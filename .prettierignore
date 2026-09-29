@@ -1,0 +1,7 @@
+dist
+coverage
+test-results
+playwright-report
+blob-report
+eddys-cafe-assets
+package-lock.json

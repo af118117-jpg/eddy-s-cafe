@@ -1,0 +1,22 @@
+node_modules
+dist
+
+# Raw source material (65 MB, partly third-party). Optimised copies go in public/images.
+eddys-cafe-assets/
+*.tsbuildinfo
+*.local
+.env
+.env.*
+
+# Playwright
+test-results
+playwright-report
+blob-report
+playwright/.cache
+
+# Editors / OS
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+Thumbs.db

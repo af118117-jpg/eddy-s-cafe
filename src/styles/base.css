@@ -1,0 +1,175 @@
+/*
+ * Global base styles. Values come from tokens.css; nothing raw here.
+ */
+
+/* Inter variable, latin subset, self-hosted. Preloaded in index.html — keep the URL in sync. */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/inter-latin-wght.woff2') format('woff2-variations');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Arial scaled to Inter's metrics, so the swap to Inter barely moves the layout. */
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial');
+  size-adjust: 107.4%;
+  ascent-override: 90.2%;
+  descent-override: 22.48%;
+  line-gap-override: 0%;
+}
+
+/*
+ * Interaction states can be forced with data-force="hover" or "focus" so the
+ * styleguide can show every state side by side. Real pointer and keyboard
+ * behaviour is unchanged (hover still only applies on hover-capable devices).
+ */
+@custom-variant hover {
+  @media (hover: hover) {
+    &:hover {
+      @slot;
+    }
+  }
+  &[data-force~='hover'] {
+    @slot;
+  }
+}
+
+@layer base {
+  :root {
+    --page-margin: var(--spacing-margin-sm);
+    --focus-ring-color: var(--color-accent);
+
+    @variant md {
+      --page-margin: var(--spacing-margin-md);
+    }
+    @variant lg {
+      --page-margin: var(--spacing-margin-lg);
+    }
+  }
+
+  *,
+  ::before,
+  ::after {
+    border-color: var(--color-line);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    font-weight: var(--font-weight-normal);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-synthesis-weight: none;
+  }
+
+  ::selection {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+  }
+
+  /* Focus: accent ring for keyboard users only. */
+  :focus-visible,
+  [data-force~='focus'] {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  /*
+   * Surfaces. Anything inside picks up colours that keep WCAG AA contrast:
+   * - cream: ink-muted is 4.1:1 on cream (below 4.5:1), so muted text uses ink.
+   * - ink (footer): ink-muted is 3.2:1 on ink, so muted text uses cream; the
+   *   accent focus ring is 2.7:1, so the ring uses bg.
+   */
+  [data-surface='cream'] {
+    --color-ink-muted: var(--color-ink);
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+  }
+
+  [data-surface='ink'] {
+    --color-ink-muted: var(--color-cream);
+    --focus-ring-color: var(--color-bg);
+    background-color: var(--color-ink);
+    color: var(--color-bg);
+  }
+}
+
+/*
+ * Page container: content up to 1280 by default, 1440 for wide layouts, with
+ * the 20 / 32 / 48 side margins outside that width. `container` extends
+ * Tailwind's built-in utility, whose per-breakpoint max-widths this replaces.
+ */
+@utility container {
+  width: 100%;
+  max-width: calc(var(--container-content) + 2 * var(--page-margin));
+  margin-inline: auto;
+  padding-inline: var(--page-margin);
+}
+
+@utility container-wide {
+  width: 100%;
+  max-width: calc(var(--container-page) + 2 * var(--page-margin));
+  margin-inline: auto;
+  padding-inline: var(--page-margin);
+}
+
+@utility container-prose {
+  width: 100%;
+  max-width: calc(min(var(--container-prose), var(--container-measure)) + 2 * var(--page-margin));
+  margin-inline: auto;
+  padding-inline: var(--page-margin);
+}
+
+/* Reading width: 680px, and never more than 68 characters. */
+@utility prose-width {
+  max-width: min(var(--container-prose), var(--container-measure));
+}
+
+/*
+ * Reduced motion: no transitions, animations or smooth scrolling anywhere.
+ * Transforms are reset on anything marked data-motion (reveals etc.), so
+ * those elements rest in their final position. Transforms used purely for
+ * layout are left alone — with transitions off they can't produce motion.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
+
+  [data-motion] {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  /*
+   * Kept as a separate rule on purpose: when these share a rule with
+   * `transform`, the minifier folds them into one transform value, which
+   * would not reset Tailwind's translate-* / scale-* / rotate-* utilities.
+   */
+  :where([data-motion]) {
+    translate: none !important;
+    scale: none !important;
+    rotate: none !important;
+  }
+}

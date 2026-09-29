@@ -1,0 +1,162 @@
+/*
+ * Design tokens — the only place raw colour, size and timing values live.
+ * Source: docs/PLAN.md. Tailwind's default scales are cleared first so that
+ * only these values can be used as utilities.
+ *
+ * `static` emits every variable even if no utility uses it yet, so base.css
+ * and runtime code (the styleguide) can read them.
+ */
+@theme static {
+  /* Colour ------------------------------------------------------------- */
+  --color-*: initial;
+  --color-bg: #fdfdfc;
+  --color-ink: #1f1c19;
+  --color-ink-muted: #6f6a64;
+  --color-cream: #e8dfd7;
+  --color-beige: #bfb3a1; /* never for text */
+  --color-beige-dark: #afa28f; /* never for text */
+  --color-accent: #2555d0;
+  --color-line: #e5e2de;
+  --color-footer: var(--color-ink);
+
+  /* Type --------------------------------------------------------------- */
+  --font-*: initial;
+  --font-sans:
+    'Inter', 'Inter Fallback', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --font-weight-*: initial;
+  --font-weight-normal: 400;
+  --font-weight-nav: 450;
+  --font-weight-medium: 500;
+
+  --tracking-*: initial;
+  --leading-*: initial;
+
+  /* Sizes are rem (16px base) so they follow the reader's font-size setting. */
+  --text-*: initial;
+  --text-display: clamp(3.5rem, 9vw, 9rem); /* 56px → 144px */
+  --text-display--line-height: 0.92;
+  --text-display--letter-spacing: -0.04em;
+  --text-display--font-weight: 500;
+
+  --text-h2: clamp(2.25rem, 4.5vw, 4rem); /* 36px → 64px */
+  --text-h2--line-height: 1.05;
+  --text-h2--letter-spacing: -0.025em;
+  --text-h2--font-weight: 500;
+
+  --text-h3: clamp(1.5rem, 2.2vw, 2rem); /* 24px → 32px */
+  --text-h3--line-height: 1.2;
+  --text-h3--letter-spacing: -0.015em;
+  --text-h3--font-weight: 500;
+
+  --text-item-name: 1.125rem; /* 18px */
+  --text-item-name--line-height: 1.35;
+  --text-item-name--font-weight: 500;
+
+  --text-body-lg: 1.125rem; /* 18px */
+  --text-body-lg--line-height: 1.6;
+  --text-body-lg--font-weight: 400;
+
+  --text-body: 1rem; /* 16px */
+  --text-body--line-height: 1.6;
+  --text-body--font-weight: 400;
+
+  --text-small: 0.875rem; /* 14px */
+  --text-small--line-height: 1.5;
+  --text-small--font-weight: 400;
+
+  --text-nav: 0.875rem; /* 14px */
+  --text-nav--line-height: 1;
+  --text-nav--font-weight: 450;
+
+  --text-meta: 0.75rem; /* 12px */
+  --text-meta--line-height: 1.4;
+  --text-meta--letter-spacing: 0.01em;
+  --text-meta--font-weight: 500;
+
+  /* Spacing — 4px base. Only these steps exist; p-5, gap-7 etc. do not. -- */
+  --spacing-*: initial;
+  --spacing-0: 0px;
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-6: 24px;
+  --spacing-8: 32px;
+  --spacing-12: 48px;
+  --spacing-16: 64px;
+  --spacing-24: 96px;
+  --spacing-32: 128px;
+  --spacing-40: 160px;
+
+  /* Section padding: 64–96 on mobile, 96–160 on desktop, fluid between. */
+  --spacing-section: clamp(64px, 32px + 8vw, 160px);
+  --spacing-section-tight: clamp(64px, 48px + 4vw, 96px);
+
+  /* Page side margins (20 / 32 / 48) and grid gutters (16 / 24). */
+  --spacing-margin-sm: 20px;
+  --spacing-margin-md: 32px;
+  --spacing-margin-lg: 48px;
+  --spacing-gutter-sm: 16px;
+  --spacing-gutter-lg: 24px;
+
+  /* Control heights. 44px is the minimum touch target. */
+  --spacing-control-md: 44px;
+  --spacing-control-lg: 56px;
+
+  /* Layout -------------------------------------------------------------- */
+  --container-*: initial;
+  --container-page: 1440px;
+  --container-content: 1280px;
+  --container-prose: 680px;
+  --container-measure: 68ch;
+
+  --breakpoint-*: initial;
+  --breakpoint-xs: 380px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+
+  /* Surfaces ------------------------------------------------------------ */
+  --radius-*: initial;
+  --radius-pill: 999px; /* buttons and chips only */
+
+  --shadow-*: initial;
+  --inset-shadow-*: initial;
+  --drop-shadow-*: initial;
+  --text-shadow-*: initial;
+
+  --border-hairline: 1px;
+
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 3px;
+
+  /* Image ratios -------------------------------------------------------- */
+  --aspect-*: initial;
+  --aspect-dish: 4 / 5;
+  --aspect-editorial: 16 / 9;
+  --aspect-editorial-wide: 21 / 9;
+  --aspect-gallery: 1 / 1;
+
+  /* Icons (lucide) ------------------------------------------------------ */
+  --icon-sm: 16px;
+  --icon-md: 20px;
+  --icon-lg: 24px;
+  --icon-stroke: 1.5;
+
+  /* Motion -------------------------------------------------------------- */
+  --ease-*: initial;
+  --ease-standard: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  --animate-*: initial;
+
+  --duration-micro: 150ms;
+  --duration-standard: 250ms;
+  --duration-reveal: 600ms;
+  --duration-reveal-long: 800ms;
+
+  --default-transition-duration: var(--duration-standard);
+  --default-transition-timing-function: var(--ease-standard);
+}

@@ -1,0 +1,6 @@
+/* Scan only src/ (and index.html) for class names — not docs or the raw asset folder. */
+@import 'tailwindcss' source('../');
+@source '../../index.html';
+
+@import './tokens.css';
+@import './base.css';
