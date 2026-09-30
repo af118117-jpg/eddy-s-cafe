@@ -61,6 +61,13 @@ function designRules() {
       pattern: '(?:^|[\\s:])text-beige',
       message: 'beige and beige-dark are never used for text (docs/PLAN.md).',
     },
+    {
+      // Off-scale spacing (gap-10, p-5, ...) generates no CSS at all, silently.
+      pattern:
+        '(?:^|[\\s:])-?(?:p[xytrbl]?|m[xytrbl]?|gap(?:-[xy])?|space-[xy]|[wh]|size|min-[wh]|max-[wh]|inset(?:-[xy])?|top|right|bottom|left|translate-[xy])-(?!(?:0|1|2|3|4|6|8|12|16|24|32|40)(?![0-9.]))[0-9]',
+      message:
+        'Not on the spacing scale (0 1 2 3 4 6 8 12 16 24 32 40): Tailwind generates nothing for it.',
+    },
   ]
   return [
     ...stringChecks.flatMap(({ pattern, message }) => [

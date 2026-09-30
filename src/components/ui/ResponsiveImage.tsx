@@ -1,3 +1,4 @@
+import type { ImageAsset } from '@/data/images'
 import { cn } from '@/lib/cn'
 
 /**
@@ -6,8 +7,9 @@ import { cn } from '@/lib/cn'
  * sets the size (e.g. a full-height hero).
  */
 export type ImageRatio = 'dish' | 'editorial' | 'editorial-wide' | 'gallery' | 'intrinsic' | 'fill'
+export type FixedImageRatio = Exclude<ImageRatio, 'intrinsic'>
 
-const ratioClass: Record<Exclude<ImageRatio, 'intrinsic'>, string> = {
+const ratioClass: Record<FixedImageRatio, string> = {
   dish: 'aspect-dish',
   editorial: 'aspect-editorial',
   'editorial-wide': 'aspect-editorial-wide',
@@ -22,10 +24,15 @@ export interface ImageSource {
   sizes?: string
 }
 
-interface ResponsiveImageProps {
-  src: string
+interface CommonProps {
   /** Describe the photo. Pass "" only when it is purely decorative. */
   alt: string
+  /** Classes for the frame. */
+  className?: string
+}
+
+interface LoadedImageProps extends CommonProps {
+  src: string
   /** Intrinsic pixel size of `src`; reserves space before load. */
   width: number
   height: number
@@ -36,33 +43,57 @@ interface ResponsiveImageProps {
   ratio?: ImageRatio
   /** For the LCP image: loads eagerly with fetchpriority="high". */
   priority?: boolean
-  /** Classes for the <picture> frame. */
-  className?: string
 }
+
+/** No photo yet (until Phase 7): a cream block of the right ratio. */
+interface PlaceholderImageProps extends CommonProps {
+  src?: undefined
+  ratio: FixedImageRatio
+}
+
+export type ResponsiveImageProps = LoadedImageProps | PlaceholderImageProps
 
 /**
  * <picture> in a fixed-ratio frame with a cream placeholder, so nothing moves
  * when the image arrives. Lazy and async unless `priority` is set.
  */
-export function ResponsiveImage({
-  src,
-  alt,
-  width,
-  height,
-  srcSet,
-  sizes,
-  sources,
-  ratio = 'intrinsic',
-  priority = false,
-  className,
-}: ResponsiveImageProps) {
+export function ResponsiveImage(props: ResponsiveImageProps) {
+  if (props.src === undefined) {
+    const { alt, ratio, className } = props
+    return (
+      // No image content yet, so nothing for assistive tech to announce.
+      <div
+        aria-hidden="true"
+        data-placeholder
+        className={cn('bg-placeholder', ratioClass[ratio], className)}
+      >
+        {import.meta.env.DEV && ratio !== 'fill' && (
+          // Dev only: which photo belongs here. Not on full-bleed slots, where it would sit under the header.
+          <span className="block p-3 text-meta text-ink">{alt}</span>
+        )}
+      </div>
+    )
+  }
+
+  const {
+    src,
+    alt,
+    width,
+    height,
+    srcSet,
+    sizes,
+    sources,
+    ratio = 'intrinsic',
+    priority = false,
+    className,
+  } = props
   // React 18 doesn't know the camelCase fetchPriority prop yet; set the attribute directly.
   const priorityAttributes = priority ? ({ fetchpriority: 'high' } as Record<string, string>) : {}
 
   return (
     <picture
       className={cn(
-        'block overflow-hidden bg-cream',
+        'block overflow-hidden bg-placeholder',
         ratio !== 'intrinsic' && ratioClass[ratio],
         className,
       )}
@@ -92,4 +123,31 @@ export function ResponsiveImage({
       />
     </picture>
   )
+}
+
+interface PhotoProps {
+  image: ImageAsset
+  ratio: FixedImageRatio
+  sizes?: string
+  priority?: boolean
+  className?: string
+}
+
+/** Renders a photo slot from content data: the photo once it exists, otherwise its placeholder. */
+export function Photo({ image, ratio, sizes, priority, className }: PhotoProps) {
+  if (image.src && image.width && image.height) {
+    return (
+      <ResponsiveImage
+        src={image.src}
+        alt={image.alt}
+        width={image.width}
+        height={image.height}
+        ratio={ratio}
+        sizes={sizes}
+        priority={priority}
+        className={className}
+      />
+    )
+  }
+  return <ResponsiveImage alt={image.alt} ratio={ratio} className={className} />
 }

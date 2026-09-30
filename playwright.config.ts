@@ -30,6 +30,10 @@ export default defineConfig({
       name: 'desktop-1280',
       use: { ...devices['Desktop Chrome'], viewport: { width: 1280, height: 800 }, channel },
     },
+    {
+      name: 'wide-1536',
+      use: { ...devices['Desktop Chrome'], viewport: { width: 1536, height: 900 }, channel },
+    },
   ],
   // Test against the production build, not the dev server.
   webServer: {

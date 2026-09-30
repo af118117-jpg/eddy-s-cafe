@@ -11,7 +11,8 @@
     "lint": "eslint .",
     "test": "vitest run",
     "e2e": "playwright test",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "import:menu": "node scripts/import-menu.mjs && prettier --write \"src/data/*.generated.ts\""
   },
   "dependencies": {
     "lucide-react": "^1.48.0",

@@ -39,7 +39,7 @@ export function AnnouncementBar({ onDismiss }: AnnouncementBarProps) {
   }
 
   return (
-    <section aria-label="Announcement" data-surface="cream">
+    <section aria-label="Announcement" data-surface="cream" data-announcement>
       <div className="container-wide flex items-center gap-2">
         {/* Balances the dismiss button so the message sits in the true centre. */}
         <span aria-hidden="true" className="-ml-3 hidden w-control-md shrink-0 sm:block" />

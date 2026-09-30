@@ -45,16 +45,23 @@
     --page-margin: var(--spacing-margin-sm);
     --focus-ring-color: var(--color-accent);
     --header-height: var(--spacing-16);
+    /* Height of the announcement bar while it's shown (see :has rule below). */
+    --announcement-height: var(--spacing-0);
     /* Space kept free at the bottom for the mobile action bar (below md). */
     --action-bar-space: calc(var(--spacing-control-lg) + env(safe-area-inset-bottom));
 
     @variant md {
       --page-margin: var(--spacing-margin-md);
-      --action-bar-space: 0;
+      /* A length, not a bare 0: it's used inside calc(). */
+      --action-bar-space: var(--spacing-0);
     }
     @variant lg {
       --page-margin: var(--spacing-margin-lg);
     }
+  }
+
+  :root:has([data-announcement]) {
+    --announcement-height: var(--spacing-control-md);
   }
 
   *,
@@ -114,6 +121,9 @@
    */
   [data-surface='cream'] {
     --color-ink-muted: var(--color-ink);
+    /* line is 1.02:1 on cream, so dividers there use beige, and so do photo placeholders. */
+    --color-line: var(--color-beige);
+    --color-placeholder: var(--color-beige);
     background-color: var(--color-cream);
     color: var(--color-fg);
   }
@@ -152,6 +162,18 @@
   max-width: calc(min(var(--container-prose), var(--container-measure)) + 2 * var(--page-margin));
   margin-inline: auto;
   padding-inline: var(--page-margin);
+}
+
+/* Page grid: 4 columns / 16px gutters, 12 columns / 24px gutters from lg. */
+@utility grid-layout {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: var(--spacing-gutter-sm);
+
+  @variant lg {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--spacing-gutter-lg);
+  }
 }
 
 /* Reading width: 680px, and never more than 68 characters. */

@@ -59,6 +59,15 @@ tests/e2e               Playwright + axe specs
 - Pages render inside `<main>`; don't add another `main`. Each page has exactly one `h1`: it receives focus after client-side navigation.
 - Buttons and chips use `fg` / `fg-inverse`, so they invert automatically inside `data-surface="ink"`.
 
+## Content data
+
+- The menu is generated: `npm run import:menu` turns `eddys-cafe-assets/05-Menu-Data/menu.csv` into `src/data/menu.generated.ts` (all 182 items) and `home-dishes.generated.ts` (only the dishes listed in `src/data/home-selection.ts`). Never edit the generated files by hand.
+- `src/data/menu.ts` holds types, the 8 groups and the category→group mapping, and has no runtime import of the menu, so the home page doesn't bundle all 182 items. Import the full list from `@/data/menu-items` (menu page only).
+- Home copy and photo slots live in `src/data/home.ts`; placeholders are marked `TODO(copy)`.
+- Photos: `<Photo image={asset} ratio=… />` renders the photo once an `ImageAsset` has `src`, otherwise a cream placeholder of the right ratio (aria-hidden; the dev server labels it with the alt text). Phase 7 fills in `src`.
+- Opening status: `useOpenStatus()` works in the café's time zone (`cafe.timeZone`, Asia/Karachi) and treats 00:30 as part of the previous day's session.
+- `/menu#coffee-tea` is linked from the home page: the menu page must give the Coffee & Tea group that id.
+
 ## Design guardrails (quick reference — details in docs/PLAN.md)
 
 - Colours only from the PLAN tokens. `beige` / `beige-dark` never used for text.
@@ -68,7 +77,8 @@ tests/e2e               Playwright + axe specs
 - Never use: 01/02 numbered markers, middle-dot meta strings, "→" on buttons, all-caps eyebrows, fade-up on every section, identical rounded cards.
 - Focus: 2px accent outline, 3px offset, `:focus-visible` only. Touch targets ≥ 44px.
 - Respect `prefers-reduced-motion`. Put `data-motion` on anything that animates in with a transform, so reduced motion rests it in place.
-- Raw values live only in `src/styles/tokens.css`. ESLint fails on hex colours, `[..px]` arbitrary values, numeric/px inline styles and `text-beige*` in `src/`. Tailwind's default colours, shadows and off-scale spacing (`p-5`) are switched off and generate nothing.
+- Raw values live only in `src/styles/tokens.css`. ESLint fails on hex colours, `[..px]` arbitrary values, numeric/px inline styles, `text-beige*` and off-scale spacing classes in `src/`. Tailwind's default colours, shadows and off-scale spacing (`gap-10`, `p-5`) are switched off and would silently generate nothing. The scale is 0 1 2 3 4 6 8 12 16 24 32 40.
+- Use the `grid-layout` utility for the 4 / 12-column page grid.
 - Dark or cream sections use `data-surface="ink" | "cream"`: it swaps muted text and the focus ring to AA-safe colours.
 
 ## Content rules
@@ -90,7 +100,8 @@ Images: width/height (or aspect-ratio) always set, modern formats, `loading="laz
 
 ## Open questions (confirm with the user before building the affected parts)
 
-- **Menu grouping:** the source data has 25 categories, but PLAN.md defines 8 groups. The mapping still needs to be agreed. There is no "Feasts" category in the data, and "Breakfast" (11 items) has no group of its own.
+- **Menu grouping:** the source data has 25 categories, but PLAN.md defines 8 groups. A proposed mapping is in `src/data/menu.ts` (marked PROPOSAL) and still needs the user's OK. Feasts = the 4 sharing platters whose descriptions give a serving size. Breakfast (11 items) is provisionally under Mains.
+- **Spelling:** "Eddy' s Khaas" (stray space) and "Poched Egg" are shown as published until the user confirms corrections.
 - **Hours:** Google Maps (dine-in) and foodpanda (delivery) disagree. The site should show Google Maps hours as opening hours unless the user says otherwise.
 - **Instagram** `@theeddyscafe` was read off a table card in a photo; the profile hasn't been verified. It is linked in the footer (flagged in `src/data/cafe.ts`); confirm before launch.
-- **WhatsApp:** no WhatsApp number is in the data. Don't assume it matches the phone number (+92 304 1112111) without confirmation.
+- **WhatsApp:** no WhatsApp number is in the data. Don't assume it matches the phone number (+92 304 1112111) without confirmation. `cafe.whatsapp` is `null` and every WhatsApp button stays hidden until it's set.

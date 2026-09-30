@@ -590,7 +590,7 @@ export default function Styleguide() {
       <GuideSection
         id="spacing"
         title="Spacing"
-        intro="A 4px base. Only these steps exist as utilities: p-5 or gap-7 generate nothing."
+        intro="A 4px base. Only these steps exist as utilities; off-scale steps (5, 7, 10) generate nothing, and lint rejects them."
       >
         <Subsection title="Scale">
           <ul className="flex flex-col gap-3">

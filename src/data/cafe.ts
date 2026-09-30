@@ -14,6 +14,11 @@ export interface DayHours {
   closes: string
 }
 
+export interface ContactLink {
+  display: string
+  href: string
+}
+
 const coordinates = { lat: 31.4502019, lng: 73.1534366 } as const
 
 export const cafe = {
@@ -29,7 +34,15 @@ export const cafe = {
     display: '+92 304 1112111',
     href: 'tel:+923041112111',
   },
+  /**
+   * TODO(content): WhatsApp isn't in the source data. Set it once the café
+   * confirms the number, e.g. { display: '+92 304 1112111',
+   * href: 'https://wa.me/923041112111' }. WhatsApp buttons stay hidden while null.
+   */
+  whatsapp: null as ContactLink | null,
   coordinates,
+  /** Hours are the café's local time; open/closed is worked out in this zone. */
+  timeZone: 'Asia/Karachi',
   /** Google Maps hours (dine-in). foodpanda lists different delivery hours. */
   openingHours: [
     { day: 'Monday', opens: '11:00', closes: '01:00' },
@@ -48,6 +61,7 @@ export const cafe = {
     /** UNVERIFIED: read off an in-store table card; the profile hasn't been opened. */
     instagram: 'https://www.instagram.com/theeddyscafe/',
   },
+  instagramHandle: '@theeddyscafe',
 } as const
 
 export type Cafe = typeof cafe
