@@ -41,8 +41,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Fatoush Salad',
-      source: '03-Food-Images/fatoush-salad.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -54,8 +52,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Hummus with Chicken',
-      source: '03-Food-Images/hummus-with-chicken.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -67,8 +63,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Hummus with Lamb',
-      source: '03-Food-Images/hummus-with-lamb.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -81,8 +75,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Jooje Pockets',
-      source: '03-Food-Images/jooje-pockets.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -95,8 +87,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Lamb Pockets',
-      source: '03-Food-Images/lamb-pockets.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -108,8 +98,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Hot & Sour Soup',
-      source: '03-Food-Images/hot-and-sour-soup.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -122,8 +110,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Thai Chicken Soup',
-      source: '03-Food-Images/thai-chicken-soup.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -135,8 +121,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: "Eddy's Special Soup",
-      source: '03-Food-Images/eddys-special-soup.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -148,8 +132,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Roasted Tomato Soup',
-      source: '03-Food-Images/roasted-tomato-soup.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -161,8 +143,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Seafood Chowder Soup',
-      source: '03-Food-Images/seafood-chowder-soup.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -174,8 +154,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Soup of The Day',
-      source: '03-Food-Images/soup-of-the-day.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -188,8 +166,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Special Club Sandwich',
-      source: '03-Food-Images/special-club-sandwich.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -202,8 +178,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Croissant Chicken Grilled Sandwich',
-      source: '03-Food-Images/croissant-chicken-grilled-sandwich.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -216,8 +190,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Croissant Egg & Shroom Sandwich',
-      source: '03-Food-Images/croissant-egg-and-shroom-sandwich.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -229,8 +201,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Open Face Mediterranean Sandwich',
-      source: '03-Food-Images/open-face-mediterranean-sandwich.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -243,8 +213,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Roasted Beef Sandwich',
-      source: '03-Food-Images/roasted-beef-sandwich.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -256,8 +224,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: "Eddy's Katsu Club Sandwich",
-      source: '03-Food-Images/eddys-katsu-club-sandwich.jpg',
-      sourceKind: 'own',
     },
   },
   {
@@ -269,8 +235,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Beef Smash Burger',
-      source: '03-Food-Images/beef-smash-burger.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -282,8 +246,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Chicken Butter Milk Burger',
-      source: '03-Food-Images/chicken-butter-milk-burger.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -296,8 +258,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Sichuan Burger',
-      source: '03-Food-Images/sichuan-burger.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -310,8 +270,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Beef Cheese Burger',
-      source: '03-Food-Images/beef-cheese-burger.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -323,8 +281,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Grilled Chicken Burger',
-      source: '03-Food-Images/grilled-chicken-burger.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -337,8 +293,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Chicken Spicy Moroccan Steak',
-      source: '03-Food-Images/chicken-spicy-moroccan-steak.jpg',
-      sourceKind: 'own',
     },
   },
   {
@@ -351,8 +305,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Beef Spicy Moroccan Steak',
-      source: '03-Food-Images/beef-spicy-moroccan-steak.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -365,8 +317,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Chicken Jalapaeno Steak',
-      source: '03-Food-Images/chicken-jalapaeno-steak.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -379,8 +329,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Beef Jalapaeno Steak',
-      source: '03-Food-Images/beef-jalapaeno-steak.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -393,8 +341,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Chicken Mexican Steak',
-      source: '03-Food-Images/chicken-mexican-steak.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -407,8 +353,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Beef Mexican Steak',
-      source: '03-Food-Images/beef-mexican-steak.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -421,8 +365,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Chicken Americano Steak',
-      source: '03-Food-Images/chicken-americano-steak.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -435,8 +377,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Beef Americano Steak',
-      source: '03-Food-Images/beef-americano-steak.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -449,8 +389,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Chicken Black Pepper Cheese Steak',
-      source: '03-Food-Images/chicken-black-pepper-cheese-steak.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -463,8 +401,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Beef Black Pepper Cheese Steak',
-      source: '03-Food-Images/beef-black-pepper-cheese-steak.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -477,8 +413,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Chicken Italian Mushroom Steak',
-      source: '03-Food-Images/chicken-italian-mushroom-steak.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -491,8 +425,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Beef Italian Mushroom Steak',
-      source: '03-Food-Images/beef-italian-mushroom-steak.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -504,8 +436,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Margherita Pizza',
-      source: '03-Food-Images/margherita-pizza.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -517,8 +447,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Short Ribs Pizza',
-      source: '03-Food-Images/short-ribs-pizza.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -530,8 +458,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Firenze Nova Pizza',
-      source: '03-Food-Images/firenze-nova-pizza.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -543,8 +469,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Chicken Chilli Cheese Pizza',
-      source: '03-Food-Images/chicken-chilli-cheese-pizza.jpg',
-      sourceKind: 'own',
     },
   },
   {
@@ -556,8 +480,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Porcini Pizza',
-      source: '03-Food-Images/porcini-pizza.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -569,8 +491,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Chicken Pepperoni Pizza',
-      source: '03-Food-Images/chicken-pepperoni-pizza.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -582,8 +502,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Beef Pepperoni Pizza',
-      source: '03-Food-Images/beef-pepperoni-pizza.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -595,8 +513,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Pinza Pizza',
-      source: '03-Food-Images/pinza-pizza.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -608,8 +524,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Hot Chicken Bao',
-      source: '03-Food-Images/hot-chicken-bao.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -621,8 +535,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Smash X Bao',
-      source: '03-Food-Images/smash-x-bao.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -634,8 +546,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Katsu Chicken Bao',
-      source: '03-Food-Images/katsu-chicken-bao.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -648,8 +558,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Chicken Ala Kiev',
-      source: '03-Food-Images/chicken-ala-kiev.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -661,8 +569,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Chicken Schnitzel',
-      source: '03-Food-Images/chicken-schnitzel.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -674,8 +580,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Teriyaki Bowl',
-      source: '03-Food-Images/teriyaki-bowl.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -687,8 +591,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Grilled Chicken with Hummus',
-      source: '03-Food-Images/grilled-chicken-with-hummus.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -701,8 +603,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Chicken with Lemon Caper Sauce',
-      source: '03-Food-Images/chicken-with-lemon-caper-sauce.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -715,8 +615,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Mediterranean Grilled Fish',
-      source: '03-Food-Images/mediterranean-grilled-fish.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -728,8 +626,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Baked Chicken Pot',
-      source: '03-Food-Images/baked-chicken-pot.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -742,8 +638,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Nashville Chicken',
-      source: '03-Food-Images/nashville-chicken.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -756,8 +650,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Parmesan Crusted Chicken',
-      source: '03-Food-Images/parmesan-crusted-chicken.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -770,8 +662,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Jalapeno Orange Chicken',
-      source: '03-Food-Images/jalapeno-orange-chicken.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -784,8 +674,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Grilled Chicken with Sundried Tomato',
-      source: '03-Food-Images/grilled-chicken-with-sundried-tomato.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -797,8 +685,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Fish & Chips',
-      source: '03-Food-Images/fish-and-chips.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -810,8 +696,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Red Curry with Garlic Rice',
-      source: '03-Food-Images/red-curry-with-garlic-rice.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -823,8 +707,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Prawn Curry with Masala Rice',
-      source: '03-Food-Images/prawn-curry-with-masala-rice.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -837,8 +719,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Chicken Cashew Nut',
-      source: '03-Food-Images/chicken-cashew-nut.jpg',
-      sourceKind: 'own',
     },
   },
   {
@@ -850,8 +730,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Stogonuf Chicken with Garlic Rice',
-      source: '03-Food-Images/stogonuf-chicken-with-garlic-rice.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -864,8 +742,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Dragon Chicken with Egg Fried Rice',
-      source: '03-Food-Images/dragon-chicken-with-egg-fried-rice.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -877,8 +753,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Oyster Chicken with Garlic Rice',
-      source: '03-Food-Images/oyster-chicken-with-garlic-rice.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -891,8 +765,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Seven Leaves with Garlic Rice',
-      source: '03-Food-Images/seven-leaves-with-garlic-rice.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -905,8 +777,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Chicken Chilli Dry',
-      source: '03-Food-Images/chicken-chilli-dry.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -919,8 +789,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Beef Chilli Dry',
-      source: '03-Food-Images/beef-chilli-dry.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -933,8 +801,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Fish Curry Almond with Masala Rice',
-      source: '03-Food-Images/fish-curry-almond-with-masala-rice.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -947,8 +813,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Kong Pao Chicken with Egg Fried Rice',
-      source: '03-Food-Images/kong-pao-chicken-with-egg-fried-rice.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -961,8 +825,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Kamil Jooje',
-      source: '03-Food-Images/kamil-jooje.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -975,8 +837,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Shish Tauk Turkish',
-      source: '03-Food-Images/shish-tauk-turkish.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -989,8 +849,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Persian Style Lamb Chops',
-      source: '03-Food-Images/persian-style-lamb-chops.jpg',
-      sourceKind: 'own',
     },
   },
   {
@@ -1003,8 +861,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Turkish Lamb Cheese Kebab',
-      source: '03-Food-Images/turkish-lamb-cheese-kebab.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1017,8 +873,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Jooje Khaas Kebab',
-      source: '03-Food-Images/jooje-khaas-kebab.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1031,8 +885,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Khafif Jooje',
-      source: '03-Food-Images/khafif-jooje.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1045,8 +897,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Adana Kebab',
-      source: '03-Food-Images/adana-kebab.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1059,8 +909,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Summuc Jooje',
-      source: '03-Food-Images/summuc-jooje.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1073,8 +921,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Afghan Seekh Kebab',
-      source: '03-Food-Images/afghan-seekh-kebab.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1087,8 +933,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Beshghab e Mix',
-      source: '03-Food-Images/beshghab-e-mix.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1101,8 +945,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: "Eddy' s Khaas",
-      source: '03-Food-Images/eddys-khaas.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1114,8 +956,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Mama Mia Pasta',
-      source: '03-Food-Images/mama-mia-pasta.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1128,8 +968,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Penny Arbiata Pasta',
-      source: '03-Food-Images/penny-arbiata-pasta.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1142,8 +980,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Beef Lasagna Pasta',
-      source: '03-Food-Images/beef-lasagna-pasta.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1156,8 +992,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Penne Carbonara Pasta',
-      source: '03-Food-Images/penne-carbonara-pasta.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1170,8 +1004,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Aglio e Olio Pasta',
-      source: '03-Food-Images/aglio-e-olio-pasta.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1183,8 +1015,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Caesar Salad',
-      source: '03-Food-Images/caesar-salad.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1196,8 +1026,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Quinoa & Cranberry Salad',
-      source: '03-Food-Images/quinoa-and-cranberry-salad.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1209,8 +1037,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Feta Salad',
-      source: '03-Food-Images/feta-salad.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1222,8 +1048,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Vietnamese Chicken Salad',
-      source: '03-Food-Images/vietnamese-chicken-salad.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1235,8 +1059,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Sautee Beef Salad',
-      source: '03-Food-Images/sautee-beef-salad.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1249,8 +1071,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Stuff Chicken Fingers',
-      source: '03-Food-Images/stuff-chicken-fingers.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1263,8 +1083,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Assorted Mini Sliders',
-      source: '03-Food-Images/assorted-mini-sliders.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1276,8 +1094,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Tempura Prawns',
-      source: '03-Food-Images/tempura-prawns.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1289,8 +1105,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Chicken Chipotle Nachos',
-      source: '03-Food-Images/chicken-chipotle-nachos.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1302,8 +1116,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Dynamite Prawns',
-      source: '03-Food-Images/dynamite-prawns.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1315,8 +1127,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Fries',
-      source: '03-Food-Images/fries.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1329,8 +1139,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Mini Sliders',
-      source: '03-Food-Images/mini-sliders.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1343,8 +1151,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Peri Peri Bites',
-      source: '03-Food-Images/peri-peri-bites.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1357,8 +1163,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Chicken Quesadillas',
-      source: '03-Food-Images/chicken-quesadillas.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1370,8 +1174,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Loaded Sriracha Fries',
-      source: '03-Food-Images/loaded-sriracha-fries.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1383,8 +1185,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Butter Chicken Strips',
-      source: '03-Food-Images/butter-chicken-strips.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1396,8 +1196,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Masala Fries',
-      source: '03-Food-Images/masala-fries.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1409,8 +1207,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Croissant & Butter Pudding',
-      source: '03-Food-Images/croissant-and-butter-pudding.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1422,8 +1218,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Molten Lava with Ice Cream',
-      source: '03-Food-Images/molten-lava-with-ice-cream.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1435,8 +1229,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Nuts About Nutella',
-      source: '03-Food-Images/nuts-about-nutella.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1448,8 +1240,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Home Made Waffles',
-      source: '03-Food-Images/home-made-waffles.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1461,8 +1251,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Home Made Nutella',
-      source: '03-Food-Images/home-made-nutella.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1474,8 +1262,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Home Made Lotus',
-      source: '03-Food-Images/home-made-lotus.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1488,8 +1274,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Cookie Dough with Ice Cream',
-      source: '03-Food-Images/cookie-dough-with-ice-cream.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1501,8 +1285,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Dessert of the Week',
-      source: '03-Food-Images/dessert-of-the-week.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1514,8 +1296,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: "Eddy's Signature Chocolate Cake",
-      source: '03-Food-Images/eddys-signature-chocolate-cake.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1527,8 +1307,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Seasonal Fresh Juice',
-      source: '04-Drink-Images/seasonal-fresh-juice.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1540,8 +1318,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Fresh Lime',
-      source: '04-Drink-Images/fresh-lime.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1553,8 +1329,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Mint Margarita',
-      source: '04-Drink-Images/mint-margarita.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1566,8 +1340,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Blue Lagoon',
-      source: '04-Drink-Images/blue-lagoon.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1579,8 +1351,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Lime',
-      source: '04-Drink-Images/homemade-sodas-lime.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1592,8 +1362,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Strawberry Soda',
-      source: '04-Drink-Images/strawberry-soda.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1605,8 +1373,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Strawberry Mint Margarita',
-      source: '04-Drink-Images/strawberry-mint-margarita.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1618,8 +1384,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Peach',
-      source: '04-Drink-Images/homemade-sodas-peach.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1631,8 +1395,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Lychee',
-      source: '04-Drink-Images/homemade-sodas-lychee.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1644,8 +1406,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Raspberry',
-      source: '04-Drink-Images/homemade-sodas-raspberry.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1657,8 +1417,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'English Breakfast Tea',
-      source: '04-Drink-Images/english-breakfast-tea.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1670,8 +1428,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Cardamom Tea',
-      source: '04-Drink-Images/cardamom-tea.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1683,8 +1439,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Chai Tea Latte',
-      source: '04-Drink-Images/chai-tea-latte.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1696,8 +1450,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Green Tea',
-      source: '04-Drink-Images/green-tea.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1709,8 +1461,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Peach Iced Tea',
-      source: '04-Drink-Images/peach-iced-tea.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1722,8 +1472,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Lemon & Mint Iced Tea',
-      source: '04-Drink-Images/lemon-and-mint-iced-tea.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1735,8 +1483,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Strawberry Iced Tea',
-      source: '04-Drink-Images/strawberry-iced-tea.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1748,8 +1494,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Hot Espresso',
-      source: '04-Drink-Images/hot-espresso.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1761,8 +1505,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Hot Cafe Latte',
-      source: '04-Drink-Images/hot-cafe-latte.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1774,8 +1516,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Hot Mocha Latte',
-      source: '04-Drink-Images/hot-mocha-latte.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1787,8 +1527,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Hot Vanilla Latte',
-      source: '04-Drink-Images/hot-vanilla-latte.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1800,8 +1538,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Hot White Chocolate Mocha',
-      source: '04-Drink-Images/hot-white-chocolate-mocha.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1813,8 +1549,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Hot Spanish Latte',
-      source: '04-Drink-Images/hot-spanish-latte.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1826,8 +1560,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Hot Macchiato',
-      source: '04-Drink-Images/hot-macchiato.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1839,8 +1571,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Hot Americano',
-      source: '04-Drink-Images/hot-americano.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1852,8 +1582,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Hot Cappuccino',
-      source: '04-Drink-Images/hot-cappuccino.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1865,8 +1593,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Hot Caramel Latte',
-      source: '04-Drink-Images/hot-caramel-latte.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1878,8 +1604,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Hot Hazelnut Latte',
-      source: '04-Drink-Images/hot-hazelnut-latte.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1891,8 +1615,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Hot Chocolate',
-      source: '04-Drink-Images/hot-chocolate.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1904,8 +1626,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Hot Babychino',
-      source: '04-Drink-Images/hot-babychino.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1917,8 +1637,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Iced Cafe Latte',
-      source: '04-Drink-Images/iced-cafe-latte.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1930,8 +1648,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Iced Mocha Latte',
-      source: '04-Drink-Images/iced-mocha-latte.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1943,8 +1659,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Iced Vanilla Latte',
-      source: '04-Drink-Images/iced-vanilla-latte.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1956,8 +1670,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Iced White Chocolate Mocha',
-      source: '04-Drink-Images/iced-white-chocolate-mocha.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1969,8 +1681,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Iced Spanish Latte',
-      source: '04-Drink-Images/iced-spanish-latte.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1982,8 +1692,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Iced Cappuccino',
-      source: '04-Drink-Images/iced-cappuccino.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -1995,8 +1703,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Iced Caramel Latte',
-      source: '04-Drink-Images/iced-caramel-latte.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -2008,8 +1714,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Iced Hazelnut Latte',
-      source: '04-Drink-Images/iced-hazelnut-latte.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -2022,8 +1726,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Mango',
-      source: '04-Drink-Images/fruity-chillers-mango.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -2036,8 +1738,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Blueberry',
-      source: '04-Drink-Images/fruity-chillers-blueberry.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -2050,8 +1750,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Strawberry',
-      source: '04-Drink-Images/fruity-chillers-strawberry.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -2064,8 +1762,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Mix Berry',
-      source: '04-Drink-Images/fruity-chillers-mix-berry.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -2078,8 +1774,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Mango',
-      source: '04-Drink-Images/fruity-smoothies-mango.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -2092,8 +1786,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Blueberry',
-      source: '04-Drink-Images/fruity-smoothies-blueberry.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -2106,8 +1798,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Strawberry',
-      source: '04-Drink-Images/fruity-smoothies-strawberry.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -2120,8 +1810,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Mix Berry',
-      source: '04-Drink-Images/fruity-smoothies-mix-berry.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -2134,8 +1822,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Caramel Shake',
-      source: '04-Drink-Images/caramel-shake.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -2148,8 +1834,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Oreo & Cream Shake',
-      source: '04-Drink-Images/oreo-and-cream-shake.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -2162,8 +1846,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Oreo Strawberry Shake',
-      source: '04-Drink-Images/oreo-strawberry-shake.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -2176,8 +1858,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Vanilla Shake',
-      source: '04-Drink-Images/vanilla-shake.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -2190,8 +1870,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Chocolate Shake',
-      source: '04-Drink-Images/chocolate-shake.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -2204,8 +1882,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Caramel Frappe',
-      source: '04-Drink-Images/caramel-frappe.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -2218,8 +1894,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Cookies & Cream Frappe',
-      source: '04-Drink-Images/cookies-and-cream-frappe.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -2232,8 +1906,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Mocha Frappe',
-      source: '04-Drink-Images/mocha-frappe.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -2246,8 +1918,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Vanilla Frappe',
-      source: '04-Drink-Images/vanilla-frappe.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -2260,8 +1930,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Voltage Frappe',
-      source: '04-Drink-Images/voltage-frappe.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -2274,8 +1942,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'drink',
     image: {
       alt: 'Lotus Frappe',
-      source: '04-Drink-Images/lotus-frappe.jpg',
-      sourceKind: 'reference',
     },
   },
   {
@@ -2312,8 +1978,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Poched Egg',
-      source: '03-Food-Images/poched-egg.jpg',
-      sourceKind: 'own',
     },
   },
   {
@@ -2362,8 +2026,6 @@ export const menuItems: readonly MenuItem[] = [
     section: 'food',
     image: {
       alt: 'Hunter Beef & Egg Sando',
-      source: '03-Food-Images/hunter-beef-and-egg-sando.jpg',
-      sourceKind: 'own',
     },
   },
   {

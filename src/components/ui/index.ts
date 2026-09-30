@@ -1,6 +1,7 @@
 export { Button, buttonClassName } from './Button'
 export type { ButtonProps, ButtonSize, ButtonVariant } from './Button'
 export { Chip } from './Chip'
+export type { ChipVariant } from './Chip'
 export { Container } from './Container'
 export type { ContainerSize } from './Container'
 export { Icon } from './Icon'
@@ -14,3 +15,4 @@ export type {
   ResponsiveImageProps,
 } from './ResponsiveImage'
 export { SectionHeading } from './SectionHeading'
+export { ServesLabel } from './ServesLabel'

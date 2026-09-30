@@ -52,9 +52,9 @@ export const menuGroups: readonly MenuGroup[] = [
 /*
  * PROPOSAL, to confirm with the café: which of the 25 source categories
  * belongs to which group. `Record` makes the compiler insist every category
- * is mapped.
+ * is mapped. The menu page lists categories in this order within each group.
  */
-const categoryGroup: Record<MenuCategory, MenuGroupId> = {
+export const categoryGroup: Readonly<Record<MenuCategory, MenuGroupId>> = {
   'Middle Eastern Starters': 'starters',
   Appetizers: 'starters',
   Soups: 'starters',

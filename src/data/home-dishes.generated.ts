@@ -13,8 +13,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     section: 'food',
     image: {
       alt: 'Persian Style Lamb Chops',
-      source: '03-Food-Images/persian-style-lamb-chops.jpg',
-      sourceKind: 'own',
     },
   },
   'chicken-spicy-moroccan-steak': {
@@ -27,8 +25,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     section: 'food',
     image: {
       alt: 'Chicken Spicy Moroccan Steak',
-      source: '03-Food-Images/chicken-spicy-moroccan-steak.jpg',
-      sourceKind: 'own',
     },
   },
   'chicken-cashew-nut': {
@@ -41,8 +37,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     section: 'food',
     image: {
       alt: 'Chicken Cashew Nut',
-      source: '03-Food-Images/chicken-cashew-nut.jpg',
-      sourceKind: 'own',
     },
   },
   'chicken-chilli-cheese-pizza': {
@@ -54,8 +48,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     section: 'food',
     image: {
       alt: 'Chicken Chilli Cheese Pizza',
-      source: '03-Food-Images/chicken-chilli-cheese-pizza.jpg',
-      sourceKind: 'own',
     },
   },
   'eddys-katsu-club-sandwich': {
@@ -67,8 +59,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     section: 'food',
     image: {
       alt: "Eddy's Katsu Club Sandwich",
-      source: '03-Food-Images/eddys-katsu-club-sandwich.jpg',
-      sourceKind: 'own',
     },
   },
   'hunter-beef-and-egg-sando': {
@@ -81,8 +71,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     section: 'food',
     image: {
       alt: 'Hunter Beef & Egg Sando',
-      source: '03-Food-Images/hunter-beef-and-egg-sando.jpg',
-      sourceKind: 'own',
     },
   },
   'hummus-with-lamb': {
@@ -94,8 +82,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     section: 'food',
     image: {
       alt: 'Hummus with Lamb',
-      source: '03-Food-Images/hummus-with-lamb.jpg',
-      sourceKind: 'reference',
     },
   },
   'dynamite-prawns': {
@@ -107,8 +93,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     section: 'food',
     image: {
       alt: 'Dynamite Prawns',
-      source: '03-Food-Images/dynamite-prawns.jpg',
-      sourceKind: 'reference',
     },
   },
   'adana-kebab': {
@@ -121,8 +105,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     section: 'food',
     image: {
       alt: 'Adana Kebab',
-      source: '03-Food-Images/adana-kebab.jpg',
-      sourceKind: 'reference',
     },
   },
   'chicken-ala-kiev': {
@@ -135,8 +117,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     section: 'food',
     image: {
       alt: 'Chicken Ala Kiev',
-      source: '03-Food-Images/chicken-ala-kiev.jpg',
-      sourceKind: 'reference',
     },
   },
   'porcini-pizza': {
@@ -148,8 +128,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     section: 'food',
     image: {
       alt: 'Porcini Pizza',
-      source: '03-Food-Images/porcini-pizza.jpg',
-      sourceKind: 'reference',
     },
   },
   'mama-mia-pasta': {
@@ -161,8 +139,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     section: 'food',
     image: {
       alt: 'Mama Mia Pasta',
-      source: '03-Food-Images/mama-mia-pasta.jpg',
-      sourceKind: 'reference',
     },
   },
   'molten-lava-with-ice-cream': {
@@ -174,8 +150,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     section: 'food',
     image: {
       alt: 'Molten Lava with Ice Cream',
-      source: '03-Food-Images/molten-lava-with-ice-cream.jpg',
-      sourceKind: 'reference',
     },
   },
   'croissant-and-butter-pudding': {
@@ -187,8 +161,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     section: 'food',
     image: {
       alt: 'Croissant & Butter Pudding',
-      source: '03-Food-Images/croissant-and-butter-pudding.jpg',
-      sourceKind: 'reference',
     },
   },
   'turkish-lamb-cheese-kebab': {
@@ -201,8 +173,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     section: 'food',
     image: {
       alt: 'Turkish Lamb Cheese Kebab',
-      source: '03-Food-Images/turkish-lamb-cheese-kebab.jpg',
-      sourceKind: 'reference',
     },
   },
   'kamil-jooje': {
@@ -215,8 +185,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     section: 'food',
     image: {
       alt: 'Kamil Jooje',
-      source: '03-Food-Images/kamil-jooje.jpg',
-      sourceKind: 'reference',
     },
   },
   'beshghab-e-mix': {
@@ -229,8 +197,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     section: 'food',
     image: {
       alt: 'Beshghab e Mix',
-      source: '03-Food-Images/beshghab-e-mix.jpg',
-      sourceKind: 'reference',
     },
   },
   'eddys-khaas': {
@@ -243,8 +209,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     section: 'food',
     image: {
       alt: "Eddy' s Khaas",
-      source: '03-Food-Images/eddys-khaas.jpg',
-      sourceKind: 'reference',
     },
   },
   'hot-espresso': {
@@ -256,8 +220,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     section: 'drink',
     image: {
       alt: 'Hot Espresso',
-      source: '04-Drink-Images/hot-espresso.jpg',
-      sourceKind: 'reference',
     },
   },
   'hot-americano': {
@@ -269,8 +231,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     section: 'drink',
     image: {
       alt: 'Hot Americano',
-      source: '04-Drink-Images/hot-americano.jpg',
-      sourceKind: 'reference',
     },
   },
   'hot-cappuccino': {
@@ -282,8 +242,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     section: 'drink',
     image: {
       alt: 'Hot Cappuccino',
-      source: '04-Drink-Images/hot-cappuccino.jpg',
-      sourceKind: 'reference',
     },
   },
   'hot-cafe-latte': {
@@ -295,8 +253,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     section: 'drink',
     image: {
       alt: 'Hot Cafe Latte',
-      source: '04-Drink-Images/hot-cafe-latte.jpg',
-      sourceKind: 'reference',
     },
   },
   'hot-spanish-latte': {
@@ -308,8 +264,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     section: 'drink',
     image: {
       alt: 'Hot Spanish Latte',
-      source: '04-Drink-Images/hot-spanish-latte.jpg',
-      sourceKind: 'reference',
     },
   },
   'iced-spanish-latte': {
@@ -321,8 +275,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     section: 'drink',
     image: {
       alt: 'Iced Spanish Latte',
-      source: '04-Drink-Images/iced-spanish-latte.jpg',
-      sourceKind: 'reference',
     },
   },
   'caramel-frappe': {
@@ -335,8 +287,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     section: 'drink',
     image: {
       alt: 'Caramel Frappe',
-      source: '04-Drink-Images/caramel-frappe.jpg',
-      sourceKind: 'reference',
     },
   },
   'lotus-frappe': {
@@ -349,8 +299,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     section: 'drink',
     image: {
       alt: 'Lotus Frappe',
-      source: '04-Drink-Images/lotus-frappe.jpg',
-      sourceKind: 'reference',
     },
   },
   'voltage-frappe': {
@@ -363,8 +311,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     section: 'drink',
     image: {
       alt: 'Voltage Frappe',
-      source: '04-Drink-Images/voltage-frappe.jpg',
-      sourceKind: 'reference',
     },
   },
   'mint-margarita': {
@@ -376,8 +322,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     section: 'drink',
     image: {
       alt: 'Mint Margarita',
-      source: '04-Drink-Images/mint-margarita.jpg',
-      sourceKind: 'reference',
     },
   },
   'blue-lagoon': {
@@ -389,8 +333,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     section: 'drink',
     image: {
       alt: 'Blue Lagoon',
-      source: '04-Drink-Images/blue-lagoon.jpg',
-      sourceKind: 'reference',
     },
   },
   'strawberry-mint-margarita': {
@@ -402,8 +344,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     section: 'drink',
     image: {
       alt: 'Strawberry Mint Margarita',
-      source: '04-Drink-Images/strawberry-mint-margarita.jpg',
-      sourceKind: 'reference',
     },
   },
 }

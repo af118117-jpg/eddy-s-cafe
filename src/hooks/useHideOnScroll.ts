@@ -25,7 +25,11 @@ export function useHideOnScroll(
       const delta = y - lastY
       if (Math.abs(delta) < SCROLL_DELTA) return
       const height = element.current?.offsetHeight ?? 0
-      setHidden(delta > 0 && y > height)
+      // More than a screen in one frame is a jump (an anchor link, a restored
+      // position), not reading: show the header, and keep the offsets that
+      // anchors are scrolled to (header + sticky bars) accurate.
+      const jumped = Math.abs(delta) > window.innerHeight
+      setHidden(!jumped && delta > 0 && y > height)
       lastY = y
     }
     const onScroll = () => {

@@ -26,7 +26,7 @@ npm run preview    # serve the build
 npm run typecheck  # tsc --noEmit
 npm run lint       # eslint
 npm run test       # vitest
-npm run e2e        # playwright (incl. axe) at 375 / 768 / 1280
+npm run e2e        # playwright (incl. axe) at 375 / 768 / 1280 / 1536
 ```
 
 Before reporting any phase as done: `typecheck`, `lint` and `test` pass, and `build` succeeds.
@@ -39,7 +39,7 @@ src/app                 routes.tsx, SiteLayout (app shell), scroll + focus manag
 src/components/layout   AnnouncementBar, SiteHeader, MobileNav, MobileActionBar, SiteFooter, SkipLink
 src/components/ui       Button, Chip, Container, Icon, Price, ResponsiveImage, SectionHeading
 src/components/home     home page sections
-src/components/menu     menu page components
+src/components/menu     menu page: MenuToolbar (GroupTabs, CategoryChips, MenuSearch, ChipRow), MenuList, EmptyState
 src/pages               route pages (the only default exports); _Styleguide is dev-only
 src/data                typed menu + café info (single source for content)
 src/hooks  src/lib
@@ -66,7 +66,18 @@ tests/e2e               Playwright + axe specs
 - Home copy and photo slots live in `src/data/home.ts`; placeholders are marked `TODO(copy)`.
 - Photos: `<Photo image={asset} ratio=… />` renders the photo once an `ImageAsset` has `src`, otherwise a cream placeholder of the right ratio (aria-hidden; the dev server labels it with the alt text). Phase 7 fills in `src`.
 - Opening status: `useOpenStatus()` works in the café's time zone (`cafe.timeZone`, Asia/Karachi) and treats 00:30 as part of the previous day's session.
-- `/menu#coffee-tea` is linked from the home page: the menu page must give the Coffee & Tea group that id.
+- `/menu#coffee-tea` is linked from the home page: the menu page gives each group's wrapper its group id and each category block its own slug id (`#hot-coffee`).
+- `import:menu` also writes `menu-image-sources.generated.ts` (where each item's raw photo is, own or reference). The app never imports it; it's for choosing photos in Phase 7.
+
+## Menu page
+
+- `src/data/menu-sections.ts` (menu page only) turns the items into category sections in group order. Chicken/Beef versions of one dish (same category and description) become one row with both prices; the four platters get their own "Sharing platters" block in Feasts. `spicyDishes` there lists what gets the "Spicy" tag.
+- `useMenuFilter` (`src/hooks/useMenuFilter.ts`) keeps `?group=&category=&q=` in the URL and replaces the history entry on every change. Import it from its module, not from `@/hooks`: through the index it lands in the main bundle. The search box has its own state; `?q=` is written after a 300 ms pause (Safari limits replaceState).
+- Search: every word has to start a word in the name, description or category ("lat" finds Latte; "latte" doesn't find Platter). Case, accents and apostrophes don't matter.
+- Replace navigations that only change the query string are not page changes: `ScrollRestorer` keeps the scroll position and `useRouteFocus` leaves focus alone. Saved positions are keyed by history key plus URL.
+- The toolbar is sticky at `top-(--header-height)` and uses the `header-hidden:` variant to move up while the header hides. Anchors stop below it via `scroll-mt-(--menu-toolbar-height)` (measured at runtime). Scrolling more than a screen at once shows the header, so anchor offsets stay exact.
+- Chip rows (`ChipRow`) are single-line horizontal scrollers so the toolbar never changes height: roving tab stop with arrow keys, snap, edge fades (`scroll-fade`), and edge buttons for fine pointers only.
+- Budget: the menu chunk is ~14 KB gzipped on top of ~75 KB main. Keep `/menu` under 90 KB in total.
 
 ## Design guardrails (quick reference — details in docs/PLAN.md)
 
@@ -102,6 +113,8 @@ Images: width/height (or aspect-ratio) always set, modern formats, `loading="laz
 
 - **Menu grouping:** the source data has 25 categories, but PLAN.md defines 8 groups. A proposed mapping is in `src/data/menu.ts` (marked PROPOSAL) and still needs the user's OK. Feasts = the 4 sharing platters whose descriptions give a serving size. Breakfast (11 items) is provisionally under Mains.
 - **Spelling:** "Eddy' s Khaas" (stray space) and "Poched Egg" are shown as published until the user confirms corrections.
+- **Menu page labelling (PROPOSAL):** the "Spicy" tag list (`spicyDishes` in `src/data/menu-sections.ts`), the merged Chicken/Beef steak rows (shown as "Spicy Moroccan Steak" with both prices), and the "Sharing platters" heading for the four feasts.
+- **Menu prices** come from the foodpanda listing (the CSV's source); confirm they match dine-in prices.
 - **Hours:** Google Maps (dine-in) and foodpanda (delivery) disagree. The site should show Google Maps hours as opening hours unless the user says otherwise.
 - **Instagram** `@theeddyscafe` was read off a table card in a photo; the profile hasn't been verified. It is linked in the footer (flagged in `src/data/cafe.ts`); confirm before launch.
 - **WhatsApp:** no WhatsApp number is in the data. Don't assume it matches the phone number (+92 304 1112111) without confirmation. `cafe.whatsapp` is `null` and every WhatsApp button stays hidden until it's set.

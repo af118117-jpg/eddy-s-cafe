@@ -1,13 +1,91 @@
-import { Container } from '@/components/ui'
+import { useLayoutEffect, useRef } from 'react'
+import { EmptyState, MenuList, MenuToolbar } from '@/components/menu'
+import { Button } from '@/components/ui'
+import { cafe, groupLabel, menuPage } from '@/data'
+import { menuSections } from '@/data/menu-sections'
+// Straight from the module: through the hooks index it would land in the main bundle.
+import { useMenuFilter } from '@/hooks/useMenuFilter'
+import { describeCount } from '@/lib/menuFilter'
 
-/* Placeholder menu page, loaded lazily. The real menu comes in a later phase. */
+/** The full menu: filter by group and category, search, share the result by URL. */
 export default function Menu() {
+  const filter = useMenuFilter(menuSections)
+  const pageRef = useRef<HTMLDivElement>(null)
+  const toolbarRef = useRef<HTMLDivElement>(null)
+  const resultsRef = useRef<HTMLDivElement>(null)
+  const searchRef = useRef<HTMLInputElement>(null)
+
+  // Category anchors stop below the sticky toolbar: its height, for scroll-margin.
+  useLayoutEffect(() => {
+    const page = pageRef.current
+    const toolbar = toolbarRef.current
+    if (!page || !toolbar) return
+    const update = () => {
+      page.style.setProperty('--menu-toolbar-height', `${String(toolbar.offsetHeight)}px`)
+    }
+    update()
+    if (typeof ResizeObserver === 'undefined') return
+    const observer = new ResizeObserver(update)
+    observer.observe(toolbar)
+    return () => {
+      observer.disconnect()
+    }
+  }, [])
+
+  // After a filter change, if the results start above the toolbar, show them from the top.
+  const filterKey = [filter.group, filter.category, filter.query].join('\n')
+  const shownKey = useRef(filterKey)
+  useLayoutEffect(() => {
+    if (shownKey.current === filterKey) return
+    shownKey.current = filterKey
+    const results = resultsRef.current
+    const toolbar = toolbarRef.current
+    if (!results || !toolbar) return
+    const header = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0
+    const top = results.getBoundingClientRect().top + window.scrollY - header - toolbar.offsetHeight
+    if (window.scrollY > top) window.scrollTo({ top })
+  }, [filterKey])
+
+  const scope =
+    menuSections.find((section) => section.id === filter.category)?.label ??
+    (filter.group ? groupLabel(filter.group) : null)
+
   return (
-    <Container className="flex flex-col gap-6 py-section">
-      <h1 className="text-h2">Menu</h1>
-      <p className="prose-width text-body-lg text-ink-muted">
-        Menu placeholder. The full menu, with search and filters, is built in a later phase.
-      </p>
-    </Container>
+    <div ref={pageRef}>
+      <div className="container flex flex-col items-start gap-8 pt-16 pb-12 md:flex-row md:items-end md:justify-between">
+        <div className="flex flex-col gap-4">
+          <h1 className="text-h2">{menuPage.title}</h1>
+          <p className="prose-width text-body-lg text-ink-muted">{menuPage.intro}</p>
+        </div>
+        <Button href={cafe.links.foodpanda} variant="secondary" className="shrink-0">
+          {menuPage.orderLabel}
+        </Button>
+      </div>
+
+      <MenuToolbar ref={toolbarRef} filter={filter} sections={menuSections} searchRef={searchRef} />
+
+      <div ref={resultsRef} className="container pb-section">
+        <p aria-live="polite" aria-atomic="true" className="py-6 text-small text-ink-muted">
+          {describeCount(filter.sections)}
+        </p>
+        {filter.count > 0 ? (
+          <MenuList sections={filter.sections} />
+        ) : (
+          <EmptyState
+            query={filter.query}
+            scope={scope}
+            menuWideCount={filter.menuWideCount}
+            onClearSearch={() => {
+              filter.clearSearch()
+              searchRef.current?.focus()
+            }}
+            onSearchWholeMenu={() => {
+              filter.searchWholeMenu()
+              searchRef.current?.focus()
+            }}
+          />
+        )}
+      </div>
+    </div>
   )
 }

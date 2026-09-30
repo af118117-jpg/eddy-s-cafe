@@ -805,6 +805,17 @@ export default function Styleguide() {
             </StateCell>
           ))}
         </div>
+        <Subsection title="Quiet (second row, e.g. menu categories)">
+          <div className="flex flex-wrap items-start gap-x-8 gap-y-6">
+            {chipStates.map((state) => (
+              <StateCell key={state.label} label={state.label}>
+                <Chip variant="quiet" pressed={state.pressed} {...state.extra}>
+                  Hot Coffee
+                </Chip>
+              </StateCell>
+            ))}
+          </div>
+        </Subsection>
         <Subsection title="Try it">
           <ChipGroupDemo />
         </Subsection>

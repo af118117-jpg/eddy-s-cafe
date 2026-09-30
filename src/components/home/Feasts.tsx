@@ -1,15 +1,5 @@
-import { Photo, Price, SectionHeading } from '@/components/ui'
-import { home, type Serves } from '@/data'
-
-function ServesLabel({ serves }: { serves: Serves }) {
-  if (serves.min === serves.max) return <>Serves {serves.min}</>
-  return (
-    <>
-      Serves <span aria-hidden="true">{`${String(serves.min)}–${String(serves.max)}`}</span>
-      <span className="sr-only">{`${String(serves.min)} to ${String(serves.max)}`}</span>
-    </>
-  )
-}
+import { Photo, Price, SectionHeading, ServesLabel } from '@/components/ui'
+import { home } from '@/data'
 
 /** Sharing platters on a cream band, with the serving size as big as the price. */
 export function Feasts() {

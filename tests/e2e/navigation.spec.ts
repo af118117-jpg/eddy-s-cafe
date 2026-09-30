@@ -48,6 +48,8 @@ test('skip link is the first stop and moves focus to main', async ({ page }) => 
 
 test('header controls are reachable in order with a visible ring', async ({ page }) => {
   await page.goto('/')
+  // Tab pressed before the app has rendered goes nowhere.
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
   const expected =
     width(page) >= LG
       ? [

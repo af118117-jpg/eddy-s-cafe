@@ -14,7 +14,8 @@ function loadPositions(): Map<string, number> {
 
 /**
  * Scroll position on route change: new pages start at the top, back/forward
- * returns to where you were on that page (also after a reload). Pages with a
+ * returns to where you were on that page (also after a reload). Query-only
+ * updates that replace the entry (menu filters) keep the position. Pages with a
  * #hash are left to ScrollToHash.
  *
  * Positions are recorded while scrolling (passive, once per frame) because by
@@ -22,10 +23,14 @@ function loadPositions(): Map<string, number> {
  * clamped the old scroll position.
  */
 export function ScrollRestorer() {
-  const { key, hash } = useLocation()
+  const { key, hash, pathname, search } = useLocation()
   const navigationType = useNavigationType()
+  // Every fresh page load has the key "default", so the URL is part of the
+  // entry's identity: a new address must not inherit the last page's position.
+  const entryKey = `${key} ${pathname}${search}`
   const positions = useRef<Map<string, number> | null>(null)
-  const currentKey = useRef(key)
+  const currentKey = useRef(entryKey)
+  const currentPath = useRef(pathname)
 
   useEffect(() => {
     window.history.scrollRestoration = 'manual'
@@ -59,15 +64,22 @@ export function ScrollRestorer() {
 
   // Layout effect: set the position before the new page is painted.
   useLayoutEffect(() => {
-    currentKey.current = key
+    // Replacing the query string of the same page (menu filters) isn't a page change: stay put.
+    const samePage = navigationType === NavigationType.Replace && pathname === currentPath.current
+    currentKey.current = entryKey
+    currentPath.current = pathname
     positions.current ??= loadPositions()
-    const saved = positions.current.get(key)
+    if (samePage) {
+      positions.current.set(entryKey, window.scrollY)
+      return
+    }
+    const saved = positions.current.get(entryKey)
     if (navigationType === NavigationType.Pop && saved !== undefined) {
       window.scrollTo(0, saved)
     } else if (!hash) {
       window.scrollTo(0, 0)
     }
-  }, [key, hash, navigationType])
+  }, [entryKey, hash, navigationType, pathname])
 
   return null
 }
