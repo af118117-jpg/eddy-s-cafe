@@ -19,6 +19,14 @@
   --color-line: #e5e2de;
   --color-footer: var(--color-ink);
 
+  /*
+   * Aliases, not new colours: text colour and the colour that sits on a
+   * text-coloured fill. They swap on ink surfaces (see base.css), so buttons
+   * and chips invert there without extra variants.
+   */
+  --color-fg: var(--color-ink);
+  --color-fg-inverse: var(--color-bg);
+
   /* Type --------------------------------------------------------------- */
   --font-*: initial;
   --font-sans:

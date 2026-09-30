@@ -26,16 +26,17 @@ npm run preview    # serve the build
 npm run typecheck  # tsc --noEmit
 npm run lint       # eslint
 npm run test       # vitest
-npm run e2e        # playwright (incl. axe)
+npm run e2e        # playwright (incl. axe) at 375 / 768 / 1280
 ```
 
 Before reporting any phase as done: `typecheck`, `lint` and `test` pass, and `build` succeeds.
+Playwright's own Chromium isn't installed on this machine; run e2e against the installed Edge with `PLAYWRIGHT_CHANNEL=msedge npm run e2e`.
 
 ## Layout
 
 ```
-src/app                 routes, providers, app shell
-src/components/layout   AnnouncementBar, SiteHeader, SiteFooter
+src/app                 routes.tsx, SiteLayout (app shell), scroll + focus management
+src/components/layout   AnnouncementBar, SiteHeader, MobileNav, MobileActionBar, SiteFooter, SkipLink
 src/components/ui       Button, Chip, Container, Icon, Price, ResponsiveImage, SectionHeading
 src/components/home     home page sections
 src/components/menu     menu page components
@@ -49,6 +50,14 @@ tests/e2e               Playwright + axe specs
 ```
 
 `/styleguide` (dev server only) shows every token and component state. Check new UI there first.
+
+## Routing and the site shell
+
+- Declarative `BrowserRouter` + `useRoutes` on purpose: the data router (`createBrowserRouter`) costs ~20 KB gzipped. Lazy pages use `React.lazy`; `SiteLayout` wraps the outlet in Suspense.
+- Page routes set `handle: { title, headerOverlay }` in `src/app/routes.tsx`. `headerOverlay` makes the header transparent over a full-bleed hero, which must pull itself up with `-mt-(--header-height)`.
+- The home page must keep the section ids `#feasts`, `#coffee`, `#visit` (used by the nav in `src/data/navigation.ts`).
+- Pages render inside `<main>`; don't add another `main`. Each page has exactly one `h1`: it receives focus after client-side navigation.
+- Buttons and chips use `fg` / `fg-inverse`, so they invert automatically inside `data-surface="ink"`.
 
 ## Design guardrails (quick reference — details in docs/PLAN.md)
 
@@ -83,5 +92,5 @@ Images: width/height (or aspect-ratio) always set, modern formats, `loading="laz
 
 - **Menu grouping:** the source data has 25 categories, but PLAN.md defines 8 groups. The mapping still needs to be agreed. There is no "Feasts" category in the data, and "Breakfast" (11 items) has no group of its own.
 - **Hours:** Google Maps (dine-in) and foodpanda (delivery) disagree. The site should show Google Maps hours as opening hours unless the user says otherwise.
-- **Instagram** `@theeddyscafe` was read off a table card in a photo; the profile hasn't been verified.
+- **Instagram** `@theeddyscafe` was read off a table card in a photo; the profile hasn't been verified. It is linked in the footer (flagged in `src/data/cafe.ts`); confirm before launch.
 - **WhatsApp:** no WhatsApp number is in the data. Don't assume it matches the phone number (+92 304 1112111) without confirmation.

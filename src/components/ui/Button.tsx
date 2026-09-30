@@ -35,10 +35,10 @@ const base =
   'inline-flex items-center justify-center gap-2 text-center font-medium transition-colors duration-(--duration-micro) ease-standard ' +
   'disabled:cursor-not-allowed disabled:opacity-40 aria-disabled:pointer-events-none aria-disabled:opacity-40'
 
+// fg / fg-inverse swap on ink surfaces, so every variant inverts there automatically.
 const variantClass: Record<ButtonVariant, string> = {
-  primary: 'rounded-pill bg-ink text-bg hover:bg-ink-muted',
-  secondary: 'rounded-pill border border-ink text-ink hover:bg-ink hover:text-bg',
-  // Inherits the text colour, so it also works on ink surfaces.
+  primary: 'rounded-pill bg-fg text-fg-inverse hover:bg-ink-muted',
+  secondary: 'rounded-pill border border-fg text-fg hover:bg-fg hover:text-fg-inverse',
   link: 'underline decoration-beige-dark decoration-1 underline-offset-4 hover:decoration-current',
 }
 

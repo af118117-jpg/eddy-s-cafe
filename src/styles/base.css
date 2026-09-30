@@ -44,9 +44,13 @@
   :root {
     --page-margin: var(--spacing-margin-sm);
     --focus-ring-color: var(--color-accent);
+    --header-height: var(--spacing-16);
+    /* Space kept free at the bottom for the mobile action bar (below md). */
+    --action-bar-space: calc(var(--spacing-control-lg) + env(safe-area-inset-bottom));
 
     @variant md {
       --page-margin: var(--spacing-margin-md);
+      --action-bar-space: 0;
     }
     @variant lg {
       --page-margin: var(--spacing-margin-lg);
@@ -62,11 +66,15 @@
   html {
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
+    /* Anchor jumps land below the sticky header. */
+    scroll-padding-top: var(--header-height);
+    /* Locking scroll for the mobile menu must not shift the layout. */
+    scrollbar-gutter: stable;
   }
 
   body {
     background-color: var(--color-bg);
-    color: var(--color-ink);
+    color: var(--color-fg);
     font-family: var(--font-sans);
     font-size: var(--text-body);
     line-height: var(--text-body--line-height);
@@ -90,22 +98,33 @@
   }
 
   /*
+   * Containers that receive focus only from code (main after a route change,
+   * a section after an anchor jump) aren't controls, so they get no ring.
+   */
+  [tabindex='-1']:focus-visible {
+    outline: none;
+  }
+
+  /*
    * Surfaces. Anything inside picks up colours that keep WCAG AA contrast:
    * - cream: ink-muted is 4.1:1 on cream (below 4.5:1), so muted text uses ink.
    * - ink (footer): ink-muted is 3.2:1 on ink, so muted text uses cream; the
-   *   accent focus ring is 2.7:1, so the ring uses bg.
+   *   accent focus ring is 2.7:1, so the ring uses bg. fg / fg-inverse swap,
+   *   so filled and outline buttons invert.
    */
   [data-surface='cream'] {
     --color-ink-muted: var(--color-ink);
     background-color: var(--color-cream);
-    color: var(--color-ink);
+    color: var(--color-fg);
   }
 
   [data-surface='ink'] {
     --color-ink-muted: var(--color-cream);
+    --color-fg: var(--color-bg);
+    --color-fg-inverse: var(--color-ink);
     --focus-ring-color: var(--color-bg);
     background-color: var(--color-ink);
-    color: var(--color-bg);
+    color: var(--color-fg);
   }
 }
 
