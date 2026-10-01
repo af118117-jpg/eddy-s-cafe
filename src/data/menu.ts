@@ -3,6 +3,7 @@
  * so pages that only need a few dishes don't bundle all 182: use
  * `./menu-items` for the full list.
  */
+import { dishPhoto } from './dish-photos'
 import type { ImageAsset } from './images'
 
 export type MenuCategory = (typeof import('./menu.generated').menuCategories)[number]
@@ -19,8 +20,6 @@ export interface MenuItem {
   priceFrom?: boolean
   category: MenuCategory
   section: 'food' | 'drink'
-  /** Only once the dish has a real photo (Phase 7). Read it with `dishImage`. */
-  image?: ImageAsset
 }
 
 export type MenuGroupId =
@@ -99,9 +98,9 @@ export const feastServes: Readonly<Record<string, Serves>> = {
   'eddys-khaas': { min: 6, max: 6 }, // "Servig for 6 persond." (as published)
 }
 
-/** The dish's photo, or its placeholder slot (alt text = the dish name) until it has one. */
+/** The dish's photo (src/data/dish-photos.ts), or its placeholder slot (alt text = the dish name). */
 export function dishImage(item: MenuItem): ImageAsset {
-  return item.image ?? { alt: item.name }
+  return dishPhoto(item.id, item.name)
 }
 
 export function groupOf(item: MenuItem): MenuGroupId {

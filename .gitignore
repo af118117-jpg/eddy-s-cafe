@@ -20,3 +20,4 @@ playwright/.cache
 .idea
 .DS_Store
 Thumbs.db
+reports

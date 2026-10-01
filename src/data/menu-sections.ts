@@ -8,6 +8,7 @@ import { slugify } from '@/lib/slug'
 import type { ImageAsset } from './images'
 import {
   categoryGroup,
+  dishImage,
   feastServes,
   menuGroups,
   type MenuCategory,
@@ -115,7 +116,7 @@ function toEntry(
     prices,
     tags: tagsFor(items),
     // A real photo from any of the variants, else a placeholder named after the row.
-    image: items.find((item) => item.image?.src)?.image ?? { alt: name },
+    image: items.map(dishImage).find((image) => image.picture) ?? { alt: name },
     itemIds: items.map((item) => item.id),
     searchText: normalizeSearch(
       [...items.map((item) => item.name), first.description, sectionLabel].join(' '),

@@ -1,6 +1,7 @@
 import { Photo, Reveal, SectionHeading } from '@/components/ui'
 import { dishImage, home, type Signature } from '@/data'
 import { cn } from '@/lib/cn'
+import { photoSizes } from '@/lib/photoSizes'
 import { DishText } from './DishText'
 
 /**
@@ -15,7 +16,7 @@ function SmallDish({ signature, square = false }: { signature: Signature; square
         <Photo
           image={dishImage(signature.item)}
           ratio="dish"
-          sizes="(width >= 48em) 33vw, 6rem"
+          sizes={square ? photoSizes.signatureStacked : photoSizes.signatureAcross}
           zoom
           className={cn(square && 'md:aspect-gallery')}
         />
@@ -50,7 +51,7 @@ export function Signatures() {
                 <Photo
                   image={dishImage(feature.item)}
                   ratio="dish"
-                  sizes="(width >= 64em) 55vw, (width >= 48em) 50vw, 100vw"
+                  sizes={photoSizes.sevenColumns}
                   zoom
                 />
               </Reveal>

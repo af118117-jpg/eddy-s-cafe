@@ -1,6 +1,7 @@
 import { useEffect, useState, type CSSProperties } from 'react'
 import { Button, Photo } from '@/components/ui'
 import { cafe, home } from '@/data'
+import { heroImage } from '@/lib/heroImage'
 
 // The wordmark's lines. One today; each further line rises 80ms after the one above.
 const WORDMARK_LINES = ['eddy’s'] as const
@@ -34,7 +35,13 @@ export function Hero() {
       className="relative -mt-(--header-height) flex min-h-[calc(100svh-var(--announcement-height)-var(--action-bar-space))] flex-col justify-end overflow-hidden"
     >
       <div data-entrance={step('photo')} className="absolute inset-0">
-        <Photo image={image} ratio="fill" sizes="100vw" priority />
+        <Photo
+          image={image}
+          ratio="fill"
+          sizes={heroImage.narrowSizes}
+          artSizes={heroImage.wideSizes}
+          priority
+        />
       </div>
       <div
         aria-hidden="true"

@@ -2,6 +2,7 @@ import { Photo } from '@/components/ui'
 import { cafe, home } from '@/data'
 import { useOpenStatus } from '@/hooks/useOpenStatus'
 import { describeOpenStatus } from '@/lib/openStatus'
+import { photoSizes } from '@/lib/photoSizes'
 import { ContactActions } from './ContactActions'
 import { HoursTable } from './HoursTable'
 
@@ -48,7 +49,7 @@ export function VisitSection() {
           href={cafe.links.googleMaps}
           className="group col-span-4 flex flex-col gap-4 self-start lg:col-span-6 lg:col-start-7"
         >
-          <Photo image={mapImage} ratio="gallery" sizes="(width >= 64em) 50vw, 100vw" zoom />
+          <Photo image={mapImage} ratio="gallery" sizes={photoSizes.sixColumns} zoom />
           <span className="self-start text-body">
             <span className="link-draw link-rest">Open in Google Maps</span>
           </span>

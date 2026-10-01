@@ -54,7 +54,13 @@ describe('MenuItemRow', () => {
     expect(screen.queryByRole('img')).not.toBeInTheDocument()
     renderRow({
       ...steak,
-      image: { alt: 'Steak', src: '/images/steak.jpg', width: 400, height: 400 },
+      image: {
+        alt: 'Steak',
+        picture: {
+          sources: { avif: '/images/steak.avif 480w', jpeg: '/images/steak.jpg 480w' },
+          img: { src: '/images/steak.jpg', w: 480, h: 600 },
+        },
+      },
     })
     expect(screen.getByRole('img', { name: 'Steak' })).toBeInTheDocument()
   })

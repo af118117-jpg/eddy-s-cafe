@@ -2,6 +2,7 @@ import { Fragment } from 'react'
 import { Photo, Price, ServesLabel } from '@/components/ui'
 import type { MenuEntry, MenuPrice, MenuTag } from '@/data/menu-sections'
 import { cn } from '@/lib/cn'
+import { photoSizes } from '@/lib/photoSizes'
 
 /** "Rs 1,999", or "Chicken Rs 1,999 / Beef Rs 2,949" (read as a comma-separated list). */
 function EntryPrice({ prices }: { prices: readonly MenuPrice[] }) {
@@ -34,8 +35,13 @@ export function MenuItemRow({ entry }: { entry: MenuEntry }) {
   const variants = entry.prices.length > 1
   return (
     <li className="flex gap-4">
-      {entry.image.src && (
-        <Photo image={entry.image} ratio="gallery" sizes="4rem" className="w-16 shrink-0" />
+      {entry.image.picture && (
+        <Photo
+          image={entry.image}
+          ratio="gallery"
+          sizes={photoSizes.thumbnail}
+          className="w-16 shrink-0 self-start"
+        />
       )}
       <div className="flex min-w-0 flex-1 flex-col gap-1">
         <div className={cn('flex items-baseline-last gap-x-2', variants && 'flex-wrap')}>

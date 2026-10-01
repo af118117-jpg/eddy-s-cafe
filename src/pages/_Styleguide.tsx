@@ -474,7 +474,7 @@ function ImageDemo({
           {...samplePhoto}
           ratio={ratio}
           priority={priority}
-          sizes="(width >= 64em) 50vw, 100vw"
+          sizes="(min-width: 1024px) 50vw, 100vw"
         />
       </div>
       <figcaption className="text-meta text-ink-muted">

@@ -9,7 +9,7 @@ This is a **frontend-only** static site. There is no backend, database, auth, AP
 ## Source of truth
 
 - `docs/PLAN.md` is the design and page spec (tokens, type scale, spacing, grid, motion, page sections, targets). Follow it exactly; if something needs to change, propose it and update PLAN.md first rather than drifting in code.
-- `eddys-cafe-assets/` is raw source material collected on 2026-09-28. Treat it as **read-only**. Copy and optimise what's needed into `public/images/` and `src/data/`; never edit or delete the originals.
+- `eddys-cafe-assets/` is raw source material collected on 2026-09-28. Treat it as **read-only**. Copy what's needed into `assets-source/` (photos) and `src/data/` (content); never edit or delete the originals.
 
 ## Stack
 
@@ -27,6 +27,8 @@ npm run typecheck  # tsc --noEmit
 npm run lint       # eslint
 npm run test       # vitest
 npm run e2e        # playwright (incl. axe) at 375 / 768 / 1280 / 1536
+npm run analyze    # production build + reports/bundle.html (treemap, gzipped sizes per chunk)
+npm run photos:placeholders  # cream placeholders for empty photo slots in assets-source/
 ```
 
 Before reporting any phase as done: `typecheck`, `lint` and `test` pass, and `build` succeeds.
@@ -44,16 +46,19 @@ src/pages               route pages (the only default exports); _Styleguide is d
 src/data                typed menu + café info (single source for content)
 src/hooks  src/lib
 src/styles              tokens.css (@theme, the only raw values) + base.css
-public/fonts            Inter variable woff2, preloaded in index.html
-public/images           optimised, resized images only
+assets-source           source photos, processed at build time (see its README)
+public/fonts            Inter variable woff2 (weights 400–500), preloaded in index.html
 tests/e2e               Playwright + axe specs
+reports                 analyze and Lighthouse output (git-ignored)
 ```
 
 `/styleguide` (dev server only) shows every token and component state. Check new UI there first.
 
 ## Routing and the site shell
 
-- Declarative `BrowserRouter` + `useRoutes` on purpose: the data router (`createBrowserRouter`) costs ~20 KB gzipped. Lazy pages use `React.lazy`; `SiteLayout` wraps the outlet in Suspense.
+- Declarative `BrowserRouter` + `useRoutes` on purpose: the data router (`createBrowserRouter`) costs ~20 KB gzipped. Home and Menu are lazy chunks (`lazyPage` / `React.lazy`), so neither page downloads the other's code and photos; `SiteLayout` wraps the outlet, `ScrollRestorer` and `ScrollToHash` in one Suspense boundary so they act when the page content commits.
+- Each page has its own HTML file, written by the `pageHtml` plugin in `vite.config.ts` (its `PAGES` list mirrors the routes): index.html preloads the hero photo and the Home chunk, menu.html the Menu chunk (and has its own title). `/menu` must be served from menu.html: `vite preview` and most static hosts do that by default ("pretty URLs"); elsewhere it falls back to index.html and still works. `main.tsx` waits for the Home chunk before the first render on `/` (`preloadPage`), so the hero renders with the frame.
+- `package.json` declares `"sideEffects": ["**/*.css"]`. That's what keeps `home.ts` and the photo data out of the main chunk when the shell imports `@/data`. Keep modules free of import-time side effects.
 - Page routes set `handle: { title, headerOverlay }` in `src/app/routes.tsx`. `headerOverlay` makes the header transparent over a full-bleed hero, which must pull itself up with `-mt-(--header-height)`.
 - The home page must keep the section ids `#feasts`, `#coffee`, `#visit` (used by the nav in `src/data/navigation.ts`).
 - Pages render inside `<main>`; don't add another `main`. Each page has exactly one `h1`: it receives focus after client-side navigation.
@@ -64,10 +69,12 @@ tests/e2e               Playwright + axe specs
 - The menu is generated: `npm run import:menu` turns `eddys-cafe-assets/05-Menu-Data/menu.csv` into `src/data/menu.generated.ts` (all 182 items) and `home-dishes.generated.ts` (only the dishes listed in `src/data/home-selection.ts`). Never edit the generated files by hand.
 - `src/data/menu.ts` holds types, the 8 groups and the category→group mapping, and has no runtime import of the menu, so the home page doesn't bundle all 182 items. Import the full list from `@/data/menu-items` (menu page only).
 - Home copy and photo slots live in `src/data/home.ts`; placeholders are marked `TODO(copy)`.
-- Photos: `<Photo image={asset} ratio=… />` renders the photo once an `ImageAsset` has `src`, otherwise a cream placeholder of the right ratio (aria-hidden; the dev server labels it with the alt text). Phase 7 fills in `src`.
+- Photos live in `assets-source/` (all cream placeholders for now; its README says what goes where) and are imported as `file.jpg?aspect=4:5&photo`: the `photo` preset in `vite.config.ts` crops them and writes AVIF, WebP and JPEG at 480/800/1200/1600/2400 (never upscaled). `ImageAsset` = `{ alt, picture?, art? }`; `<Photo image={asset} ratio=… sizes=… />` renders the <picture>, or a cream placeholder (aria-hidden) when there is no `picture`. Every `sizes` value comes from `src/lib/photoSizes.ts`, worked out from the grid; `tests/e2e/images.spec.ts` checks them against the rendered width.
+- The hero is art-directed (4:5 below 768px, 16:9 above, AVIF at quality 40 under its scrims). Its media and sizes live in `src/lib/heroImage.ts`, shared by the Hero and the preload in index.html: change them in one place or the browser downloads the hero twice.
+- Dish photos: `assets-source/dishes/<menu id>.jpg` (`src/data/dish-photos.ts`) with alt text in `dishAlts`; gallery photos in name order with `galleryAlts` in `home.ts`. Tests require alt text for each.
 - Opening status: `useOpenStatus()` works in the café's time zone (`cafe.timeZone`, Asia/Karachi) and treats 00:30 as part of the previous day's session.
 - `/menu#coffee-tea` is linked from the home page: the menu page gives each group's wrapper its group id and each category block its own slug id (`#hot-coffee`).
-- `import:menu` also writes `menu-image-sources.generated.ts` (where each item's raw photo is, own or reference). The app never imports it; it's for choosing photos in Phase 7.
+- `import:menu` also writes `menu-image-sources.generated.ts` (where each item's raw photo is, own or reference). The app never imports it; it's for choosing dish photos.
 
 ## Menu page
 
@@ -78,7 +85,8 @@ tests/e2e               Playwright + axe specs
 - The toolbar is sticky at `top-(--header-height)`, and that `top` never changes: a 1px sentinel marks it `data-stuck`, and base.css translates a stuck toolbar up into the header's place while the header hides. Changing `top` instead would log a layout shift on every hide/show. Anchors stop below it via `scroll-mt-(--menu-toolbar-height)` (measured at runtime). Scrolling more than a screen at once shows the header, so anchor offsets stay exact.
 - Don't add `content-visibility: auto` to the category blocks: it halves the render cost of "All" but breaks the deep-link offsets (blocks above the target change height after the jump).
 - Chip rows (`ChipRow`) are single-line horizontal scrollers so the toolbar never changes height: roving tab stop with arrow keys, snap, edge fades (`scroll-fade`), and edge buttons for fine pointers only.
-- Budget: the menu chunk is ~14 KB gzipped on top of ~75 KB main. Keep `/menu` under 90 KB in total.
+- The first render shows only the first ~24 dishes; the rest follows at once in a transition, which React renders in slices (one 180-dish render was the page's longest task). `ScrollRestorer` keeps re-applying a saved position for up to a second so Back/reload still land deep in the list.
+- Budget (gzipped): main ~67 KB, Menu ~14.5 KB, shared photo chunk ~3–4 KB, so `/menu` is ~85 KB; Home ~11 KB, so `/` is ~82 KB. Keep each page under 90 KB.
 
 ## Motion (details in docs/PLAN.md Motion)
 
@@ -113,6 +121,8 @@ tests/e2e               Playwright + axe specs
 
 Lighthouse mobile 95+ in all four categories · LCP < 2.0s · CLS < 0.05 · JS < 90KB gzipped · WCAG 2.1 AA with zero serious/critical axe violations.
 Images: width/height (or aspect-ratio) always set, modern formats, `loading="lazy"` below the fold, hero image preloaded.
+Fonts: the Inter file only has the 400–500 weight range; nothing may ask for more (`b`, `strong` and `th` are 500 in base.css).
+Measure with Lighthouse mobile on `npm run preview` (HTTP/1.1); production hosts serve HTTP/2, which is faster still.
 
 ## Workflow
 

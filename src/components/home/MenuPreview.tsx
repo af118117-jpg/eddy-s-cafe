@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Button, Chip, Photo, SectionHeading } from '@/components/ui'
 import { dishImage, groupOf, home, menuGroups, type MenuGroupId } from '@/data'
+import { photoSizes } from '@/lib/photoSizes'
 import { DishText } from './DishText'
 
 type Filter = MenuGroupId | 'all'
@@ -53,7 +54,7 @@ export function MenuPreview() {
                 <Photo
                   image={dishImage(item)}
                   ratio="dish"
-                  sizes="(width >= 64em) 25vw, (width >= 48em) 50vw, 100vw"
+                  sizes={photoSizes.fourAcross}
                   zoom
                   // One column on phones: 16:9 keeps eight dishes from becoming a very long scroll.
                   className="max-md:aspect-editorial"

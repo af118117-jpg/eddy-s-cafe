@@ -1,5 +1,6 @@
 import { Button, Photo, Price, SectionHeading } from '@/components/ui'
 import { home, type MenuItem } from '@/data'
+import { photoSizes } from '@/lib/photoSizes'
 
 function PriceList({
   id,
@@ -36,7 +37,7 @@ export function DrinksSplit() {
         <Photo
           image={image}
           ratio="dish"
-          sizes="(width >= 64em) 40vw, (width >= 48em) 50vw, 100vw"
+          sizes={photoSizes.fiveColumns}
           className="col-span-4 md:col-span-2 lg:col-span-5"
         />
         <div className="col-span-4 flex flex-col gap-12 md:col-span-2 lg:col-span-6 lg:col-start-7">

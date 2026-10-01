@@ -1,13 +1,28 @@
-import { useLayoutEffect, useRef } from 'react'
+import { startTransition, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { EmptyState, MenuList, MenuToolbar } from '@/components/menu'
 import { Button } from '@/components/ui'
 import { cafe, groupLabel, menuPage } from '@/data'
 import type { MenuGroupId } from '@/data'
-import { menuSections } from '@/data/menu-sections'
+import { menuSections, type MenuSection } from '@/data/menu-sections'
 import { useCrossfade } from '@/hooks/useCrossfade'
 // Straight from the module: through the hooks index it would land in the main bundle.
 import { useMenuFilter, type MenuFilterState } from '@/hooks/useMenuFilter'
 import { describeCount } from '@/lib/menuFilter'
+
+/** About two screens of dishes on a phone: what the first render shows. */
+const FIRST_ENTRIES = 24
+
+/** The first sections, up to about `entries` dishes (whole sections only). */
+function firstSections(sections: readonly MenuSection[], entries: number): readonly MenuSection[] {
+  const shown: MenuSection[] = []
+  let count = 0
+  for (const section of sections) {
+    if (count >= entries) break
+    shown.push(section)
+    count += section.entries.length
+  }
+  return shown
+}
 
 /** The full menu: filter by group and category, search, share the result by URL. */
 export default function Menu() {
@@ -16,6 +31,20 @@ export default function Menu() {
   const toolbarRef = useRef<HTMLDivElement>(null)
   const resultsRef = useRef<HTMLDivElement>(null)
   const searchRef = useRef<HTMLInputElement>(null)
+
+  // The first render shows the first sections only; the rest follows at once in
+  // a transition, which React renders in small slices. Rendering all 180 dishes
+  // in one go is a single long task that keeps a slow phone from responding.
+  const [complete, setComplete] = useState(false)
+  useEffect(() => {
+    startTransition(() => {
+      setComplete(true)
+    })
+  }, [])
+  const shownSections = useMemo(
+    () => (complete ? filter.sections : firstSections(filter.sections, FIRST_ENTRIES)),
+    [complete, filter.sections],
+  )
 
   // Category anchors stop below the sticky toolbar: its height, for scroll-margin.
   useLayoutEffect(() => {
@@ -103,7 +132,7 @@ export default function Menu() {
           {describeCount(filter.sections)}
         </p>
         {filter.count > 0 ? (
-          <MenuList sections={filter.sections} />
+          <MenuList sections={shownSections} />
         ) : (
           <EmptyState
             query={filter.query}

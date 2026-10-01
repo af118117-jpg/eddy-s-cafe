@@ -86,12 +86,13 @@ export function SiteLayout({ pages }: SiteLayoutProps) {
         */}
         <Suspense fallback={<div aria-hidden="true" className="min-h-svh" />}>
           <Outlet />
+          {/* Inside the boundary: they act in the same commit as the page content, even when a lazy page loads late. */}
+          <ScrollRestorer />
+          <ScrollToHash />
         </Suspense>
       </main>
       <SiteFooter />
       {!navOpen && <MobileActionBar />}
-      <ScrollRestorer />
-      <ScrollToHash />
     </div>
   )
 }

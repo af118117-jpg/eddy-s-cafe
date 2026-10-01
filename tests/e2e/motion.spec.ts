@@ -122,6 +122,7 @@ test.describe('with motion', () => {
   test('the hero entrance plays once, animating only transform and opacity', async ({ page }) => {
     await page.goto('/')
     await expect(page.locator('html')).toHaveClass(/js-motion/)
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
     const names = await page.evaluate(() =>
       document.getAnimations().map((animation) => (animation as CSSAnimation).animationName),
     )

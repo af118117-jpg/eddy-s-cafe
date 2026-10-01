@@ -3,6 +3,9 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -12,7 +15,9 @@
     "test": "vitest run",
     "e2e": "playwright test",
     "format": "prettier --write .",
-    "import:menu": "node scripts/import-menu.mjs && prettier --write \"src/data/*.generated.ts\""
+    "analyze": "vite build --mode analyze",
+    "import:menu": "node scripts/import-menu.mjs && prettier --write \"src/data/*.generated.ts\"",
+    "photos:placeholders": "node scripts/placeholder-photos.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.48.0",
@@ -35,12 +40,16 @@
     "eslint": "^10.11.0",
     "eslint-plugin-react-hooks": "^7.1.1",
     "globals": "^17.12.0",
+    "imagetools-core": "^12.0.0",
     "jsdom": "^30.1.1",
     "prettier": "^3.9.9",
+    "rollup-plugin-visualizer": "^7.1.1",
+    "sharp": "^0.35.5",
     "tailwindcss": "^4.3.3",
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.71.0",
     "vite": "^8.3.1",
+    "vite-imagetools": "^12.0.1",
     "vitest": "^5.0.2"
   }
 }

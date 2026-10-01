@@ -23,17 +23,17 @@ Use ONLY these. `beige` and `beige-dark` are never used for text.
 
 Inter variable, self-hosted woff2, latin subset, `font-display: swap`.
 
-| Style     | Size                   | Line height | Weight | Tracking  |
-| --------- | ---------------------- | ----------- | ------ | --------- |
-| display   | clamp(56px, 9vw, 144px) | 0.92        | 500    | -0.04em   |
-| h2        | clamp(36px, 4.5vw, 64px) | 1.05       | 500    | -0.025em  |
-| h3        | clamp(24px, 2.2vw, 32px) | 1.2        | 500    | -0.015em  |
-| item-name | 18px                   | 1.35        | 500    | —         |
-| body-lg   | 18px                   | 1.6         | 400    | —         |
-| body      | 16px                   | 1.6         | 400    | —         |
-| small     | 14px                   | 1.5         | 400    | —         |
-| nav       | 14px                   | 1           | 450    | —         |
-| meta      | 12px                   | 1.4         | 500    | +0.01em   |
+| Style     | Size                     | Line height | Weight | Tracking |
+| --------- | ------------------------ | ----------- | ------ | -------- |
+| display   | clamp(56px, 9vw, 144px)  | 0.92        | 500    | -0.04em  |
+| h2        | clamp(36px, 4.5vw, 64px) | 1.05        | 500    | -0.025em |
+| h3        | clamp(24px, 2.2vw, 32px) | 1.2         | 500    | -0.015em |
+| item-name | 18px                     | 1.35        | 500    | —        |
+| body-lg   | 18px                     | 1.6         | 400    | —        |
+| body      | 16px                     | 1.6         | 400    | —        |
+| small     | 14px                     | 1.5         | 400    | —        |
+| nav       | 14px                     | 1           | 450    | —        |
+| meta      | 12px                     | 1.4         | 500    | +0.01em  |
 
 - Sentence case labels (no all-caps).
 - Prices use `tabular-nums`.
@@ -145,6 +145,13 @@ Menu groups:
 - LCP < 2.0s
 - CLS < 0.05
 - JS < 90KB gzipped
+
+How:
+
+- Photos: AVIF, WebP and JPEG at 480, 800, 1200, 1600 and 2400px wide, with `sizes` matching the layout; width and height on every image; lazy below the fold.
+- Hero: art-directed (a 4:5 crop below 768px, 16:9 above), `fetchpriority="high"`, preloaded from the home page's HTML with the same srcset and sizes.
+- Fonts: Inter variable, self-hosted and preloaded, with only the weights in use (400–500).
+- JS: the home and menu pages are separate chunks, each preloaded by its own HTML file, so neither ships the other's code.
 
 ### Accessibility
 

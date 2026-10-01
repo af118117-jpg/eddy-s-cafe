@@ -1,5 +1,6 @@
 import { Photo } from '@/components/ui'
 import { home } from '@/data'
+import { photoSizes } from '@/lib/photoSizes'
 
 /** Short story beside a 4:5 photo; stacks below 768px. */
 export function Intro() {
@@ -19,7 +20,7 @@ export function Intro() {
         <Photo
           image={image}
           ratio="dish"
-          sizes="(width >= 64em) 40vw, (width >= 48em) 50vw, 100vw"
+          sizes={photoSizes.fiveColumns}
           className="col-span-4 md:col-span-2 lg:col-span-5 lg:col-start-8"
         />
       </div>

@@ -1,6 +1,7 @@
 import { Button, Photo, Reveal, SectionHeading } from '@/components/ui'
 import { cafe, home } from '@/data'
 import { cn } from '@/lib/cn'
+import { photoSizes } from '@/lib/photoSizes'
 
 /** 3 × 3 square photos (2 across on phones, where the ninth is dropped to keep rows even). */
 export function Gallery() {
@@ -13,7 +14,7 @@ export function Gallery() {
           {images.map((image, index) => (
             <li key={image.alt} className={cn(index === 8 && 'max-md:hidden')}>
               <Reveal>
-                <Photo image={image} ratio="gallery" sizes="(width >= 48em) 33vw, 50vw" zoom />
+                <Photo image={image} ratio="gallery" sizes={photoSizes.gallery} zoom />
               </Reveal>
             </li>
           ))}
