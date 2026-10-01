@@ -9,7 +9,8 @@ import { Wordmark } from './Wordmark'
 const year = new Date().getFullYear()
 const hours = summariseHours(cafe.openingHours)
 
-const listLinkClass = 'inline-flex min-h-control-md items-center'
+// At least 44px both ways, even for short labels like "Visit".
+const listLinkClass = 'inline-flex min-h-control-md min-w-control-md items-center'
 
 function FooterHeading({ id, children }: { id?: string; children: ReactNode }) {
   return (

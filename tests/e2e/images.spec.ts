@@ -57,6 +57,8 @@ test('every photo’s sizes matches the width it is drawn at', async ({ page }) 
   for (const path of ['/', '/menu']) {
     await page.goto(path)
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
+    // The menu renders its later sections (where the photos are) just after the first paint.
+    await expect(page.locator('main picture img').first()).toBeAttached()
     const photos = await readPhotos(page)
     expect(photos.length, path).toBeGreaterThan(0)
     for (const photo of photos) {

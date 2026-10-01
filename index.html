@@ -5,7 +5,10 @@
     <!-- viewport-fit=cover exposes the safe-area insets the mobile action bar pads for. -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#FDFDFC" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <!-- The build preloads the hero photo here, first (vite.config.ts, pageHtml). -->
     <!-- hero-preload -->
     <!-- Must match the @font-face URL in src/styles/base.css. -->
@@ -16,8 +19,8 @@
       type="font/woff2"
       crossorigin
     />
-    <meta name="description" content="eddy's Café, 77 Green Avenue West, Canal Road, Faisalabad." />
-    <title>eddy's Café</title>
+    <!-- Title, description, canonical, link-preview tags and JSON-LD for each page (vite.config.ts, pageHead). -->
+    <!-- page-head -->
   </head>
   <body>
     <div id="root"></div>

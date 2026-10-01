@@ -6,7 +6,10 @@ import { resolveConfigs } from 'imagetools-core'
 import { visualizer } from 'rollup-plugin-visualizer'
 import { defineConfig, type Plugin, type PluginOption } from 'vite'
 import { imagetools } from 'vite-imagetools'
+import { cafe } from './src/data/cafe.ts'
+import { ogImage, pageMeta, siteUrl, type PageMeta } from './src/data/site.ts'
 import { heroImage } from './src/lib/heroImage.ts'
+import { restaurantSchemaScript } from './src/lib/schema.ts'
 
 /** Every photo is generated at these widths, up to the width of its (cropped) source. */
 const PHOTO_WIDTHS = [480, 800, 1200, 1600, 2400]
@@ -48,9 +51,62 @@ const photoPreset = imagetools({
  * path gets index.html. Keep in step with src/app/routes.tsx.
  */
 const PAGES = [
-  { file: 'index.html', module: 'src/pages/Home.tsx', title: null },
-  { file: 'menu.html', module: 'src/pages/Menu.tsx', title: 'Menu | eddy’s Café' },
+  { file: 'index.html', module: 'src/pages/Home.tsx', meta: pageMeta.home },
+  { file: 'menu.html', module: 'src/pages/Menu.tsx', meta: pageMeta.menu },
 ] as const
+
+const escapeHtml = (text: string) =>
+  text.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')
+
+/**
+ * A page's head for search engines and link previews: title, description,
+ * canonical URL, Open Graph and Twitter tags, and on the home page the
+ * Restaurant JSON-LD (src/lib/schema.ts). Crawlers and link previews read
+ * these from the HTML without running the app.
+ */
+function headTags(meta: PageMeta, { schema = false } = {}): string {
+  const url = meta.path === null ? null : `${siteUrl}${meta.path}`
+  const image = `${siteUrl}${ogImage.path}`
+  const tag = (attribute: 'name' | 'property', key: string, content: string) =>
+    `<meta ${attribute}="${key}" content="${escapeHtml(content)}">`
+  return [
+    `<title>${escapeHtml(meta.title)}</title>`,
+    tag('name', 'description', meta.description),
+    url ? `<link rel="canonical" href="${url}">` : tag('name', 'robots', 'noindex'),
+    tag('property', 'og:type', 'website'),
+    tag('property', 'og:site_name', cafe.name),
+    tag('property', 'og:locale', 'en_PK'),
+    tag('property', 'og:title', meta.title),
+    tag('property', 'og:description', meta.description),
+    ...(url ? [tag('property', 'og:url', url)] : []),
+    tag('property', 'og:image', image),
+    tag('property', 'og:image:width', String(ogImage.width)),
+    tag('property', 'og:image:height', String(ogImage.height)),
+    tag('property', 'og:image:alt', ogImage.alt),
+    tag('name', 'twitter:card', 'summary_large_image'),
+    tag('name', 'twitter:title', meta.title),
+    tag('name', 'twitter:description', meta.description),
+    tag('name', 'twitter:image', image),
+    tag('name', 'twitter:image:alt', ogImage.alt),
+    ...(schema ? [`<script type="application/ld+json">${restaurantSchemaScript()}</script>`] : []),
+  ].join('\n    ')
+}
+
+/**
+ * Writes the home page's head (headTags) into index.html in place of the
+ * `<!-- page-head -->` comment, in dev and in the build. pageHtml then swaps
+ * in each other page's head for its own HTML file.
+ */
+function pageHead(): Plugin {
+  const MARKER = '<!-- page-head -->'
+  return {
+    name: 'eddys:page-head',
+    transformIndexHtml(html) {
+      if (!html.includes(MARKER)) throw new Error(`index.html has no ${MARKER} comment`)
+      return html.replace(MARKER, headTags(pageMeta.home, { schema: true }))
+    },
+  }
+}
 
 /**
  * Writes what each page needs first into its HTML, so it downloads alongside
@@ -62,7 +118,7 @@ const PAGES = [
  *   the srcset, sizes and media of the Hero's <picture> (src/lib/heroImage.ts),
  *   so the browser uses the preloaded file instead of fetching another.
  * index.html is the home page. The other pages' files are copies of it with
- * their own preloads and title, so the menu doesn't download the hero.
+ * their own preloads and head (headTags), so the menu doesn't download the hero.
  * Build only: in dev there are no final file names to point at.
  */
 function pageHtml(): Plugin {
@@ -127,13 +183,14 @@ function pageHtml(): Plugin {
           throw new Error('index.html was not built')
         }
         const home = index.source
+        const homeHead = headTags(pageMeta.home, { schema: true })
         for (const page of PAGES) {
           if (page.file === 'index.html') continue
           const html: string = home
             .replace(/\s*<link rel="preload" as="image"[^>]*>/g, '')
             .replace(homePreloads, modulePreloads.get(page.file) ?? '')
-            .replace(/<title>[^<]*<\/title>/, `<title>${page.title}</title>`)
-          if (html.includes(homePreloads))
+            .replace(homeHead, headTags(page.meta))
+          if (html.includes(homePreloads) || html.includes(homeHead))
             throw new Error(`Could not adapt index.html for ${page.file}`)
           this.emitFile({ type: 'asset', fileName: page.file, source: html })
         }
@@ -147,6 +204,7 @@ export default defineConfig(({ mode }) => ({
     react(),
     tailwindcss(),
     photoPreset,
+    pageHead(),
     pageHtml(),
     // `npm run analyze`: a treemap of every chunk with gzipped sizes.
     mode === 'analyze' &&

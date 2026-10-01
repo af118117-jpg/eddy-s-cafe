@@ -17,7 +17,9 @@
     "format": "prettier --write .",
     "analyze": "vite build --mode analyze",
     "import:menu": "node scripts/import-menu.mjs && prettier --write \"src/data/*.generated.ts\"",
-    "photos:placeholders": "node scripts/placeholder-photos.mjs"
+    "photos:placeholders": "node scripts/placeholder-photos.mjs",
+    "icons": "node scripts/icons.mjs",
+    "og-image": "node scripts/og-image.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.48.0",

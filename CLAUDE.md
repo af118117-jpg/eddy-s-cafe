@@ -29,6 +29,8 @@ npm run test       # vitest
 npm run e2e        # playwright (incl. axe) at 375 / 768 / 1280 / 1536
 npm run analyze    # production build + reports/bundle.html (treemap, gzipped sizes per chunk)
 npm run photos:placeholders  # cream placeholders for empty photo slots in assets-source/
+npm run icons      # favicon set + site.webmanifest from public/favicon.svg and the colour tokens
+npm run og-image   # public/og-image.jpg (1200×630) in the site's font and colours (needs PLAYWRIGHT_CHANNEL=msedge here)
 ```
 
 Before reporting any phase as done: `typecheck`, `lint` and `test` pass, and `build` succeeds.
@@ -63,6 +65,14 @@ reports                 analyze and Lighthouse output (git-ignored)
 - The home page must keep the section ids `#feasts`, `#coffee`, `#visit` (used by the nav in `src/data/navigation.ts`).
 - Pages render inside `<main>`; don't add another `main`. Each page has exactly one `h1`: it receives focus after client-side navigation.
 - Buttons and chips use `fg` / `fg-inverse`, so they invert automatically inside `data-surface="ink"`.
+
+## SEO and the document head
+
+- `src/data/site.ts` (no imports) holds `siteUrl`, each page's `title` / `description` / canonical `path` (`pageMeta`) and the link-preview image. Route handles carry `meta: pageMeta.x`.
+- The build writes each page's head into its HTML (`pageHead` / `headTags` in `vite.config.ts`): title, description, canonical, Open Graph and Twitter tags, and on the home page the Restaurant JSON-LD from `src/lib/schema.ts` (built from `cafe.ts` and `hours.ts`). Crawlers and link previews read them without running the app. `useDocumentHead` (in `SiteLayout`) keeps them current while navigating in the app; the not-found page gets `noindex` and no canonical.
+- `siteUrl` is a placeholder (`https://eddys-cafe.example`) until the café has a domain. Change it together with `public/robots.txt` and `public/sitemap.xml`; a unit test fails if they disagree.
+- `src/lib/schema.ts`, `hours.ts`, `heroImage.ts` and `src/data/site.ts` / `cafe.ts` are loaded by the Vite config too: keep their imports relative (no `@/`).
+- Lighthouse SEO is 100 on both pages without prerendering; add it only if that changes.
 
 ## Content data
 
@@ -104,7 +114,8 @@ reports                 analyze and Lighthouse output (git-ignored)
 - Sentence case everywhere — no all-caps labels. Prices use `tabular-nums`.
 - One bold move only: the oversized lowercase "eddy's" wordmark over the full-bleed hero photo. Everything else stays quiet.
 - Never use: 01/02 numbered markers, middle-dot meta strings, "→" on buttons, all-caps eyebrows, fade-up on every section, identical rounded cards.
-- Focus: 2px accent outline, 3px offset, `:focus-visible` only. Touch targets ≥ 44px.
+- Focus: 2px accent outline, 3px offset, `:focus-visible` only. `scroll-padding` on `html` keeps focused controls clear of the sticky header and the mobile action bar. Touch targets ≥ 44px both ways, inline links too (`tests/e2e/a11y.spec.ts` checks every control on phones).
+- Text over the hero photo must pass AA over a pure white photo: the scrims are sized for that, and `a11y.spec.ts` measures the header's contrast from rendered pixels.
 - Respect `prefers-reduced-motion`. Put `data-motion` on anything that animates in with a transform, so reduced motion rests it in place.
 - Raw values live only in `src/styles/tokens.css`. ESLint fails on hex colours, `[..px]` arbitrary values, numeric/px inline styles, `text-beige*` and off-scale spacing classes in `src/`. Tailwind's default colours, shadows and off-scale spacing (`gap-10`, `p-5`) are switched off and would silently generate nothing. The scale is 0 1 2 3 4 6 8 12 16 24 32 40.
 - Use the `grid-layout` utility for the 4 / 12-column page grid.
@@ -137,4 +148,5 @@ Measure with Lighthouse mobile on `npm run preview` (HTTP/1.1); production hosts
 - **Menu prices** come from the foodpanda listing (the CSV's source); confirm they match dine-in prices.
 - **Hours:** Google Maps (dine-in) and foodpanda (delivery) disagree. The site should show Google Maps hours as opening hours unless the user says otherwise.
 - **Instagram** `@theeddyscafe` was read off a table card in a photo; the profile hasn't been verified. It is linked in the footer (flagged in `src/data/cafe.ts`); confirm before launch.
+- **Domain:** the café has no website yet. `siteUrl` (canonical, Open Graph, JSON-LD, sitemap) is a placeholder; set the real address before launch.
 - **WhatsApp:** no WhatsApp number is in the data. Don't assume it matches the phone number (+92 304 1112111) without confirmation. `cafe.whatsapp` is `null` and every WhatsApp button stays hidden until it's set.

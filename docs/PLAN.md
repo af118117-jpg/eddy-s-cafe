@@ -157,3 +157,12 @@ How:
 
 - WCAG 2.1 AA
 - Zero serious or critical axe violations
+- Touch targets at least 44 × 44px; focus never hidden behind sticky or fixed bars
+- Text over photos passes AA whatever the photo (scrims sized for a white photo)
+
+### SEO
+
+- Lighthouse SEO 95+
+- Each page: its own title, meta description, canonical URL, Open Graph and Twitter tags, in the HTML file
+- Home page: Restaurant JSON-LD (address, geo, phone, opening hours, cuisine, price range, menu, sameAs)
+- robots.txt, sitemap.xml, favicon set and web app manifest (colours from the tokens)

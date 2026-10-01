@@ -1,4 +1,5 @@
-import type { DayHours } from '@/data/cafe'
+// Relative import: the Vite config loads this file (through src/lib/schema.ts).
+import type { DayHours } from '../data/cafe'
 
 /** "11:00" → "11 AM", "13:30" → "1:30 PM", "00:00" → "midnight", "12:00" → "noon". */
 export function formatTime(time: string): string {
@@ -27,8 +28,8 @@ function dayRange(first: string, last: string, count: number): string {
   return `${first} to ${last}`
 }
 
-/** Groups consecutive days that share the same hours, for short summaries. */
-export function summariseHours(week: readonly DayHours[]): HoursGroup[] {
+/** Runs of consecutive days that share the same hours, in week order. */
+export function groupHours(week: readonly DayHours[]): { days: DayHours[] }[] {
   const groups: { days: DayHours[] }[] = []
   for (const day of week) {
     const current = groups.at(-1)
@@ -39,7 +40,12 @@ export function summariseHours(week: readonly DayHours[]): HoursGroup[] {
       groups.push({ days: [day] })
     }
   }
-  return groups.flatMap(({ days }) => {
+  return groups
+}
+
+/** Groups consecutive days that share the same hours, for short summaries. */
+export function summariseHours(week: readonly DayHours[]): HoursGroup[] {
+  return groupHours(week).flatMap(({ days }) => {
     const first = days[0]
     const last = days.at(-1)
     if (!first || !last) return []

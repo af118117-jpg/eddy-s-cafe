@@ -85,8 +85,10 @@
   html {
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
-    /* Anchor jumps land below the sticky header. */
+    /* Anchor jumps land below the sticky header, and focused controls scroll
+       clear of the fixed mobile action bar instead of hiding behind it. */
     scroll-padding-top: var(--header-height);
+    scroll-padding-bottom: var(--action-bar-space);
     /* Locking scroll for the mobile menu must not shift the layout. */
     scrollbar-gutter: stable;
   }

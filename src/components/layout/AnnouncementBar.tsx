@@ -47,8 +47,12 @@ export function AnnouncementBar({ onDismiss }: AnnouncementBarProps) {
           <span>
             Open daily till late<span className="max-sm:hidden"> on Green Avenue</span>
           </span>
-          <a href={cafe.links.foodpanda} className="link-draw link-rest font-medium">
-            Order on foodpanda
+          {/* The full bar height, so it's a 44px touch target. */}
+          <a
+            href={cafe.links.foodpanda}
+            className="inline-flex min-h-control-md items-center font-medium"
+          >
+            <span className="link-draw link-rest">Order on foodpanda</span>
           </a>
         </p>
         <button

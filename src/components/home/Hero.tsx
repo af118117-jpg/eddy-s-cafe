@@ -43,9 +43,14 @@ export function Hero() {
           priority
         />
       </div>
+      {/*
+        Behind the header: at least 65% ink over its whole height (three header
+        heights in all, so short screens get it too), which keeps white header
+        text above 4.5:1 even over a white photo.
+      */}
       <div
         aria-hidden="true"
-        className="absolute inset-x-0 top-0 h-1/3 bg-linear-to-b from-ink/60 to-transparent"
+        className="absolute inset-x-0 top-0 h-[calc(3*var(--header-height))] bg-linear-to-b from-ink/80 via-ink/65 via-40% to-transparent"
       />
       <div
         aria-hidden="true"

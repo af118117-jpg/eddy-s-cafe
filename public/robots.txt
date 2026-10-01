@@ -1,2 +1,5 @@
 User-agent: *
 Allow: /
+
+# TODO(domain): the site's real address; must match siteUrl in src/data/site.ts.
+Sitemap: https://eddys-cafe.example/sitemap.xml

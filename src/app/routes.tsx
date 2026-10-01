@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react'
 import { useRoutes, type RouteObject } from 'react-router-dom'
+import { pageMeta } from '@/data/site'
 import NotFound from '@/pages/NotFound'
 import { lazyPage } from './lazyPage'
 import { SiteLayout, type RouteHandle } from './SiteLayout'
@@ -24,22 +25,22 @@ export function preloadPage(pathname: string): Promise<void> {
 // import and its chunk are dropped.
 const Styleguide = import.meta.env.DEV ? lazy(() => import('@/pages/_Styleguide')) : null
 
-/** Pages inside the site frame. `handle` sets the title and header style. */
+/** Pages inside the site frame. `handle` sets the head (title, description, canonical) and header style. */
 const pages: RouteObject[] = [
   {
     index: true,
     element: <Home />, // lazy: SiteLayout wraps pages in Suspense
-    handle: { headerOverlay: true } satisfies RouteHandle,
+    handle: { meta: pageMeta.home, headerOverlay: true } satisfies RouteHandle,
   },
   {
     path: 'menu',
     element: <Menu />, // lazy: SiteLayout wraps pages in Suspense
-    handle: { title: 'Menu' } satisfies RouteHandle,
+    handle: { meta: pageMeta.menu } satisfies RouteHandle,
   },
   {
     path: '*',
     element: <NotFound />,
-    handle: { title: 'Page not found' } satisfies RouteHandle,
+    handle: { meta: pageMeta.notFound } satisfies RouteHandle,
   },
 ]
 
