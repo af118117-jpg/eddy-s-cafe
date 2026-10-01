@@ -29,6 +29,11 @@ interface CommonProps {
   alt: string
   /** Classes for the frame. */
   className?: string
+  /**
+   * Scale the photo to 1.03 on hover, inside the frame. Hovering an ancestor
+   * link or `data-zoom-group` element triggers it too.
+   */
+  zoom?: boolean
 }
 
 interface LoadedImageProps extends CommonProps {
@@ -59,18 +64,22 @@ export type ResponsiveImageProps = LoadedImageProps | PlaceholderImageProps
  */
 export function ResponsiveImage(props: ResponsiveImageProps) {
   if (props.src === undefined) {
-    const { alt, ratio, className } = props
+    const { alt, ratio, zoom = false, className } = props
     return (
       // No image content yet, so nothing for assistive tech to announce.
       <div
         aria-hidden="true"
         data-placeholder
-        className={cn('bg-placeholder', ratioClass[ratio], className)}
+        data-zoom={zoom || undefined}
+        className={cn('overflow-hidden', ratioClass[ratio], className)}
       >
-        {import.meta.env.DEV && ratio !== 'fill' && (
-          // Dev only: which photo belongs here. Not on full-bleed slots, where it would sit under the header.
-          <span className="block p-3 text-meta text-ink">{alt}</span>
-        )}
+        {/* The fill is the part that scales on hover, like the <img> of a real photo. */}
+        <div data-placeholder-fill className="size-full bg-placeholder">
+          {import.meta.env.DEV && ratio !== 'fill' && (
+            // Dev only: which photo belongs here. Not on full-bleed slots, where it would sit under the header.
+            <span className="block p-3 text-meta text-ink">{alt}</span>
+          )}
+        </div>
       </div>
     )
   }
@@ -85,6 +94,7 @@ export function ResponsiveImage(props: ResponsiveImageProps) {
     sources,
     ratio = 'intrinsic',
     priority = false,
+    zoom = false,
     className,
   } = props
   // React 18 doesn't know the camelCase fetchPriority prop yet; set the attribute directly.
@@ -92,6 +102,7 @@ export function ResponsiveImage(props: ResponsiveImageProps) {
 
   return (
     <picture
+      data-zoom={zoom || undefined}
       className={cn(
         'block overflow-hidden bg-placeholder',
         ratio !== 'intrinsic' && ratioClass[ratio],
@@ -130,11 +141,13 @@ interface PhotoProps {
   ratio: FixedImageRatio
   sizes?: string
   priority?: boolean
+  /** Hover zoom (see ResponsiveImage). */
+  zoom?: boolean
   className?: string
 }
 
 /** Renders a photo slot from content data: the photo once it exists, otherwise its placeholder. */
-export function Photo({ image, ratio, sizes, priority, className }: PhotoProps) {
+export function Photo({ image, ratio, sizes, priority, zoom, className }: PhotoProps) {
   if (image.src && image.width && image.height) {
     return (
       <ResponsiveImage
@@ -145,9 +158,10 @@ export function Photo({ image, ratio, sizes, priority, className }: PhotoProps) 
         ratio={ratio}
         sizes={sizes}
         priority={priority}
+        zoom={zoom}
         className={className}
       />
     )
   }
-  return <ResponsiveImage alt={image.alt} ratio={ratio} className={className} />
+  return <ResponsiveImage alt={image.alt} ratio={ratio} zoom={zoom} className={className} />
 }

@@ -6,13 +6,14 @@ import { Icon } from '@/components/ui'
 import { cafe } from '@/data'
 
 const itemClass =
-  'flex min-h-control-lg flex-col items-center justify-center gap-1 text-meta transition-colors duration-(--duration-micro) ease-standard hover:bg-cream aria-[current=page]:underline aria-[current=page]:underline-offset-4'
+  'flex min-h-control-lg flex-col items-center justify-center gap-1 text-meta transition-colors duration-(--duration-standard) ease-standard hover:bg-cream'
 
 function ItemContent({ icon, children }: { icon: LucideIcon; children: ReactNode }) {
   return (
     <>
       <Icon icon={icon} size="md" />
-      {children}
+      {/* Underlined on the current page (link-draw, base.css). */}
+      <span className="link-draw">{children}</span>
     </>
   )
 }

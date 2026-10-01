@@ -9,8 +9,7 @@ import { Wordmark } from './Wordmark'
 const year = new Date().getFullYear()
 const hours = summariseHours(cafe.openingHours)
 
-const listLinkClass =
-  'inline-flex min-h-control-md items-center decoration-1 underline-offset-4 hover:underline aria-[current=page]:underline'
+const listLinkClass = 'inline-flex min-h-control-md items-center'
 
 function FooterHeading({ id, children }: { id?: string; children: ReactNode }) {
   return (
@@ -51,7 +50,7 @@ export function SiteFooter() {
             ))}
             <li>
               <a href={cafe.links.foodpanda} className={listLinkClass}>
-                Order on foodpanda
+                <span className="link-draw">Order on foodpanda</span>
               </a>
             </li>
           </ul>
@@ -90,7 +89,7 @@ export function SiteFooter() {
           <ul className="-my-2">
             <li>
               <a href={cafe.links.instagram} className={listLinkClass}>
-                Instagram
+                <span className="link-draw">Instagram</span>
               </a>
             </li>
           </ul>

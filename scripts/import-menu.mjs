@@ -95,7 +95,7 @@ const items = rows.map((r) => {
     ...(from ? { priceFrom: true } : {}),
     category,
     section: r[col.Section].trim() === 'Drink' ? 'drink' : 'food',
-    image: { alt: name },
+    // No image yet: until a dish has a real photo, dishImage() gives its placeholder slot.
   }
 })
 

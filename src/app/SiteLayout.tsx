@@ -79,8 +79,12 @@ export function SiteLayout({ pages }: SiteLayoutProps) {
         }}
       />
       <main id={MAIN_ID} tabIndex={-1} className="flex-1">
-        {/* Already mounted, so a lazy page loading during navigation keeps the old page on screen. */}
-        <Suspense fallback={null}>
+        {/*
+          Already mounted, so a lazy page loading during navigation keeps the old page on screen.
+          On a first visit straight to a lazy page, the fallback holds a screen's height, so the
+          footer isn't drawn at the top and then pushed away (a layout shift).
+        */}
+        <Suspense fallback={<div aria-hidden="true" className="min-h-svh" />}>
           <Outlet />
         </Suspense>
       </main>

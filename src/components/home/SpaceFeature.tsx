@@ -1,4 +1,4 @@
-import { Photo } from '@/components/ui'
+import { Photo, Reveal } from '@/components/ui'
 import { home } from '@/data'
 
 /** A wide interior photo with a short caption (16:9 on phones, where 21:9 gets too thin). */
@@ -6,12 +6,14 @@ export function SpaceFeature() {
   const { caption, captionIsPlaceholder, image } = home.space
   return (
     <figure className="container-wide flex flex-col gap-4 py-section">
-      <Photo
-        image={image}
-        ratio="editorial-wide"
-        sizes="100vw"
-        className="max-md:aspect-editorial"
-      />
+      <Reveal>
+        <Photo
+          image={image}
+          ratio="editorial-wide"
+          sizes="100vw"
+          className="max-md:aspect-editorial"
+        />
+      </Reveal>
       {/* TODO(copy): placeholder caption, see src/data/home.ts */}
       <figcaption
         data-todo={captionIsPlaceholder || undefined}

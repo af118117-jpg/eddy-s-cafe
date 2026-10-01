@@ -37,7 +37,7 @@ Playwright's own Chromium isn't installed on this machine; run e2e against the i
 ```
 src/app                 routes.tsx, SiteLayout (app shell), scroll + focus management
 src/components/layout   AnnouncementBar, SiteHeader, MobileNav, MobileActionBar, SiteFooter, SkipLink
-src/components/ui       Button, Chip, Container, Icon, Price, ResponsiveImage, SectionHeading
+src/components/ui       Button, Chip, Container, Icon, Price, ResponsiveImage (Photo), Reveal, SectionHeading, ServesLabel
 src/components/home     home page sections
 src/components/menu     menu page: MenuToolbar (GroupTabs, CategoryChips, MenuSearch, ChipRow), MenuList, EmptyState
 src/pages               route pages (the only default exports); _Styleguide is dev-only
@@ -75,9 +75,19 @@ tests/e2e               Playwright + axe specs
 - `useMenuFilter` (`src/hooks/useMenuFilter.ts`) keeps `?group=&category=&q=` in the URL and replaces the history entry on every change. Import it from its module, not from `@/hooks`: through the index it lands in the main bundle. The search box has its own state; `?q=` is written after a 300 ms pause (Safari limits replaceState).
 - Search: every word has to start a word in the name, description or category ("lat" finds Latte; "latte" doesn't find Platter). Case, accents and apostrophes don't matter.
 - Replace navigations that only change the query string are not page changes: `ScrollRestorer` keeps the scroll position and `useRouteFocus` leaves focus alone. Saved positions are keyed by history key plus URL.
-- The toolbar is sticky at `top-(--header-height)` and uses the `header-hidden:` variant to move up while the header hides. Anchors stop below it via `scroll-mt-(--menu-toolbar-height)` (measured at runtime). Scrolling more than a screen at once shows the header, so anchor offsets stay exact.
+- The toolbar is sticky at `top-(--header-height)`, and that `top` never changes: a 1px sentinel marks it `data-stuck`, and base.css translates a stuck toolbar up into the header's place while the header hides. Changing `top` instead would log a layout shift on every hide/show. Anchors stop below it via `scroll-mt-(--menu-toolbar-height)` (measured at runtime). Scrolling more than a screen at once shows the header, so anchor offsets stay exact.
+- Don't add `content-visibility: auto` to the category blocks: it halves the render cost of "All" but breaks the deep-link offsets (blocks above the target change height after the jump).
 - Chip rows (`ChipRow`) are single-line horizontal scrollers so the toolbar never changes height: roving tab stop with arrow keys, snap, edge fades (`scroll-fade`), and edge buttons for fine pointers only.
 - Budget: the menu chunk is ~14 KB gzipped on top of ~75 KB main. Keep `/menu` under 90 KB in total.
+
+## Motion (details in docs/PLAN.md Motion)
+
+- No animation libraries. CSS animations/transitions, the Web Animations API and View Transitions only.
+- `src/lib/motion.ts` adds `js-motion` to `<html>` before the first render, only while reduced motion is off, and follows changes. Every hide-before-reveal style lives under `.js-motion` in base.css, so content is visible without it.
+- Only transform, opacity and clip-path move; colours may fade; layout properties never animate.
+- Hero entrance (`data-entrance`, first visit per page load only), `Reveal` (clip-path wipe, Signatures/SpaceFeature/Gallery photos only, never text), hover zoom (`Photo zoom`, triggered by an ancestor link or `data-zoom-group`), drawn link underlines (`link-draw` / `link-rest` on the span around link text).
+- Menu filtering: `useCrossfade` runs chip/empty-state changes in a view transition (opacity fallback); the toolbar is a named `menu-toolbar` group that shows its new state at once, so the sliding tab indicator (three-piece pill in `ChipRow`) plays undisturbed. Search typing isn't crossfaded. While React renders the new results (~0.1s) the page can't take clicks.
+- Durations and scales are tokens: `--duration-hero`, `--duration-crossfade`, `--motion-stagger`, `--scale-hero-from`, `--scale-hover`. Scripts read them with `durationToken()` / `easingToken()`.
 
 ## Design guardrails (quick reference — details in docs/PLAN.md)
 

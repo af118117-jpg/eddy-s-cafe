@@ -47,10 +47,7 @@ export function AnnouncementBar({ onDismiss }: AnnouncementBarProps) {
           <span>
             Open daily till late<span className="max-sm:hidden"> on Green Avenue</span>
           </span>
-          <a
-            href={cafe.links.foodpanda}
-            className="font-medium underline decoration-beige-dark underline-offset-4 hover:decoration-current"
-          >
+          <a href={cafe.links.foodpanda} className="link-draw link-rest font-medium">
             Order on foodpanda
           </a>
         </p>
@@ -58,7 +55,7 @@ export function AnnouncementBar({ onDismiss }: AnnouncementBarProps) {
           type="button"
           onClick={dismiss}
           aria-label="Dismiss announcement"
-          className="-mr-3 inline-flex size-(--spacing-control-md) shrink-0 items-center justify-center rounded-pill transition-colors duration-(--duration-micro) ease-standard hover:bg-fg hover:text-fg-inverse"
+          className="-mr-3 inline-flex size-(--spacing-control-md) shrink-0 items-center justify-center rounded-pill transition-colors duration-(--duration-standard) ease-standard hover:bg-fg hover:text-fg-inverse"
         >
           <Icon icon={X} size="sm" />
         </button>

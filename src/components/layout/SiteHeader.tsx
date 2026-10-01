@@ -65,7 +65,7 @@ export function SiteHeader({
                 <li key={item.to}>
                   <NavItemLink
                     item={item}
-                    className="inline-flex min-h-control-md items-center text-nav decoration-1 underline-offset-4 hover:underline aria-[current=page]:underline"
+                    className="inline-flex min-h-control-md items-center text-nav"
                   />
                 </li>
               ))}

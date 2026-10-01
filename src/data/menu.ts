@@ -19,7 +19,8 @@ export interface MenuItem {
   priceFrom?: boolean
   category: MenuCategory
   section: 'food' | 'drink'
-  image: ImageAsset
+  /** Only once the dish has a real photo (Phase 7). Read it with `dishImage`. */
+  image?: ImageAsset
 }
 
 export type MenuGroupId =
@@ -96,6 +97,11 @@ export const feastServes: Readonly<Record<string, Serves>> = {
   'kamil-jooje': { min: 3, max: 4 }, // "perfect for 3 & 4 guests"
   'beshghab-e-mix': { min: 4, max: 4 }, // "Serving for 4 persons."
   'eddys-khaas': { min: 6, max: 6 }, // "Servig for 6 persond." (as published)
+}
+
+/** The dish's photo, or its placeholder slot (alt text = the dish name) until it has one. */
+export function dishImage(item: MenuItem): ImageAsset {
+  return item.image ?? { alt: item.name }
 }
 
 export function groupOf(item: MenuItem): MenuGroupId {

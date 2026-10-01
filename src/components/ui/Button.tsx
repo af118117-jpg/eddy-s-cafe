@@ -32,14 +32,15 @@ type RouteLinkProps = ButtonOwnProps &
 export type ButtonProps = NativeButtonProps | AnchorProps | RouteLinkProps
 
 const base =
-  'inline-flex items-center justify-center gap-2 text-center font-medium transition-colors duration-(--duration-micro) ease-standard ' +
+  'inline-flex items-center justify-center gap-2 text-center font-medium transition-colors duration-(--duration-standard) ease-standard ' +
   'disabled:cursor-not-allowed disabled:opacity-40 aria-disabled:pointer-events-none aria-disabled:opacity-40'
 
 // fg / fg-inverse swap on ink surfaces, so every variant inverts there automatically.
 const variantClass: Record<ButtonVariant, string> = {
   primary: 'rounded-pill bg-fg text-fg-inverse hover:bg-ink-muted',
   secondary: 'rounded-pill border border-fg text-fg hover:bg-fg hover:text-fg-inverse',
-  link: 'underline decoration-beige-dark decoration-1 underline-offset-4 hover:decoration-current',
+  // The underline is drawn by the link-draw span around the label (see base.css).
+  link: '',
 }
 
 const sizeClass: Record<ButtonVariant, Record<ButtonSize, string>> = {
@@ -71,10 +72,12 @@ export function Button({
 }: ButtonProps) {
   const classes = buttonClassName(variant, size, className)
   const iconElement = icon ? <Icon icon={icon} size={size === 'lg' ? 'md' : 'sm'} /> : null
+  const label =
+    variant === 'link' ? <span className="link-draw link-rest">{children}</span> : children
   const content = (
     <>
       {iconPosition === 'start' && iconElement}
-      {children}
+      {label}
       {iconPosition === 'end' && iconElement}
     </>
   )

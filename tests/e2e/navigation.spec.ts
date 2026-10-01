@@ -38,6 +38,8 @@ async function tabTo(page: Page, name: string, max = 40) {
 
 test('skip link is the first stop and moves focus to main', async ({ page }) => {
   await page.goto('/')
+  // Tab pressed before the app has rendered goes nowhere.
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
   await page.keyboard.press('Tab')
   const first = await focused(page)
   expect(first?.name).toBe('Skip to content')

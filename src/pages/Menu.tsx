@@ -2,9 +2,11 @@ import { useLayoutEffect, useRef } from 'react'
 import { EmptyState, MenuList, MenuToolbar } from '@/components/menu'
 import { Button } from '@/components/ui'
 import { cafe, groupLabel, menuPage } from '@/data'
+import type { MenuGroupId } from '@/data'
 import { menuSections } from '@/data/menu-sections'
+import { useCrossfade } from '@/hooks/useCrossfade'
 // Straight from the module: through the hooks index it would land in the main bundle.
-import { useMenuFilter } from '@/hooks/useMenuFilter'
+import { useMenuFilter, type MenuFilterState } from '@/hooks/useMenuFilter'
 import { describeCount } from '@/lib/menuFilter'
 
 /** The full menu: filter by group and category, search, share the result by URL. */
@@ -46,6 +48,33 @@ export default function Menu() {
     if (window.scrollY > top) window.scrollTo({ top })
   }, [filterKey])
 
+  // Chip and empty-state changes crossfade the results; typing in the search updates them directly.
+  const crossfade = useCrossfade(filterKey, resultsRef)
+  const actions: Pick<
+    MenuFilterState,
+    'setGroup' | 'setCategory' | 'clearSearch' | 'searchWholeMenu'
+  > = {
+    setGroup: (group: MenuGroupId | null) => {
+      if (group === filter.group && filter.category === null) return
+      crossfade(() => {
+        filter.setGroup(group)
+      })
+    },
+    setCategory: (category: string | null) => {
+      if (category === filter.category) return
+      crossfade(() => {
+        filter.setCategory(category)
+      })
+    },
+    clearSearch: () => {
+      if (!filter.input) return
+      crossfade(filter.clearSearch)
+    },
+    searchWholeMenu: () => {
+      crossfade(filter.searchWholeMenu)
+    },
+  }
+
   const scope =
     menuSections.find((section) => section.id === filter.category)?.label ??
     (filter.group ? groupLabel(filter.group) : null)
@@ -62,7 +91,12 @@ export default function Menu() {
         </Button>
       </div>
 
-      <MenuToolbar ref={toolbarRef} filter={filter} sections={menuSections} searchRef={searchRef} />
+      <MenuToolbar
+        filter={{ ...filter, ...actions }}
+        sections={menuSections}
+        toolbarRef={toolbarRef}
+        searchRef={searchRef}
+      />
 
       <div ref={resultsRef} className="container pb-section">
         <p aria-live="polite" aria-atomic="true" className="py-6 text-small text-ink-muted">
@@ -76,11 +110,11 @@ export default function Menu() {
             scope={scope}
             menuWideCount={filter.menuWideCount}
             onClearSearch={() => {
-              filter.clearSearch()
+              actions.clearSearch()
               searchRef.current?.focus()
             }}
             onSearchWholeMenu={() => {
-              filter.searchWholeMenu()
+              actions.searchWholeMenu()
               searchRef.current?.focus()
             }}
           />

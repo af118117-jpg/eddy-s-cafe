@@ -14,5 +14,6 @@ export type {
   ImageSource,
   ResponsiveImageProps,
 } from './ResponsiveImage'
+export { Reveal } from './Reveal'
 export { SectionHeading } from './SectionHeading'
 export { ServesLabel } from './ServesLabel'
