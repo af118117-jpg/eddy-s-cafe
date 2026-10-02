@@ -6,14 +6,9 @@ import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { chromium } from '@playwright/test'
 import sharp from 'sharp'
+import { colorToken as token } from './tokens.ts'
 
 const root = fileURLToPath(new URL('..', import.meta.url))
-const tokens = readFileSync(`${root}src/styles/tokens.css`, 'utf8')
-const token = (name) => {
-  const value = new RegExp(`--color-${name}:\\s*(#[0-9a-fA-F]{6})`).exec(tokens)?.[1]
-  if (!value) throw new Error(`No --color-${name} in tokens.css`)
-  return value
-}
 const font = readFileSync(`${root}public/fonts/inter-latin-wght-400-500.woff2`).toString('base64')
 
 const html = `<!doctype html>

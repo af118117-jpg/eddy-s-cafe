@@ -12,6 +12,7 @@ import {
 import { pageMeta, type PageMeta } from '@/data/site'
 import { useMinWidth, useScrolledPast } from '@/hooks'
 import { useDocumentHead } from '@/hooks/useDocumentHead'
+import { PageErrorBoundary } from './PageErrorBoundary'
 import { ScrollRestorer } from './ScrollRestorer'
 import { ScrollToHash } from './ScrollToHash'
 import { useRouteFocus } from './useRouteFocus'
@@ -83,12 +84,15 @@ export function SiteLayout({ pages }: SiteLayoutProps) {
           On a first visit straight to a lazy page, the fallback holds a screen's height, so the
           footer isn't drawn at the top and then pushed away (a layout shift).
         */}
-        <Suspense fallback={<div aria-hidden="true" className="min-h-svh" />}>
-          <Outlet />
-          {/* Inside the boundary: they act in the same commit as the page content, even when a lazy page loads late. */}
-          <ScrollRestorer />
-          <ScrollToHash />
-        </Suspense>
+        {/* A page that fails to load or render leaves the frame working (see PageErrorBoundary). */}
+        <PageErrorBoundary resetKey={location.pathname}>
+          <Suspense fallback={<div aria-hidden="true" className="min-h-svh" />}>
+            <Outlet />
+            {/* Inside the boundary: they act in the same commit as the page content, even when a lazy page loads late. */}
+            <ScrollRestorer />
+            <ScrollToHash />
+          </Suspense>
+        </PageErrorBoundary>
       </main>
       <SiteFooter />
       {!navOpen && <MobileActionBar />}

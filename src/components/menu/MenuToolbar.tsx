@@ -1,5 +1,4 @@
 import { useEffect, useRef, type RefObject } from 'react'
-import { groupLabel } from '@/data'
 import type { MenuSection } from '@/data/menu-sections'
 import type { MenuFilterState } from '@/hooks/useMenuFilter'
 import { CategoryChips } from './CategoryChips'
@@ -10,6 +9,8 @@ interface MenuToolbarProps {
   filter: MenuFilterState
   /** Every section, for the category chips. */
   sections: readonly MenuSection[]
+  /** The category or group being searched ("Coffee & Tea"); null for the whole menu. */
+  scope: string | null
   toolbarRef: RefObject<HTMLDivElement>
   searchRef?: RefObject<HTMLInputElement>
 }
@@ -51,15 +52,12 @@ function useStuckFlag(
  * Sticky under the header, moving up into its place while it hides. Every row is
  * a single line, so the toolbar never changes height while filtering.
  */
-export function MenuToolbar({ filter, sections, toolbarRef, searchRef }: MenuToolbarProps) {
+export function MenuToolbar({ filter, sections, scope, toolbarRef, searchRef }: MenuToolbarProps) {
   const sentinelRef = useRef<HTMLDivElement>(null)
   useStuckFlag(toolbarRef, sentinelRef)
   const categories = filter.group
     ? sections.filter((section) => section.group === filter.group)
     : sections
-  const scope =
-    sections.find((section) => section.id === filter.category)?.label ??
-    (filter.group ? groupLabel(filter.group) : null)
 
   return (
     <>

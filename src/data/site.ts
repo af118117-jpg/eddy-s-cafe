@@ -1,9 +1,21 @@
 /*
  * What search engines and link previews see: the site's address and each
- * page's title and description. No imports: the build (vite.config.ts) writes
- * these into each page's HTML file, and useDocumentHead keeps the head in step
- * while navigating inside the app.
+ * page's title and description. The build (vite.config.ts) writes these into
+ * each page's HTML file, and useDocumentHead keeps the head in step while
+ * navigating inside the app. The Vite config loads this file: relative
+ * imports with their extensions only.
  */
+import { dailyOpening } from '../lib/hours.ts'
+import { cafe } from './cafe.ts'
+
+// Address and hours come from cafe.ts, so the search snippet can't go stale.
+const opening = dailyOpening(cafe.openingHours)
+const homeDescription = [
+  `All-day café and grill at ${cafe.address.street}, ${cafe.address.city}: Middle Eastern charcoal grills, steaks, pizza and specialty coffee.`,
+  opening && `Open daily from ${opening}.`,
+]
+  .filter(Boolean)
+  .join(' ')
 
 /**
  * TODO(domain): the café has no website yet, so this is a placeholder on a
@@ -24,8 +36,7 @@ export interface PageMeta {
 export const pageMeta = {
   home: {
     title: 'eddy’s Café, Faisalabad',
-    description:
-      'All-day café and grill at 77 Green Avenue West, Faisalabad: Middle Eastern charcoal grills, steaks, pizza and specialty coffee. Open daily from 11 AM.',
+    description: homeDescription,
     path: '/',
   },
   menu: {

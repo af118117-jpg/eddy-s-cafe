@@ -6,6 +6,9 @@
   "sideEffects": [
     "**/*.css"
   ],
+  "engines": {
+    "node": ">=22.18"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -19,7 +22,8 @@
     "import:menu": "node scripts/import-menu.mjs && prettier --write \"src/data/*.generated.ts\"",
     "photos:placeholders": "node scripts/placeholder-photos.mjs",
     "icons": "node scripts/icons.mjs",
-    "og-image": "node scripts/og-image.mjs"
+    "og-image": "node scripts/og-image.mjs",
+    "screenshots": "npm run build && node scripts/screenshots.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.48.0",

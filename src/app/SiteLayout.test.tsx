@@ -30,6 +30,11 @@ describe('Site frame', () => {
     expect(main).toHaveFocus()
   })
 
+  it('ignores a malformed #hash instead of failing (a mangled shared link)', async () => {
+    renderAt('/menu#%E0%A4%A')
+    expect(await screen.findByRole('heading', { level: 1, name: 'Menu' })).toBeInTheDocument()
+  })
+
   it('marks the menu link as the current page on /menu', async () => {
     renderAt('/menu')
     await screen.findByRole('heading', { level: 1, name: 'Menu' })

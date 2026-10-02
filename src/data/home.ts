@@ -10,6 +10,7 @@ import heroWide from '/assets-source/hero.jpg?aspect=16:9&avifQuality=40&photo'
 import introPhoto from '/assets-source/intro.jpg?aspect=4:5&photo'
 import spacePhoto from '/assets-source/space.jpg?aspect=16:9&photo'
 import { heroImage } from '@/lib/heroImage'
+import { describeHours } from '@/lib/hours'
 import { cafe } from './cafe'
 import { homeDishes } from './home-dishes.generated'
 import { homeSelection } from './home-selection'
@@ -116,7 +117,8 @@ export const home = {
     story: [
       `${cafe.name} sits at ${cafe.address.street}, on ${cafe.address.area} in ${cafe.address.city}.`,
       'The menu runs from Middle Eastern charcoal grills and steaks to pizza, bao, breakfast plates and a full coffee bar.',
-      'Doors open at 11 AM every day and stay open until 1 AM, or 2 AM from Friday to Sunday.',
+      // Hours come from cafe.ts, so this line follows any change there.
+      `Open ${describeHours(cafe.openingHours)}.`,
       'Eat in, take away, or order through foodpanda.',
     ],
     storyIsPlaceholder: true as boolean,
@@ -172,7 +174,7 @@ export const home = {
 
   space: {
     // TODO(copy): a line about the room itself (seating, light, the terrace?).
-    caption: 'Eat in on Green Avenue West, open until 2 AM from Friday to Sunday.',
+    caption: `Dine in at ${cafe.address.street}, ${cafe.address.area}.`,
     captionIsPlaceholder: true as boolean,
     image: {
       alt: 'A corner table by the stairs, under a square light',
@@ -189,7 +191,9 @@ export const home = {
   visit: {
     title: 'Visit',
     hoursTitle: 'Opening hours',
-    // No map image yet (none in the source material): a placeholder inside the Google Maps link.
+    // TODO(photo): no map image in the source material, so this is an empty cream square inside
+    // the Google Maps link. Add one (a static map you may publish, or an illustrated one) as
+    // assets-source/map.jpg and import it here like the photos above.
     mapImage: { alt: '' } satisfies ImageAsset,
   },
 

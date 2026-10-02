@@ -41,7 +41,18 @@ for gallery and dish photos). The crop is centred.
 A file in `dishes/` named after a menu id (`src/data/menu.generated.ts`) is
 picked up automatically. It replaces the cream block on the home page and
 adds a thumbnail to that dish on the menu page. Add its alt text to `dishAlts`;
-the unit tests check that every dish photo has one.
+the unit tests check that every dish photo has one. The eight dishes under
+"From the menu" on the home page show photos only once all eight have one;
+until then they are a text list, not eight empty frames.
+
+## Still missing
+
+- **A map** for the Visit section, which shows an empty cream square inside
+  the Google Maps link until then (`mapImage` in `src/data/home.ts`). Nothing in
+  the source material fits: use a map you're allowed to publish (an
+  illustrated one, or a static map whose terms allow it), save it as
+  `map.jpg` here and import it in `home.ts` like the other photos.
+- **A platter photo** for `feasts.jpg`; the material has none.
 
 The six signature dishes have the café's own promotional posters
 (`03-Food-Images/<id>.jpg`). They are only 1080 × 1420 and have the dish

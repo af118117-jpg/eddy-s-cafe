@@ -1,12 +1,20 @@
 import { useState } from 'react'
 import { Button, Chip, Photo, SectionHeading } from '@/components/ui'
 import { dishImage, groupOf, home, menuGroups, type MenuGroupId } from '@/data'
+import { cn } from '@/lib/cn'
 import { photoSizes } from '@/lib/photoSizes'
 import { DishText } from './DishText'
 
 type Filter = MenuGroupId | 'all'
 
-/** Eight featured dishes with group chips to filter them. */
+const withPhotos = home.menuPreview.items.every((item) => dishImage(item).picture)
+
+/**
+ * Eight featured dishes with group chips to filter them. They show photos only
+ * once every one of them has one (assets-source/dishes/<id>.jpg); until then
+ * they read as a printed menu rather than eight empty frames, which also
+ * keeps them from repeating the photo-led Signatures above.
+ */
 export function MenuPreview() {
   const { title, linkLabel, items } = home.menuPreview
   const [filter, setFilter] = useState<Filter>('all')
@@ -48,20 +56,31 @@ export function MenuPreview() {
             {count}
           </p>
 
-          <ul className="grid gap-x-gutter-sm gap-y-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-x-gutter-lg">
-            {visible.map((item) => (
-              <li key={item.id} data-zoom-group className="flex flex-col gap-4">
-                <Photo
-                  image={dishImage(item)}
-                  ratio="dish"
-                  sizes={photoSizes.fourAcross}
-                  zoom
-                  // One column on phones: 16:9 keeps eight dishes from becoming a very long scroll.
-                  className="max-md:aspect-editorial"
-                />
-                <DishText item={item} />
-              </li>
-            ))}
+          <ul
+            className={cn(
+              'grid gap-x-gutter-sm md:grid-cols-2 lg:grid-cols-4 lg:gap-x-gutter-lg',
+              withPhotos ? 'gap-y-12' : 'gap-y-8',
+            )}
+          >
+            {visible.map((item) =>
+              withPhotos ? (
+                <li key={item.id} data-zoom-group className="flex flex-col gap-4">
+                  <Photo
+                    image={dishImage(item)}
+                    ratio="dish"
+                    sizes={photoSizes.fourAcross}
+                    zoom
+                    // One column on phones: 16:9 keeps eight dishes from becoming a very long scroll.
+                    className="max-md:aspect-editorial"
+                  />
+                  <DishText item={item} />
+                </li>
+              ) : (
+                <li key={item.id} className="border-t pt-4">
+                  <DishText item={item} />
+                </li>
+              ),
+            )}
           </ul>
         </div>
 

@@ -1,25 +1,27 @@
 // Writes the favicon set and the web app manifest into public/, from
 // public/favicon.svg and the colour tokens in src/styles/tokens.css:
 //   favicon.ico (16, 32, 48), apple-touch-icon.png (180),
-//   icon-192.png, icon-512.png, icon-maskable-512.png, site.webmanifest
+//   icon-192.png, icon-512.png, icon-maskable-512.png, site.webmanifest,
+// and sets favicon.svg's two colours to the tokens
 // Usage: npm run icons
 import { readFileSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import sharp from 'sharp'
+import { colorToken } from './tokens.ts'
 
 const root = fileURLToPath(new URL('..', import.meta.url))
-const svg = readFileSync(`${root}public/favicon.svg`)
-const tokens = readFileSync(`${root}src/styles/tokens.css`, 'utf8')
-const token = (name) => {
-  const value = new RegExp(`--color-${name}:\\s*(#[0-9a-fA-F]{6})`).exec(tokens)?.[1]
-  if (!value) throw new Error(`No --color-${name} in tokens.css`)
-  return value.toUpperCase()
-}
-const ink = token('ink')
-const bg = token('bg')
+const ink = colorToken('ink')
+const bg = colorToken('bg')
+
+// favicon.svg is drawn by hand; its two colours are kept in step with the tokens here.
+const svgPath = `${root}public/favicon.svg`
+const svg = readFileSync(svgPath, 'utf8')
+  .replace(/(<rect[^>]* fill=")#[0-9a-fA-F]{6}/, `$1${ink}`)
+  .replace(/(<path[^>]* fill=")#[0-9a-fA-F]{6}/, `$1${bg}`)
+writeFileSync(svgPath, svg)
 
 const png = (size) =>
-  sharp(svg, { density: 72 * (size / 64) * 2 })
+  sharp(Buffer.from(svg), { density: 72 * (size / 64) * 2 })
     .resize(size, size)
     .png()
     .toBuffer()

@@ -1,7 +1,9 @@
 import { describe, expect, it } from 'vitest'
 import { cafe } from '@/data'
 import type { DayHours } from '@/data'
-import { formatTime, summariseHours } from './hours'
+import { home } from '@/data/home'
+import { pageMeta } from '@/data/site'
+import { dailyOpening, describeHours, formatTime, summariseHours } from './hours'
 
 describe('formatTime', () => {
   it('formats whole and part hours in 12-hour time', () => {
@@ -31,5 +33,29 @@ describe('summariseHours', () => {
       { days: 'Friday', hours: 'noon to midnight' },
       { days: 'Saturday and Sunday', hours: '10 AM to 11 PM' },
     ])
+  })
+})
+
+describe('hours in running text', () => {
+  it('describes the week as one phrase', () => {
+    expect(describeHours(cafe.openingHours)).toBe(
+      'Monday to Thursday from 11 AM to 1 AM and Friday to Sunday from 11 AM to 2 AM',
+    )
+    expect(describeHours(cafe.openingHours.slice(0, 1))).toBe('Monday from 11 AM to 1 AM')
+  })
+
+  it('gives a daily opening time only when every day opens then', () => {
+    expect(dailyOpening(cafe.openingHours)).toBe('11 AM')
+    const lateMonday = cafe.openingHours.map((day) =>
+      day.day === 'Monday' ? { ...day, opens: '12:00' } : day,
+    )
+    expect(dailyOpening(lateMonday)).toBeNull()
+    expect(dailyOpening(cafe.openingHours.slice(0, 6))).toBeNull()
+  })
+
+  it('is what the copy and the search snippet say, so neither restates the hours', () => {
+    expect(home.intro.story.join(' ')).toContain(describeHours(cafe.openingHours))
+    expect(pageMeta.home.description).toContain('Open daily from 11 AM.')
+    expect(pageMeta.home.description).toContain(cafe.address.street)
   })
 })

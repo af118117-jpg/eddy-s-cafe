@@ -109,20 +109,22 @@ export function ChipRow({ label, children, indicator = false, className }: ChipR
   const indicatorRef = useRef<HTMLSpanElement>(null)
   // Transitions switch on only after the indicator's first placement, so it doesn't fly in.
   const [indicatorReady, setIndicatorReady] = useState(false)
-  const lastPressed = useRef<HTMLButtonElement | null>(null)
+  // null until the first layout, so the indicator is placed then even with nothing pressed.
+  const lastPressed = useRef<HTMLButtonElement | undefined | null>(null)
   const firstChip = useRef<HTMLButtonElement | undefined>(undefined)
   const [overflow, setOverflow] = useState({ start: false, end: false })
 
-  // After every render: set the roving Tab stop (the focused chip, else the pressed one, else the first).
+  // After every render: set the roving Tab stop (the focused chip, else the pressed one, else the
+  // first). It only writes attributes; anything that measures waits for a change of chips or of
+  // the pressed one, since the row re-renders on every keystroke in the menu search.
   useLayoutEffect(() => {
     const row = rowRef.current
     if (!row) return
     const chips = chipsIn(row)
+    const pressed = chips.find((chip) => chip.getAttribute('aria-pressed') === 'true')
     const focused = chips.find((chip) => chip === document.activeElement)
-    const stop =
-      focused ?? chips.find((chip) => chip.getAttribute('aria-pressed') === 'true') ?? chips[0]
+    const stop = focused ?? pressed ?? chips[0]
     for (const chip of chips) chip.tabIndex = chip === stop ? 0 : -1
-    if (indicatorRef.current) positionIndicator(indicatorRef.current, pressedChip(row))
 
     // New chips (another group's categories): start from the beginning.
     if (chips[0] !== firstChip.current) {
@@ -130,11 +132,14 @@ export function ChipRow({ label, children, indicator = false, className }: ChipR
       row.scrollLeft = 0
     }
 
+    if (pressed === lastPressed.current) return
+    lastPressed.current = pressed
+    // Resizes move it too: the ResizeObserver below handles those.
+    if (indicatorRef.current) positionIndicator(indicatorRef.current, pressed)
+
     // A newly pressed chip that is hidden or under a fade scrolls to the start
     // of the row, where scroll snap would put it anyway.
-    const pressed = chips.find((chip) => chip.getAttribute('aria-pressed') === 'true')
-    if (!pressed || pressed === lastPressed.current) return
-    lastPressed.current = pressed
+    if (!pressed) return
     const left = pressed.offsetLeft
     const right = left + pressed.offsetWidth
     const fadeStart = row.scrollLeft > 0 ? EDGE_CLEARANCE : 0

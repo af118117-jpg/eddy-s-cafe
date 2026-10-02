@@ -1,12 +1,13 @@
 /*
  * Restaurant structured data (schema.org JSON-LD) for the home page. The
  * build writes it into index.html (vite.config.ts), so crawlers read it
- * without running the app. Relative imports: the Vite config loads this file.
+ * without running the app. The Vite config loads this file: relative imports
+ * with their extensions only.
  * Every value comes from src/data/cafe.ts and site.ts.
  */
-import { cafe } from '../data/cafe'
-import { ogImage, siteUrl } from '../data/site'
-import { groupHours } from './hours'
+import { cafe } from '../data/cafe.ts'
+import { ogImage, siteUrl } from '../data/site.ts'
+import { groupHours } from './hours.ts'
 
 export function restaurantSchema() {
   const { address, coordinates, links } = cafe

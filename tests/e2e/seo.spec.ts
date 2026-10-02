@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import { colorToken } from '../../scripts/tokens.ts'
 
 const SITE = 'https://eddys-cafe.example'
 
@@ -10,6 +11,8 @@ function headOf(html: string) {
     title: /<title>([^<]*)<\/title>/.exec(html)?.[1],
     description: meta('description'),
     canonical: /<link rel="canonical" href="([^"]+)"/.exec(html)?.[1],
+    robots: meta('robots'),
+    themeColor: meta('theme-color'),
     ogTitle: meta('og:title'),
     ogUrl: meta('og:url'),
     ogImage: meta('og:image'),
@@ -36,11 +39,27 @@ test('each page’s HTML has its own title, description, canonical and preview t
     expect(page.ogUrl).toBe(page.canonical)
     expect(page.ogImage).toBe(`${SITE}/og-image.jpg`)
     expect(page.twitterCard).toBe('summary_large_image')
+    expect(page.themeColor).toBe(colorToken('bg'))
+    expect(page.robots).toBeNull()
   }
   // The Restaurant JSON-LD is on the home page only.
   expect(home.jsonLd).toHaveLength(1)
   expect(home.jsonLd[0]?.['@type']).toBe('Restaurant')
   expect(menu.jsonLd).toHaveLength(0)
+})
+
+test('404.html, which static hosts serve for unknown paths, is the not-found page and not indexed', async ({
+  request,
+}) => {
+  const html = await (await request.get('/404.html')).text()
+  const head = headOf(html)
+  expect(head.title).toBe('Page not found | eddy’s Café')
+  expect(head.robots).toBe('noindex')
+  expect(head.canonical).toBeUndefined()
+  expect(head.jsonLd).toHaveLength(0)
+  // Nothing preloaded: the not-found page is in the main chunk and has no photos.
+  expect(html).not.toContain('as="image"')
+  expect(html).not.toContain('modulepreload')
 })
 
 test('moving between pages in the app keeps the head in step', async ({ page }) => {
@@ -83,8 +102,9 @@ test('robots.txt, the sitemap, the manifest, the icons and the preview image are
     background_color: string
     icons: { src: string }[]
   }
-  // Colour tokens only: bg is #FDFDFC.
-  expect([manifest.theme_color, manifest.background_color]).toEqual(['#FDFDFC', '#FDFDFC'])
+  // Colour tokens only (npm run icons writes them from tokens.css).
+  const bg = colorToken('bg')
+  expect([manifest.theme_color, manifest.background_color]).toEqual([bg, bg])
 
   for (const [path, type] of [
     ['/favicon.ico', 'image/'],

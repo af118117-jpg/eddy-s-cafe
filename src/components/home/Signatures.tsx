@@ -6,19 +6,20 @@ import { DishText } from './DishText'
 
 /**
  * Small dish: a compact row (thumbnail + text) on phones, a stacked image and
- * text from 768px. `square` uses a 1:1 image there instead of 4:5, so two
- * stacked dishes match the height of the large one beside them.
+ * text from 768px. `stacked` (the two beside the large dish) crops wider than
+ * 4:5 there, 16:9 in the two-column layout and 1:1 from 1024px, so the pair
+ * comes out about as tall as the large dish instead of leaving a gap under it.
  */
-function SmallDish({ signature, square = false }: { signature: Signature; square?: boolean }) {
+function SmallDish({ signature, stacked = false }: { signature: Signature; stacked?: boolean }) {
   return (
     <article data-zoom-group className="flex gap-4 md:flex-col md:gap-4">
       <Reveal className="w-24 shrink-0 md:w-auto">
         <Photo
           image={dishImage(signature.item)}
           ratio="dish"
-          sizes={square ? photoSizes.signatureStacked : photoSizes.signatureAcross}
+          sizes={stacked ? photoSizes.signatureStacked : photoSizes.signatureAcross}
           zoom
-          className={cn(square && 'md:aspect-gallery')}
+          className={cn(stacked && 'md:aspect-editorial lg:aspect-gallery')}
         />
       </Reveal>
       <DishText item={signature.item} description={signature.summary} compact className="flex-1" />
@@ -61,7 +62,7 @@ export function Signatures() {
 
           <div className="col-span-4 flex flex-col gap-8 md:col-span-2 lg:col-span-4 lg:col-start-9 lg:justify-between">
             {stacked.map((signature) => (
-              <SmallDish key={signature.item.id} signature={signature} square />
+              <SmallDish key={signature.item.id} signature={signature} stacked />
             ))}
           </div>
 

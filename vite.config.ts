@@ -6,6 +6,7 @@ import { resolveConfigs } from 'imagetools-core'
 import { visualizer } from 'rollup-plugin-visualizer'
 import { defineConfig, type Plugin, type PluginOption } from 'vite'
 import { imagetools } from 'vite-imagetools'
+import { colorToken } from './scripts/tokens.ts'
 import { cafe } from './src/data/cafe.ts'
 import { ogImage, pageMeta, siteUrl, type PageMeta } from './src/data/site.ts'
 import { heroImage } from './src/lib/heroImage.ts'
@@ -46,14 +47,18 @@ const photoPreset = imagetools({
 })
 
 /**
- * Page routes, each served from its own HTML file: `/menu` from menu.html,
- * which static hosts and `vite preview` do without configuration. Any other
- * path gets index.html. Keep in step with src/app/routes.tsx.
+ * Each page's own HTML file: `/menu` is served from menu.html (`vite preview`
+ * and Netlify do that by default, Vercel with cleanUrls in vercel.json), and
+ * static hosts serve 404.html, with a 404 status, for any path without a file.
+ * `module` is the page's lazy chunk, if it has one. Keep in step with
+ * src/app/routes.tsx.
  */
-const PAGES = [
+const PAGES: readonly { file: string; module: string | null; meta: PageMeta }[] = [
   { file: 'index.html', module: 'src/pages/Home.tsx', meta: pageMeta.home },
   { file: 'menu.html', module: 'src/pages/Menu.tsx', meta: pageMeta.menu },
-] as const
+  // The not-found page is in the main chunk: nothing to preload.
+  { file: '404.html', module: null, meta: pageMeta.notFound },
+]
 
 const escapeHtml = (text: string) =>
   text.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')
@@ -72,6 +77,7 @@ function headTags(meta: PageMeta, { schema = false } = {}): string {
   return [
     `<title>${escapeHtml(meta.title)}</title>`,
     tag('name', 'description', meta.description),
+    tag('name', 'theme-color', colorToken('bg')),
     url ? `<link rel="canonical" href="${url}">` : tag('name', 'robots', 'noindex'),
     tag('property', 'og:type', 'website'),
     tag('property', 'og:site_name', cafe.name),
@@ -118,7 +124,8 @@ function pageHead(): Plugin {
  *   the srcset, sizes and media of the Hero's <picture> (src/lib/heroImage.ts),
  *   so the browser uses the preloaded file instead of fetching another.
  * index.html is the home page. The other pages' files are copies of it with
- * their own preloads and head (headTags), so the menu doesn't download the hero.
+ * their own preloads and head (headTags), so the menu doesn't download the
+ * hero and the not-found page isn't indexed.
  * Build only: in dev there are no final file names to point at.
  */
 function pageHtml(): Plugin {
@@ -147,10 +154,15 @@ function pageHtml(): Plugin {
         if (!html.includes(MARKER)) throw new Error(`index.html has no ${MARKER} comment`)
         const loaded = new Set([entry.fileName, ...entry.imports])
         for (const page of PAGES) {
+          const { module } = page
+          if (module === null) {
+            modulePreloads.set(page.file, '')
+            continue
+          }
           const chunk = Object.values(bundle).find(
-            (output) => output.type === 'chunk' && output.facadeModuleId?.endsWith(page.module),
+            (output) => output.type === 'chunk' && output.facadeModuleId?.endsWith(module),
           )
-          if (chunk?.type !== 'chunk') throw new Error(`No chunk for ${page.module}`)
+          if (chunk?.type !== 'chunk') throw new Error(`No chunk for ${module}`)
           const files = [chunk.fileName, ...chunk.imports].filter((file) => !loaded.has(file))
           modulePreloads.set(
             page.file,

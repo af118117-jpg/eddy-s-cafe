@@ -31,6 +31,17 @@ function restore(y: number): () => void {
   return stop
 }
 
+/**
+ * Whether this document came from a reload or Back/Forward, the only loads
+ * that should land where the reader was. A link from another site or a typed
+ * address is a fresh visit, though the tab's saved positions say otherwise.
+ */
+function documentFromHistory(): boolean {
+  if (typeof performance.getEntriesByType !== 'function') return true
+  const [load] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[]
+  return load?.type !== 'navigate'
+}
+
 function loadPositions(): Map<string, number> {
   try {
     const saved = window.sessionStorage.getItem(STORAGE_KEY)
@@ -59,6 +70,8 @@ export function ScrollRestorer() {
   const positions = useRef<Map<string, number> | null>(null)
   const currentKey = useRef(entryKey)
   const currentPath = useRef(pathname)
+  // The entry the document loaded with, until the reader moves on from it.
+  const firstEntry = useRef<string | null>(entryKey)
 
   useEffect(() => {
     window.history.scrollRestoration = 'manual'
@@ -101,8 +114,10 @@ export function ScrollRestorer() {
       positions.current.set(entryKey, window.scrollY)
       return
     }
+    if (entryKey !== firstEntry.current) firstEntry.current = null
+    const freshVisit = firstEntry.current !== null && !documentFromHistory()
     const saved = positions.current.get(entryKey)
-    if (navigationType === NavigationType.Pop && saved !== undefined) {
+    if (navigationType === NavigationType.Pop && saved !== undefined && !freshVisit) {
       return restore(saved)
     } else if (!hash) {
       window.scrollTo(0, 0)
