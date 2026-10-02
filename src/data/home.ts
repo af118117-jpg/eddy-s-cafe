@@ -1,13 +1,14 @@
 /*
  * Home page content: copy and photo slots. Which dishes appear is set in
  * home-selection.ts; names, descriptions and prices come from the menu data.
- * Search for "TODO(copy)" for placeholders to replace.
+ * Search for "TODO(copy)" and "TODO(photo)" for placeholders to replace.
  */
 import drinksPhoto from '/assets-source/drinks.jpg?aspect=4:5&photo'
 import feastsPhoto from '/assets-source/feasts.jpg?aspect=4:5&photo'
-import heroNarrow from '/assets-source/hero.jpg?aspect=4:5&avifQuality=40&photo'
-import heroWide from '/assets-source/hero.jpg?aspect=16:9&avifQuality=40&photo'
+import heroNarrow from '/assets-source/hero.jpg?aspect=4:5&avifQuality=25&photo'
+import heroWide from '/assets-source/hero.jpg?aspect=16:9&avifQuality=25&photo'
 import introPhoto from '/assets-source/intro.jpg?aspect=4:5&photo'
+import mapPhoto from '/assets-source/map.jpg?aspect=1:1&photo'
 import spacePhoto from '/assets-source/space.jpg?aspect=16:9&photo'
 import { heroImage } from '@/lib/heroImage'
 import { describeHours } from '@/lib/hours'
@@ -18,9 +19,10 @@ import type { ImageAsset, Picture } from './images'
 import { feastServes, type MenuItem, type Serves } from './menu'
 
 /*
- * Photos come from assets-source/ (see its README for what goes where). For
- * now every file there is a cream placeholder; the alt texts describe the
- * photo the README suggests for each slot. Rewrite one if you use another photo.
+ * Photos come from assets-source/. They are the café's own photos from its
+ * Google Maps listing and its dish posters (the README there gives each
+ * file's source and crop); swap in originals from the café when it has them.
+ * Each alt text describes the photo in that file: rewrite it with the photo.
  */
 
 /** Gallery photos in file-name order (01.jpg first), cropped square. */
@@ -37,10 +39,10 @@ export const galleryAlts: Readonly<Record<string, string>> = {
   '03': 'A coffee in an eddy’s mug on a wooden table',
   '04': 'Orange and red juices in glass bottles on a balcony',
   '05': 'An eddy’s takeaway bag on a table by the stairs',
-  '06': 'Grilled chicken with fries and a creamy sauce',
+  '06': 'Two poached eggs on toast with hollandaise, potatoes and sautéed mushrooms',
   '07': 'The eddy’s café sign on the front of the building',
-  '08': 'The front of eddy’s Café, with a red carpet at the door',
-  '09': 'The coffee bar under the eddy’s sign, with the drinks boards above',
+  '08': 'Syrup bottles and espresso machines on the coffee counter',
+  '09': 'Grey armchairs and wooden tables by the window in the dining room',
 }
 
 const galleryImages: ImageAsset[] = Object.entries(galleryFiles).map(([path, picture]) => ({
@@ -102,9 +104,8 @@ export const home = {
   hero: {
     positioning:
       'An all-day café and grill on Green Avenue, from Middle Eastern charcoal to specialty coffee.',
-    // Decorative: a backdrop under the wordmark, which with the line below says it all.
     image: {
-      alt: '',
+      alt: 'Inside eddy’s: armchairs, sofas and wooden tables in the dining room',
       picture: heroNarrow,
       art: { media: heroImage.wideMedia, picture: heroWide },
     } satisfies ImageAsset,
@@ -151,9 +152,9 @@ export const home = {
       if (!serves) throw new Error(`No serving size for feast: ${id}`)
       return { item: dish(id), serves, description: lookup(feastDescriptions, id, 'description') }
     }),
-    // TODO(photo): no photo of a platter yet; the alt text describes one from the menu.
+    // TODO(photo): there's no photo of a sharing platter yet, so this is a grilled plate.
     image: {
-      alt: 'A sharing platter of grilled meats with rice, hummus and pita bread',
+      alt: 'Grilled chicken with fries, vegetables and a creamy sauce',
       picture: feastsPhoto,
     } satisfies ImageAsset,
   },
@@ -177,7 +178,7 @@ export const home = {
     caption: `Dine in at ${cafe.address.street}, ${cafe.address.area}.`,
     captionIsPlaceholder: true as boolean,
     image: {
-      alt: 'A corner table by the stairs, under a square light',
+      alt: 'A corner table with a sofa bench beside the stairs',
       picture: spacePhoto,
     } satisfies ImageAsset,
   },
@@ -191,10 +192,12 @@ export const home = {
   visit: {
     title: 'Visit',
     hoursTitle: 'Opening hours',
-    // TODO(photo): no map image in the source material, so this is an empty cream square inside
-    // the Google Maps link. Add one (a static map you may publish, or an illustrated one) as
-    // assets-source/map.jpg and import it here like the photos above.
-    mapImage: { alt: '' } satisfies ImageAsset,
+    // The storefront, so visitors know what to look for, inside the Google Maps link. (No map
+    // image in the source material; an illustrated map could replace it as assets-source/map.jpg.)
+    mapImage: {
+      alt: 'The front of eddy’s Café on Green Avenue West',
+      picture: mapPhoto,
+    } satisfies ImageAsset,
   },
 
   closing: {

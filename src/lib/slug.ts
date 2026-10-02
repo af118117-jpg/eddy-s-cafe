@@ -1,5 +1,5 @@
 /**
- * "Tropical and Asian Mains" → "tropical-and-asian-mains", "Eddy' s Khaas" → "eddys-khaas".
+ * "Tropical and Asian Mains" → "tropical-and-asian-mains", "Eddy's Khaas" → "eddys-khaas".
  * Same rules as scripts/import-menu.mjs, so ids and anchors look alike.
  */
 export function slugify(value: string): string {

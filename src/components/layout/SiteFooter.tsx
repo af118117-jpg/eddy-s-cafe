@@ -26,7 +26,12 @@ function FooterHeading({ id, children }: { id?: string; children: ReactNode }) {
  */
 export function SiteFooter() {
   return (
-    <footer data-surface="ink" className="pt-section pb-12">
+    // On phones the fixed action bar sits over the bottom of the page: the footer (always
+    // last) runs on underneath it, so its last line clears the bar and no white strip shows.
+    <footer
+      data-surface="ink"
+      className="pt-section pb-[calc(var(--spacing-12)+var(--action-bar-space))]"
+    >
       <div className="container-wide grid grid-cols-4 gap-x-gutter-sm gap-y-12 lg:grid-cols-12 lg:gap-x-gutter-lg">
         <div className="col-span-4 lg:col-span-4">
           <Link

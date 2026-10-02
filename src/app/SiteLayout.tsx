@@ -59,7 +59,7 @@ export function SiteLayout({ pages }: SiteLayoutProps) {
   useDocumentHead(handle.meta ?? pageMeta.notFound)
 
   return (
-    <div className="relative flex min-h-svh flex-col pb-(--action-bar-space)">
+    <div className="relative flex min-h-svh flex-col">
       <div
         ref={sentinelRef}
         aria-hidden="true"

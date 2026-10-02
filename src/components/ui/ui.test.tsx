@@ -63,9 +63,9 @@ describe('Price', () => {
 describe('ResponsiveImage', () => {
   const photo = { src: '/images/a.jpg', alt: 'A dish', width: 800, height: 1000 }
 
-  it('is lazy and async by default', () => {
+  it('is lazy and async by default', async () => {
     render(<ResponsiveImage {...photo} ratio="dish" />)
-    const img = screen.getByRole('img', { name: 'A dish' })
+    const img = await screen.findByRole('img', { name: 'A dish' })
     expect(img).toHaveAttribute('loading', 'lazy')
     expect(img).toHaveAttribute('decoding', 'async')
     expect(img).not.toHaveAttribute('fetchpriority')
@@ -79,9 +79,11 @@ describe('ResponsiveImage', () => {
     expect(img).toHaveAttribute('fetchpriority', 'high')
   })
 
-  it('reserves the intrinsic ratio when no ratio is given', () => {
+  it('reserves the intrinsic ratio when no ratio is given', async () => {
     render(<ResponsiveImage {...photo} />)
-    expect(screen.getByRole('img').closest('picture')).toHaveStyle({ aspectRatio: '800 / 1000' })
+    expect((await screen.findByRole('img')).closest('picture')).toHaveStyle({
+      aspectRatio: '800 / 1000',
+    })
   })
 
   it('renders a hidden placeholder of the right ratio when there is no photo yet', () => {

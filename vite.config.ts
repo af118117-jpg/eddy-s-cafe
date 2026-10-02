@@ -20,8 +20,10 @@ const PHOTO_WIDTHS = [480, 800, 1200, 1600, 2400]
  * cropped to that ratio and encoded as AVIF, WebP and JPEG at each width in
  * PHOTO_WIDTHS, as a <picture> description ({ sources, img }; see
  * src/data/images.ts). Widths the source can't fill are left out instead of
- * being upscaled. `&avifQuality=40` lowers the quality of the AVIF files only
- * (sharp's default is 50), for the hero, which sits under dark scrims.
+ * being upscaled; the source's own width is added when it falls between two.
+ * `&avifQuality=25` lowers the quality of the AVIF files only (sharp's default
+ * is 50), for the hero: it sits under dark scrims, and as the largest paint its
+ * size decides LCP.
  */
 const photoPreset = imagetools({
   defaultDirectives: async (url, metadata) => {
@@ -32,8 +34,11 @@ const photoPreset = imagetools({
     const { width, height } = (await metadata()).autoOrient
     const maxWidth = Math.floor(Math.min(width, (height * ratioWidth) / ratioHeight))
     const widths = PHOTO_WIDTHS.filter((w) => w <= maxWidth)
+    // A source between two widths (a 700px poster crop) also gets its own full width, so
+    // it isn't capped at the size below: still never larger than the source.
+    if (maxWidth > (widths.at(-1) ?? 0) * 1.1) widths.push(maxWidth)
     return new URLSearchParams({
-      w: (widths.length > 0 ? widths : [maxWidth]).join(';'),
+      w: widths.join(';'),
       format: 'avif;webp;jpg',
       as: 'picture',
     })
@@ -109,7 +114,8 @@ function pageHead(): Plugin {
     name: 'eddys:page-head',
     transformIndexHtml(html) {
       if (!html.includes(MARKER)) throw new Error(`index.html has no ${MARKER} comment`)
-      return html.replace(MARKER, headTags(pageMeta.home, { schema: true }))
+      // A replacer function: a replacement string would read "$&" or "$$" as patterns.
+      return html.replace(MARKER, () => headTags(pageMeta.home, { schema: true }))
     },
   }
 }
@@ -180,9 +186,11 @@ function pageHtml(): Plugin {
           // Vite swaps the __VITE_ASSET__ placeholders in the srcset for the final URLs.
           return `<link rel="preload" as="image" type="image/avif" fetchpriority="high" media="${media}" imagesrcset="${srcset}" imagesizes="${sizes}">`
         })
+        // Replacer functions, never replacement strings: Vite's asset ids can contain "$", and a
+        // "$$" in one turned into "$" here, an id the build then couldn't find (it failed now and then).
         return html
-          .replace(MARKER, hero.join('\n    '))
-          .replace('</head>', `  ${modulePreloads.get('index.html') ?? ''}\n  </head>`)
+          .replace(MARKER, () => hero.join('\n    '))
+          .replace('</head>', () => `  ${modulePreloads.get('index.html') ?? ''}\n  </head>`)
       },
     },
     generateBundle: {
@@ -200,8 +208,8 @@ function pageHtml(): Plugin {
           if (page.file === 'index.html') continue
           const html: string = home
             .replace(/\s*<link rel="preload" as="image"[^>]*>/g, '')
-            .replace(homePreloads, modulePreloads.get(page.file) ?? '')
-            .replace(homeHead, headTags(page.meta))
+            .replace(homePreloads, () => modulePreloads.get(page.file) ?? '')
+            .replace(homeHead, () => headTags(page.meta))
           if (html.includes(homePreloads) || html.includes(homeHead))
             throw new Error(`Could not adapt index.html for ${page.file}`)
           this.emitFile({ type: 'asset', fileName: page.file, source: html })

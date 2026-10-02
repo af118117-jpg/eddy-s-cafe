@@ -1,6 +1,7 @@
 import { act, render, renderHook, screen } from '@testing-library/react'
 import { useRef, useState } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { Photo, Reveal } from '@/components/ui'
 import { MOTION_CLASS, watchMotionPreference } from '@/lib/motion'
 import { useCrossfade } from './useCrossfade'
 import { useInView } from './useInView'
@@ -112,6 +113,93 @@ describe('useInView', () => {
     vi.stubGlobal('IntersectionObserver', undefined)
     render(<Probe />)
     expect(screen.getByText('in')).toBeInTheDocument()
+  })
+
+  describe('with a fallback', () => {
+    function Fallback() {
+      const ref = useRef<HTMLDivElement>(null)
+      const inView = useInView(ref, { fallbackMs: 1500 })
+      return <div ref={ref}>{inView ? 'in' : 'out'}</div>
+    }
+    beforeEach(() => {
+      vi.useFakeTimers()
+    })
+    afterEach(() => {
+      vi.useRealTimers()
+    })
+
+    it('turns true if the observer never reports, so nothing stays hidden', () => {
+      render(<Fallback />)
+      act(() => {
+        vi.advanceTimersByTime(1499)
+      })
+      expect(screen.getByText('out')).toBeInTheDocument()
+      act(() => {
+        vi.advanceTimersByTime(1)
+      })
+      expect(screen.getByText('in')).toBeInTheDocument()
+    })
+
+    it('waits for the reader once the observer has reported', () => {
+      render(<Fallback />)
+      fire(false)
+      act(() => {
+        vi.advanceTimersByTime(5000)
+      })
+      expect(screen.getByText('out')).toBeInTheDocument()
+    })
+  })
+})
+
+describe('Reveal', () => {
+  /** Each observer Reveal creates, by its rootMargin, so a test can report to one. */
+  const observers = new Map<string, IntersectionObserverCallback>()
+  beforeEach(() => {
+    observers.clear()
+    vi.stubGlobal(
+      'IntersectionObserver',
+      class {
+        constructor(cb: IntersectionObserverCallback, init?: IntersectionObserverInit) {
+          observers.set(init?.rootMargin ?? '', cb)
+        }
+        observe = vi.fn()
+        disconnect = vi.fn()
+      },
+    )
+  })
+  const report = (rootMargin: string, isIntersecting: boolean) => {
+    act(() => {
+      observers.get(rootMargin)?.(
+        [{ isIntersecting } as IntersectionObserverEntry],
+        {} as IntersectionObserver,
+      )
+    })
+  }
+  const picture = {
+    sources: { avif: '/a-480.avif 480w', webp: '/a-480.webp 480w', jpeg: '/a-480.jpg 480w' },
+    img: { src: '/a-480.jpg', w: 480, h: 600 },
+  }
+
+  it('loads its photo a screen ahead, while it is still hidden, then reveals it', async () => {
+    const { container } = render(
+      <Reveal>
+        <Photo image={{ alt: 'A dish', picture }} ratio="dish" sizes="100vw" />
+      </Reveal>,
+    )
+    const wrapper = container.querySelector('[data-reveal]')
+    const img = await screen.findByRole('img', { name: 'A dish' })
+    expect(observers.size).toBe(2)
+    report('0px 0px -10% 0px', false)
+    report('100% 0px', false)
+    expect(img).toHaveAttribute('loading', 'lazy')
+
+    // A screen away: the clip-path still hides it, so the browser's lazy loading wouldn't start.
+    report('100% 0px', true)
+    expect(img).toHaveAttribute('loading', 'eager')
+    expect(wrapper).toHaveAttribute('data-reveal', 'hidden')
+
+    report('0px 0px -10% 0px', true)
+    expect(wrapper).toHaveAttribute('data-reveal', 'shown')
   })
 })
 

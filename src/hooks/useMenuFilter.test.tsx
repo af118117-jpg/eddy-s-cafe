@@ -113,7 +113,9 @@ describe('useMenuFilter: reading the URL', () => {
       filterMenu(menuSections, { group: null, category: null, query: 'eddys' }).sections,
     )
     expect(eddys).toContain("Eddy's Katsu Club Sandwich")
-    expect(eddys).toContain("Eddy' s Khaas") // as published
+    expect(eddys).toContain("Eddy's Khaas")
+    // A stray space after the apostrophe (as the source once had) still matches.
+    expect(normalizeSearch("Eddy' s")).toBe(normalizeSearch('eddys'))
 
     expect(normalizeSearch('Café  Latte & Crème')).toBe('cafe latte and creme')
     const cafe = filterMenu(menuSections, { group: null, category: null, query: 'café latte' })

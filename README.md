@@ -66,22 +66,22 @@ Two smaller lists sit next to it:
 
 ## Adding photos
 
-Photos go in [`assets-source/`](assets-source/), and [its README](assets-source/README.md) lists every slot: file name, where it appears, its crop and the suggested photo. Every file there today is a cream placeholder with its own name printed on it, so **replace them all before launch**.
+Photos go in [`assets-source/`](assets-source/), and [its README](assets-source/README.md) lists every slot: file name, where it appears, its crop and the photo in it. They are the café’s own photos from its Google Maps listing and its dish posters, copied from `eddys-cafe-assets/`; before launch, confirm the café may publish each one (see that README).
 
-To use a photo, save it over the placeholder with the same name, as a JPEG. The build crops it to the slot’s ratio (centred) and writes AVIF, WebP and JPEG copies at 480 to 2400px wide, so give it at least 2400px of width after cropping where you can (1600px for dishes and the gallery). It never enlarges a small photo; it just makes fewer sizes.
+To change a photo, save the new one over the file with the same name, as a JPEG. The build crops it to the slot’s ratio (centred) and writes AVIF, WebP and JPEG copies at 480 to 2400px wide, so give it at least 2400px of width after cropping where you can (1600px for dishes and the gallery). It never enlarges a small photo: it makes the sizes it can, plus one at the photo’s own width.
 
 Then write its alt text, a short description of what the photo shows:
 
-| Photo                                | Alt text                                              |
-| ------------------------------------ | ----------------------------------------------------- |
-| `intro`, `feasts`, `drinks`, `space` | the `image.alt` of that section in `src/data/home.ts` |
-| `gallery/01.jpg` … `09.jpg`          | `galleryAlts` in `src/data/home.ts`                   |
-| `dishes/<menu id>.jpg`               | `dishAlts` in `src/data/dish-photos.ts`               |
-| `hero.jpg`                           | none: it’s a backdrop under the wordmark              |
+| Photo                                        | Alt text                                              |
+| -------------------------------------------- | ----------------------------------------------------- |
+| `hero`, `intro`, `feasts`, `drinks`, `space` | the `image.alt` of that section in `src/data/home.ts` |
+| `gallery/01.jpg` … `09.jpg`                  | `galleryAlts` in `src/data/home.ts`                   |
+| `dishes/<menu id>.jpg`                       | `dishAlts` in `src/data/dish-photos.ts`               |
+| `map.jpg`                                    | `visit.mapImage.alt` in `src/data/home.ts`            |
 
 - **Dishes.** A photo named after a menu id (`dishes/adana-kebab.jpg`) is picked up automatically. It shows on the home page and as a thumbnail on the menu page. The eight dishes under “From the menu” on the home page show photos only once all eight have one; until then they appear as a text list.
 - **Hero.** One photo, cropped 4:5 on phones and 16:9 from 768px. Keep the subject away from the bottom-left corner, where the wordmark sits.
-- **Map.** The Visit section has an empty square for a map image (`mapImage` in `home.ts`, marked TODO). Add a map you’re allowed to publish as `assets-source/map.jpg` and import it there like the other photos.
+- **Map.** The Visit section shows the storefront (`map.jpg`) inside its Google Maps link, as there’s no map image. An illustrated map could replace it under the same name.
 
 The unit tests fail if a photo has no alt text.
 
@@ -98,7 +98,7 @@ Everything else reads from this file: the hours table, the live “Open now / Cl
 
 ## Before launch
 
-- **Photos:** replace every placeholder in `assets-source/` (see above).
+- **Photos:** confirm the café may use each photo in `assets-source/` (some Google Maps photos may be customers’ uploads), and ask for its original dish photos, which are sharper than the posters.
 - **Domain:** the site doesn’t have one yet, so `https://eddys-cafe.example` stands in. Set the real address in `src/data/site.ts` (`siteUrl`), `public/robots.txt` and `public/sitemap.xml`; a test fails if the three disagree.
 - **Copy:** search the code for `TODO` for the placeholder texts and the open questions.
 - **Instagram:** `@theeddyscafe` was read off a table card in a photo and hasn’t been checked; confirm it’s the café’s account.

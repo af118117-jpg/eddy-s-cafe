@@ -35,6 +35,36 @@ test('every control is at least 44 × 44 px on a phone', async ({ page }) => {
   expect(Math.min(skip?.width ?? 0, skip?.height ?? 0)).toBeGreaterThanOrEqual(44)
 })
 
+test('on phones the footer runs on under the action bar, and its last line clears it', async ({
+  page,
+}) => {
+  test.skip((page.viewportSize()?.width ?? 0) >= MD, 'Phone widths only')
+  for (const path of ['/', '/menu']) {
+    await page.goto(path)
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
+    // The menu renders its later sections just after the first paint.
+    await page.waitForTimeout(500)
+    await page.evaluate(() => {
+      window.scrollTo(0, document.documentElement.scrollHeight)
+    })
+    await page.waitForTimeout(300)
+    const layout = await page.evaluate(() => {
+      const bar = document.querySelector('nav[aria-label="Quick actions"]')?.getBoundingClientRect()
+      const footer = document.querySelector('footer')?.getBoundingClientRect()
+      const last = [...document.querySelectorAll('footer p, footer a')].at(-1)
+      return {
+        barTop: bar?.top ?? 0,
+        barBottom: bar?.bottom ?? 0,
+        footerBottom: footer?.bottom ?? 0,
+        lastLineBottom: last?.getBoundingClientRect().bottom ?? Infinity,
+      }
+    })
+    expect(layout.lastLineBottom, path).toBeLessThanOrEqual(layout.barTop)
+    // No strip of page background between the footer and the bottom of the screen.
+    expect(layout.footerBottom, path).toBeGreaterThanOrEqual(layout.barBottom - 1)
+  }
+})
+
 test('focus is never hidden behind the sticky header or the action bar', async ({ page }) => {
   for (const path of ['/', '/menu']) {
     await page.goto(path)

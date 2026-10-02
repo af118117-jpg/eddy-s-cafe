@@ -52,8 +52,10 @@
     --header-height: var(--spacing-16);
     /* Height of the announcement bar while it's shown (see :has rule below). */
     --announcement-height: var(--spacing-0);
-    /* Space kept free at the bottom for the mobile action bar (below md). */
-    --action-bar-space: calc(var(--spacing-control-lg) + env(safe-area-inset-bottom));
+    /* The mobile action bar's full height (below md): its row, its top border and the safe area. */
+    --action-bar-space: calc(
+      var(--spacing-control-lg) + var(--border-hairline) + env(safe-area-inset-bottom)
+    );
 
     @variant md {
       --page-margin: var(--spacing-margin-md);

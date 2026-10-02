@@ -34,23 +34,21 @@ describe('home content', () => {
     }
   })
 
-  it('describes every photo; only the hero backdrop is decorative', () => {
+  it('has a photo with written alt text in every slot, the hero and the map included', () => {
     const images: ImageAsset[] = [
+      home.hero.image,
       home.intro.image,
       home.feasts.image,
       home.drinks.image,
       home.space.image,
+      home.visit.mapImage,
       ...home.gallery.images,
     ]
     for (const image of images) {
       expect(image.picture).toBeDefined()
-      expect(image.alt).not.toBe('')
+      expect(image.alt.length, image.alt).toBeGreaterThan(10)
       expect(image.alt).not.toMatch(/TODO/)
     }
-    expect(home.hero.image.alt).toBe('')
-    // The map slot has no photo yet, so it stays a hidden placeholder.
-    const map: ImageAsset = home.visit.mapImage
-    expect(map.picture).toBeUndefined()
   })
 
   it('has alt text written for every gallery and dish photo file', () => {
