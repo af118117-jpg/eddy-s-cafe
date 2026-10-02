@@ -44,7 +44,7 @@ export function restaurantSchema() {
       closes: days[0]?.closes,
     })),
     // The Instagram profile is still unverified (see cafe.ts); confirm before launch.
-    sameAs: [links.googleMaps, links.foodpanda, links.instagram],
+    sameAs: [links.googleMaps, links.foodpanda, links.facebook, links.instagram],
   }
 }
 

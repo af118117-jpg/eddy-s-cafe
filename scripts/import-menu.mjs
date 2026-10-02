@@ -52,7 +52,7 @@ function parseCsv(text) {
 const slug = (value) =>
   value
     .toLowerCase()
-    .replace(/['’]\s*/g, '') // "Eddy' s Khaas" (as published) → "eddys-khaas"
+    .replace(/['’]\s*/g, '') // "Eddy's Khaas", even with a stray space ("Eddy' s") → "eddys-khaas"
     .replace(/&/g, ' and ')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '')

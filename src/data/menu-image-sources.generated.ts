@@ -320,7 +320,7 @@ export const menuImageSources: Readonly<
     source: '03-Food-Images/eddys-khaas.jpg',
     sourceKind: 'reference',
   },
-  'mama-mia-pasta': {
+  'mamma-mia-pasta': {
     source: '03-Food-Images/mama-mia-pasta.jpg',
     sourceKind: 'reference',
   },

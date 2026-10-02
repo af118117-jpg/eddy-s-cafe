@@ -45,6 +45,26 @@ describe('Site frame', () => {
     )
     expect(within(header).getByRole('link', { name: 'Visit' })).not.toHaveAttribute('aria-current')
   })
+
+  it('links to the café’s Facebook page and Instagram from the footer, in a new tab', async () => {
+    renderAt('/')
+    await screen.findByRole('main')
+    const footer = screen.getByRole('contentinfo')
+    for (const [name, href] of [
+      [
+        'Facebook (opens in a new tab)',
+        'https://www.facebook.com/p/eddys-Caf%C3%A9-61585277011632/',
+      ],
+      ['Instagram (opens in a new tab)', 'https://www.instagram.com/theeddyscafe/'],
+    ]) {
+      const link = within(footer).getByRole('link', { name })
+      expect(link).toHaveAttribute('href', href)
+      expect(link).toHaveAttribute('target', '_blank')
+      expect(link).toHaveAttribute('rel', 'noopener noreferrer')
+      // The icon is decoration: the visible name is the link's name.
+      expect(link.querySelector('svg')).toHaveAttribute('aria-hidden', 'true')
+    }
+  })
 })
 
 describe('AnnouncementBar', () => {

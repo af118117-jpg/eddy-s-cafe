@@ -1,7 +1,8 @@
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
-import { Button } from '@/components/ui'
+import { Button, Facebook, Icon, Instagram } from '@/components/ui'
 import { cafe, primaryNav } from '@/data'
+import { cn } from '@/lib/cn'
 import { summariseHours } from '@/lib/hours'
 import { NavItemLink } from './NavItemLink'
 import { Wordmark } from './Wordmark'
@@ -11,6 +12,12 @@ const hours = summariseHours(cafe.openingHours)
 
 // At least 44px both ways, even for short labels like "Visit".
 const listLinkClass = 'inline-flex min-h-control-md min-w-control-md items-center'
+
+// They open in a new tab, so the site stays where the visitor left it.
+const socialLinks = [
+  { name: 'Facebook', href: cafe.links.facebook, icon: Facebook },
+  { name: 'Instagram', href: cafe.links.instagram, icon: Instagram },
+]
 
 function FooterHeading({ id, children }: { id?: string; children: ReactNode }) {
   return (
@@ -26,9 +33,14 @@ function FooterHeading({ id, children }: { id?: string; children: ReactNode }) {
  */
 export function SiteFooter() {
   return (
-    <footer data-surface="ink" className="pt-section pb-12">
+    // On phones the fixed action bar sits over the bottom of the page: the footer (always
+    // last) runs on underneath it, so its last line clears the bar and no white strip shows.
+    <footer
+      data-surface="ink"
+      className="pt-section pb-[calc(var(--spacing-12)+var(--action-bar-space))]"
+    >
       <div className="container-wide grid grid-cols-4 gap-x-gutter-sm gap-y-12 lg:grid-cols-12 lg:gap-x-gutter-lg">
-        <div className="col-span-4 lg:col-span-4">
+        <div className="col-span-4 lg:col-span-3">
           <Link
             to="/"
             aria-label={`${cafe.name}, home`}
@@ -85,14 +97,23 @@ export function SiteFooter() {
           </dl>
         </div>
 
-        <div className="col-span-4 flex flex-col gap-3 sm:col-span-2 lg:col-span-1">
+        <div className="col-span-4 flex flex-col gap-3 sm:col-span-2 lg:col-span-2">
           <FooterHeading>Follow</FooterHeading>
           <ul className="-my-2">
-            <li>
-              <a href={cafe.links.instagram} className={listLinkClass}>
-                <span className="link-draw">Instagram</span>
-              </a>
-            </li>
+            {socialLinks.map(({ name, href, icon }) => (
+              <li key={name}>
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${name} (opens in a new tab)`}
+                  className={cn(listLinkClass, 'gap-2')}
+                >
+                  <Icon icon={icon} />
+                  <span className="link-draw">{name}</span>
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

@@ -1,5 +1,7 @@
+import { useContext } from 'react'
 import type { ImageAsset, Picture } from '@/data/images'
 import { cn } from '@/lib/cn'
+import { RevealLoadContext } from './revealLoad'
 
 /**
  * dish 4:5 · editorial 16:9 · editorial-wide 21:9 · gallery 1:1.
@@ -65,9 +67,11 @@ export type ResponsiveImageProps = LoadedImageProps | PlaceholderImageProps
 
 /**
  * <picture> in a fixed-ratio frame with a cream placeholder, so nothing moves
- * when the image arrives. Lazy and async unless `priority` is set.
+ * when the image arrives. Lazy and async unless `priority` is set, or a
+ * Reveal around it says it's about to be shown.
  */
 export function ResponsiveImage(props: ResponsiveImageProps) {
+  const loadNow = useContext(RevealLoadContext)
   if (props.src === undefined) {
     const { alt, ratio, zoom = false, className } = props
     return (
@@ -135,7 +139,7 @@ export function ResponsiveImage(props: ResponsiveImageProps) {
         alt={alt}
         width={width}
         height={height}
-        loading={priority ? 'eager' : 'lazy'}
+        loading={priority || loadNow ? 'eager' : 'lazy'}
         decoding={priority ? 'auto' : 'async'}
         {...priorityAttributes}
         className="size-full object-cover"

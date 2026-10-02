@@ -97,9 +97,9 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     category: 'Pizza',
     section: 'food',
   },
-  'mama-mia-pasta': {
-    id: 'mama-mia-pasta',
-    name: 'Mama Mia Pasta',
+  'mamma-mia-pasta': {
+    id: 'mamma-mia-pasta',
+    name: 'Mamma Mia Pasta',
     description: 'Spaghetti pasta cooked in tomato sauce, chicken cubes & served with garlic bread',
     price: 1699,
     category: 'Pasta',
@@ -150,7 +150,7 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
   },
   'eddys-khaas': {
     id: 'eddys-khaas',
-    name: "Eddy' s Khaas",
+    name: "Eddy's Khaas",
     description:
       'Servig for 6 persond. The ultimate Middle Eastern feast featuring premium grilled chicken, lamb, fish, served with rice, hummus, pita bread, sauces, & fattoush salad',
     price: 8999,

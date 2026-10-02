@@ -60,6 +60,12 @@ export const cafe = {
     foodpanda: 'https://www.foodpanda.pk/restaurant/i9ta/eddys-cafe',
     /** UNVERIFIED: read off an in-store table card; the profile hasn't been opened. */
     instagram: 'https://www.instagram.com/theeddyscafe/',
+    /**
+     * Added at the user's request on 2026-10-02 (restaurant-info.txt says "Not publicly
+     * found"). The page is titled "eddy's Café | Faisalabad". The www address, without
+     * the ?_rdc=1&_rdr that Facebook adds when it redirects to web.facebook.com.
+     */
+    facebook: 'https://www.facebook.com/p/eddys-Caf%C3%A9-61585277011632/',
   },
   instagramHandle: '@theeddyscafe',
   /** Google Maps: "Rs 1,000-6,000 per person", as reported by 168 people. */

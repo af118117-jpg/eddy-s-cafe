@@ -42,7 +42,7 @@ Playwright's own Chromium isn't installed on this machine; run e2e against the i
 ```
 src/app                 routes.tsx, SiteLayout (app shell), scroll + focus management
 src/components/layout   AnnouncementBar, SiteHeader, MobileNav, MobileActionBar, SiteFooter, SkipLink
-src/components/ui       Button, Chip, Container, Icon, Price, ResponsiveImage (Photo), Reveal, SectionHeading, ServesLabel
+src/components/ui       Button, Chip, Container, Icon, Price, ResponsiveImage (Photo), Reveal, SectionHeading, ServesLabel, brandIcons (Facebook, Instagram: lucide 1.x has none)
 src/components/home     home page sections
 src/components/menu     menu page: MenuToolbar (GroupTabs, CategoryChips, MenuSearch, ChipRow), MenuList, EmptyState
 src/pages               route pages (the only default exports); _Styleguide is dev-only
@@ -84,8 +84,8 @@ reports                 analyze and Lighthouse output (git-ignored)
 - `src/data/menu.ts` holds types, the 8 groups and the category→group mapping, and has no runtime import of the menu, so the home page doesn't bundle all 182 items. Import the full list from `@/data/menu-items` (menu page only).
 - Home copy and photo slots live in `src/data/home.ts`; placeholders are marked `TODO(copy)` / `TODO(photo)`. Copy never restates the hours or address: build it from `cafe.ts` (`describeHours`, `dailyOpening` in `src/lib/hours.ts`).
 - MenuPreview shows dish photos only once all eight featured dishes have one; until then it's a text list (no empty frames). The Visit section has quiet Call/WhatsApp links; the big Call/WhatsApp/Directions buttons belong to ClosingCTA right after it.
-- Photos live in `assets-source/` (all cream placeholders for now; its README says what goes where) and are imported as `file.jpg?aspect=4:5&photo`: the `photo` preset in `vite.config.ts` crops them and writes AVIF, WebP and JPEG at 480/800/1200/1600/2400 (never upscaled). `ImageAsset` = `{ alt, picture?, art? }`; `<Photo image={asset} ratio=… sizes=… />` renders the <picture>, or a cream placeholder (aria-hidden) when there is no `picture`. Every `sizes` value comes from `src/lib/photoSizes.ts`, worked out from the grid; `tests/e2e/images.spec.ts` checks them against the rendered width.
-- The hero is art-directed (4:5 below 768px, 16:9 above, AVIF at quality 40 under its scrims). Its media and sizes live in `src/lib/heroImage.ts`, shared by the Hero and the preload in index.html: change them in one place or the browser downloads the hero twice.
+- Photos live in `assets-source/`: the café's own, copied and cropped from `eddys-cafe-assets/` (its README lists each file's source and crop, and that the café still has to confirm it may publish them). They are imported as `file.jpg?aspect=4:5&photo`: the `photo` preset in `vite.config.ts` crops them and writes AVIF, WebP and JPEG at 480/800/1200/1600/2400, never upscaled, plus the source's own width when it falls between two. `ImageAsset` = `{ alt, picture?, art? }`; `<Photo image={asset} ratio=… sizes=… />` renders the <picture>, or a cream placeholder (aria-hidden) when there is no `picture`. Every `sizes` value comes from `src/lib/photoSizes.ts`, worked out from the grid; `tests/e2e/images.spec.ts` checks them against the rendered width.
+- The hero is art-directed (4:5 below 768px, 16:9 above, AVIF at quality 25: it sits under dark scrims, and as the largest paint its bytes decide LCP). Its media and sizes live in `src/lib/heroImage.ts`, shared by the Hero and the preload in index.html: change them in one place or the browser downloads the hero twice.
 - Dish photos: `assets-source/dishes/<menu id>.jpg` (`src/data/dish-photos.ts`) with alt text in `dishAlts`; gallery photos in name order with `galleryAlts` in `home.ts`. Tests require alt text for each.
 - Opening status: `useOpenStatus()` works in the café's time zone (`cafe.timeZone`, Asia/Karachi) and treats 00:30 as part of the previous day's session.
 - `/menu#coffee-tea` is linked from the home page: the menu page gives each group's wrapper its group id and each category block its own slug id (`#hot-coffee`).
@@ -108,7 +108,7 @@ reports                 analyze and Lighthouse output (git-ignored)
 - No animation libraries. CSS animations/transitions, the Web Animations API and View Transitions only.
 - `src/lib/motion.ts` adds `js-motion` to `<html>` before the first render, only while reduced motion is off, and follows changes. Every hide-before-reveal style lives under `.js-motion` in base.css, so content is visible without it.
 - Only transform, opacity and clip-path move; colours may fade; layout properties never animate.
-- Hero entrance (`data-entrance`, first visit per page load only), `Reveal` (clip-path wipe, Signatures/SpaceFeature/Gallery photos only, never text), hover zoom (`Photo zoom`, triggered by an ancestor link or `data-zoom-group`), drawn link underlines (`link-draw` / `link-rest` on the span around link text).
+- Hero entrance (`data-entrance`, first visit per page load only), `Reveal` (clip-path wipe, Signatures/SpaceFeature/Gallery photos only, never text; while hidden its clip-path hides the photo from the browser's lazy loading, so Reveal tells it to load a screen ahead through `RevealLoadContext`, and its observers fall back to showing it if they haven't reported within 1.5s), hover zoom (`Photo zoom`, triggered by an ancestor link or `data-zoom-group`), drawn link underlines (`link-draw` / `link-rest` on the span around link text).
 - Menu filtering: `useCrossfade` runs chip/empty-state changes in a view transition (opacity fallback); the toolbar is a named `menu-toolbar` group that shows its new state at once, so the sliding tab indicator (three-piece pill in `ChipRow`) plays undisturbed. Search typing isn't crossfaded. While React renders the new results (~0.1s) the page can't take clicks.
 - Durations and scales are tokens: `--duration-hero`, `--duration-crossfade`, `--motion-stagger`, `--scale-hero-from`, `--scale-hover`. Scripts read them with `durationToken()` / `easingToken()`.
 
@@ -149,10 +149,11 @@ Measure with Lighthouse mobile on `npm run preview` (HTTP/1.1); production hosts
 ## Open questions (confirm with the user before building the affected parts)
 
 - **Menu grouping:** the source data has 25 categories, but PLAN.md defines 8 groups. A proposed mapping is in `src/data/menu.ts` (marked PROPOSAL) and still needs the user's OK. Feasts = the 4 sharing platters whose descriptions give a serving size. Breakfast (11 items) is provisionally under Mains.
-- **Spelling:** "Eddy' s Khaas" (stray space) and "Poched Egg" are shown as published until the user confirms corrections.
+- **Spelling:** "Poched Egg" is shown as published until the user confirms a correction. ("Eddy's Khaas" and "Mamma Mia Pasta" were corrected in `src/data/menu.csv` at the user's request on 2026-10-02.)
 - **Menu page labelling (PROPOSAL):** the "Spicy" tag list (`spicyDishes` in `src/data/menu-sections.ts`), the merged Chicken/Beef steak rows (shown as "Spicy Moroccan Steak" with both prices), and the "Sharing platters" heading for the four feasts.
 - **Menu prices** come from the foodpanda listing (the CSV's source); confirm they match dine-in prices.
 - **Hours:** Google Maps (dine-in) and foodpanda (delivery) disagree. The site should show Google Maps hours as opening hours unless the user says otherwise.
 - **Instagram** `@theeddyscafe` was read off a table card in a photo; the profile hasn't been verified. It is linked in the footer (flagged in `src/data/cafe.ts`); confirm before launch.
+- **Facebook:** the page in `cafe.links.facebook` (titled "eddy's Café | Faisalabad") was added at the user's request on 2026-10-02; the raw data says "Not publicly found". It is in the footer's Follow links and the JSON-LD `sameAs`.
 - **Domain:** the café has no website yet. `siteUrl` (canonical, Open Graph, JSON-LD, sitemap) is a placeholder; set the real address before launch.
 - **WhatsApp:** no WhatsApp number is in the data. Don't assume it matches the phone number (+92 304 1112111) without confirmation. `cafe.whatsapp` is `null` and every WhatsApp button stays hidden until it's set.

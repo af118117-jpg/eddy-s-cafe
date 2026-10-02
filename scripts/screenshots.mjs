@@ -1,5 +1,6 @@
 // Full-page screenshots of every page at every width we design for, for
-// design review: tests/screenshots/<page>-<width>.png.
+// design review: tests/screenshots/<page>-<width>.jpg (JPEG: the photos make PNGs
+// too heavy to keep in the repository).
 // Usage: npm run screenshots   (builds first; on this machine set
 // PLAYWRIGHT_CHANNEL=msedge, as for the e2e tests)
 // Reduced motion, so photos that wipe in on scroll are already shown; every
@@ -52,9 +53,9 @@ try {
         for (const img of images) img.loading = 'eager'
         await Promise.all(images.map((img) => img.decode().catch(() => undefined)))
       })
-      const file = `${outDir}/${name}-${String(viewport.width)}.png`
-      await page.screenshot({ path: file, fullPage: true })
-      console.log(`tests/screenshots/${name}-${String(viewport.width)}.png`)
+      const file = `${outDir}/${name}-${String(viewport.width)}.jpg`
+      await page.screenshot({ path: file, fullPage: true, type: 'jpeg', quality: 80 })
+      console.log(`tests/screenshots/${name}-${String(viewport.width)}.jpg`)
     }
     await context.close()
   }

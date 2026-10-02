@@ -71,7 +71,9 @@ test('every photo’s sizes matches the width it is drawn at', async ({ page }) 
   }
 })
 
-test('photos reserve their space and only the hero loads eagerly', async ({ page }) => {
+test('photos reserve their space, have alt text, and only the hero loads at once', async ({
+  page,
+}) => {
   await page.goto('/')
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
   const photos = await page.evaluate(() =>
@@ -82,17 +84,67 @@ test('photos reserve their space and only the hero loads eagerly', async ({ page
       loading: img.getAttribute('loading'),
       fetchpriority: img.getAttribute('fetchpriority'),
       hero: !!img.closest('[aria-labelledby="hero-title"]'),
+      // Photos in a scroll reveal a screen away load early on purpose (see Reveal).
+      far: img.getBoundingClientRect().top > 2 * window.innerHeight,
     })),
   )
   for (const photo of photos) {
     expect(Number(photo.width)).toBeGreaterThan(0)
     expect(Number(photo.height)).toBeGreaterThan(0)
-    expect(photo.alt).not.toBeNull()
-    expect(photo.loading).toBe(photo.hero ? 'eager' : 'lazy')
+    expect(photo.alt?.length).toBeGreaterThan(10)
+    if (photo.hero) expect(photo.loading).toBe('eager')
+    if (photo.far) expect(photo.loading).toBe('lazy')
     expect(photo.fetchpriority).toBe(photo.hero ? 'high' : null)
   }
   expect(photos.filter((photo) => photo.hero)).toHaveLength(1)
 })
+
+for (const reducedMotion of ['no-preference', 'reduce'] as const) {
+  test(`every photo has loaded by the time it is on screen (reduced motion: ${reducedMotion})`, async ({
+    page,
+  }) => {
+    await page.emulateMedia({ reducedMotion })
+    for (const path of ['/', '/menu']) {
+      await page.goto(path)
+      await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
+      const failed: string[] = []
+      page.on('response', (response) => {
+        if (response.status() >= 400) failed.push(`${String(response.status())} ${response.url()}`)
+      })
+      const images = page.locator('main img')
+      // The menu renders its later sections (with most of its photos) just after the first
+      // paint: wait until the count stops changing.
+      let count = -1
+      await expect
+        .poll(async () => {
+          const previous = count
+          count = await images.count()
+          return count > 0 && count === previous
+        })
+        .toBe(true)
+      for (let i = 0; i < count; i++) {
+        const img = images.nth(i)
+        // Hidden at this width (the ninth gallery photo on phones): never loaded, by design.
+        if (!(await img.isVisible())) continue
+        await img.evaluate((el) => {
+          el.scrollIntoView({ block: 'center' })
+        })
+        // Loaded, and not still behind the reveal's clip, within the reveal's 800ms.
+        await expect
+          .poll(
+            () =>
+              img.evaluate((el: HTMLImageElement) => ({
+                loaded: el.complete && el.naturalWidth > 0,
+                revealed: el.closest('[data-reveal="hidden"]') === null,
+              })),
+            { timeout: 3000, message: `${path} image ${String(i)}` },
+          )
+          .toEqual({ loaded: true, revealed: true })
+      }
+      expect(failed, path).toEqual([])
+    }
+  })
+}
 
 test('the hero downloads once, from the preload, in AVIF', async ({ page }) => {
   await page.goto('/')

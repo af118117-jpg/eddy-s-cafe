@@ -49,7 +49,7 @@ describe('MenuItemRow', () => {
     expect(tags.map((tag) => tag.textContent)).toEqual(['Spicy', 'Serves 3–43 to 4'])
   })
 
-  it('shows a thumbnail only when the entry has a photo', () => {
+  it('shows a thumbnail only when the entry has a photo', async () => {
     renderRow(steak)
     expect(screen.queryByRole('img')).not.toBeInTheDocument()
     renderRow({
@@ -62,7 +62,7 @@ describe('MenuItemRow', () => {
         },
       },
     })
-    expect(screen.getByRole('img', { name: 'Steak' })).toBeInTheDocument()
+    expect(await screen.findByRole('img', { name: 'Steak' })).toBeInTheDocument()
   })
 })
 

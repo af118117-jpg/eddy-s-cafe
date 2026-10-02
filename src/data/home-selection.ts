@@ -21,7 +21,7 @@ export const homeSelection = {
     'adana-kebab',
     'chicken-ala-kiev',
     'porcini-pizza',
-    'mama-mia-pasta',
+    'mamma-mia-pasta',
     'molten-lava-with-ice-cream',
     'croissant-and-butter-pudding',
   ],

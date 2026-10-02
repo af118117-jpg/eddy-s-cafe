@@ -1,3 +1,4 @@
+export { Facebook, Instagram } from './brandIcons'
 export { Button, buttonClassName } from './Button'
 export type { ButtonProps, ButtonSize, ButtonVariant } from './Button'
 export { Chip } from './Chip'
