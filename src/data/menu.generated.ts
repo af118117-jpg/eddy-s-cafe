@@ -39,9 +39,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 999,
     category: 'Middle Eastern Starters',
     section: 'food',
-    image: {
-      alt: 'Fatoush Salad',
-    },
   },
   {
     id: 'hummus-with-chicken',
@@ -50,9 +47,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1299,
     category: 'Middle Eastern Starters',
     section: 'food',
-    image: {
-      alt: 'Hummus with Chicken',
-    },
   },
   {
     id: 'hummus-with-lamb',
@@ -61,9 +55,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1499,
     category: 'Middle Eastern Starters',
     section: 'food',
-    image: {
-      alt: 'Hummus with Lamb',
-    },
   },
   {
     id: 'jooje-pockets',
@@ -73,9 +64,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1199,
     category: 'Middle Eastern Starters',
     section: 'food',
-    image: {
-      alt: 'Jooje Pockets',
-    },
   },
   {
     id: 'lamb-pockets',
@@ -85,9 +73,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1499,
     category: 'Middle Eastern Starters',
     section: 'food',
-    image: {
-      alt: 'Lamb Pockets',
-    },
   },
   {
     id: 'hot-and-sour-soup',
@@ -96,9 +81,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 549,
     category: 'Soups',
     section: 'food',
-    image: {
-      alt: 'Hot & Sour Soup',
-    },
   },
   {
     id: 'thai-chicken-soup',
@@ -108,9 +90,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 549,
     category: 'Soups',
     section: 'food',
-    image: {
-      alt: 'Thai Chicken Soup',
-    },
   },
   {
     id: 'eddys-special-soup',
@@ -119,9 +98,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 699,
     category: 'Soups',
     section: 'food',
-    image: {
-      alt: "Eddy's Special Soup",
-    },
   },
   {
     id: 'roasted-tomato-soup',
@@ -130,9 +106,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 549,
     category: 'Soups',
     section: 'food',
-    image: {
-      alt: 'Roasted Tomato Soup',
-    },
   },
   {
     id: 'seafood-chowder-soup',
@@ -141,9 +114,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 649,
     category: 'Soups',
     section: 'food',
-    image: {
-      alt: 'Seafood Chowder Soup',
-    },
   },
   {
     id: 'soup-of-the-day',
@@ -152,9 +122,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 549,
     category: 'Soups',
     section: 'food',
-    image: {
-      alt: 'Soup of The Day',
-    },
   },
   {
     id: 'special-club-sandwich',
@@ -164,9 +131,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1699,
     category: 'Sandwiches',
     section: 'food',
-    image: {
-      alt: 'Special Club Sandwich',
-    },
   },
   {
     id: 'croissant-chicken-grilled-sandwich',
@@ -176,9 +140,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1799,
     category: 'Sandwiches',
     section: 'food',
-    image: {
-      alt: 'Croissant Chicken Grilled Sandwich',
-    },
   },
   {
     id: 'croissant-egg-and-shroom-sandwich',
@@ -188,9 +149,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1499,
     category: 'Sandwiches',
     section: 'food',
-    image: {
-      alt: 'Croissant Egg & Shroom Sandwich',
-    },
   },
   {
     id: 'open-face-mediterranean-sandwich',
@@ -199,9 +157,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 999,
     category: 'Sandwiches',
     section: 'food',
-    image: {
-      alt: 'Open Face Mediterranean Sandwich',
-    },
   },
   {
     id: 'roasted-beef-sandwich',
@@ -211,9 +166,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1799,
     category: 'Sandwiches',
     section: 'food',
-    image: {
-      alt: 'Roasted Beef Sandwich',
-    },
   },
   {
     id: 'eddys-katsu-club-sandwich',
@@ -222,9 +174,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1899,
     category: 'Sandwiches',
     section: 'food',
-    image: {
-      alt: "Eddy's Katsu Club Sandwich",
-    },
   },
   {
     id: 'beef-smash-burger',
@@ -233,9 +182,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1549,
     category: 'Burgers',
     section: 'food',
-    image: {
-      alt: 'Beef Smash Burger',
-    },
   },
   {
     id: 'chicken-butter-milk-burger',
@@ -244,9 +190,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1399,
     category: 'Burgers',
     section: 'food',
-    image: {
-      alt: 'Chicken Butter Milk Burger',
-    },
   },
   {
     id: 'sichuan-burger',
@@ -256,9 +199,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1399,
     category: 'Burgers',
     section: 'food',
-    image: {
-      alt: 'Sichuan Burger',
-    },
   },
   {
     id: 'beef-cheese-burger',
@@ -268,9 +208,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1449,
     category: 'Burgers',
     section: 'food',
-    image: {
-      alt: 'Beef Cheese Burger',
-    },
   },
   {
     id: 'grilled-chicken-burger',
@@ -279,9 +216,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1299,
     category: 'Burgers',
     section: 'food',
-    image: {
-      alt: 'Grilled Chicken Burger',
-    },
   },
   {
     id: 'chicken-spicy-moroccan-steak',
@@ -291,9 +225,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1999,
     category: 'Steak House',
     section: 'food',
-    image: {
-      alt: 'Chicken Spicy Moroccan Steak',
-    },
   },
   {
     id: 'beef-spicy-moroccan-steak',
@@ -303,9 +234,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 2949,
     category: 'Steak House',
     section: 'food',
-    image: {
-      alt: 'Beef Spicy Moroccan Steak',
-    },
   },
   {
     id: 'chicken-jalapaeno-steak',
@@ -315,9 +243,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1999,
     category: 'Steak House',
     section: 'food',
-    image: {
-      alt: 'Chicken Jalapaeno Steak',
-    },
   },
   {
     id: 'beef-jalapaeno-steak',
@@ -327,9 +252,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 2949,
     category: 'Steak House',
     section: 'food',
-    image: {
-      alt: 'Beef Jalapaeno Steak',
-    },
   },
   {
     id: 'chicken-mexican-steak',
@@ -339,9 +261,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1999,
     category: 'Steak House',
     section: 'food',
-    image: {
-      alt: 'Chicken Mexican Steak',
-    },
   },
   {
     id: 'beef-mexican-steak',
@@ -351,9 +270,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 2949,
     category: 'Steak House',
     section: 'food',
-    image: {
-      alt: 'Beef Mexican Steak',
-    },
   },
   {
     id: 'chicken-americano-steak',
@@ -363,9 +279,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1999,
     category: 'Steak House',
     section: 'food',
-    image: {
-      alt: 'Chicken Americano Steak',
-    },
   },
   {
     id: 'beef-americano-steak',
@@ -375,9 +288,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 2949,
     category: 'Steak House',
     section: 'food',
-    image: {
-      alt: 'Beef Americano Steak',
-    },
   },
   {
     id: 'chicken-black-pepper-cheese-steak',
@@ -387,9 +297,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1999,
     category: 'Steak House',
     section: 'food',
-    image: {
-      alt: 'Chicken Black Pepper Cheese Steak',
-    },
   },
   {
     id: 'beef-black-pepper-cheese-steak',
@@ -399,9 +306,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 2949,
     category: 'Steak House',
     section: 'food',
-    image: {
-      alt: 'Beef Black Pepper Cheese Steak',
-    },
   },
   {
     id: 'chicken-italian-mushroom-steak',
@@ -411,9 +315,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1999,
     category: 'Steak House',
     section: 'food',
-    image: {
-      alt: 'Chicken Italian Mushroom Steak',
-    },
   },
   {
     id: 'beef-italian-mushroom-steak',
@@ -423,9 +324,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 2949,
     category: 'Steak House',
     section: 'food',
-    image: {
-      alt: 'Beef Italian Mushroom Steak',
-    },
   },
   {
     id: 'margherita-pizza',
@@ -434,9 +332,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1699,
     category: 'Pizza',
     section: 'food',
-    image: {
-      alt: 'Margherita Pizza',
-    },
   },
   {
     id: 'short-ribs-pizza',
@@ -445,9 +340,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 2199,
     category: 'Pizza',
     section: 'food',
-    image: {
-      alt: 'Short Ribs Pizza',
-    },
   },
   {
     id: 'firenze-nova-pizza',
@@ -456,9 +348,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1799,
     category: 'Pizza',
     section: 'food',
-    image: {
-      alt: 'Firenze Nova Pizza',
-    },
   },
   {
     id: 'chicken-chilli-cheese-pizza',
@@ -467,9 +356,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1699,
     category: 'Pizza',
     section: 'food',
-    image: {
-      alt: 'Chicken Chilli Cheese Pizza',
-    },
   },
   {
     id: 'porcini-pizza',
@@ -478,9 +364,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1899,
     category: 'Pizza',
     section: 'food',
-    image: {
-      alt: 'Porcini Pizza',
-    },
   },
   {
     id: 'chicken-pepperoni-pizza',
@@ -489,9 +372,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1799,
     category: 'Pizza',
     section: 'food',
-    image: {
-      alt: 'Chicken Pepperoni Pizza',
-    },
   },
   {
     id: 'beef-pepperoni-pizza',
@@ -500,9 +380,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1999,
     category: 'Pizza',
     section: 'food',
-    image: {
-      alt: 'Beef Pepperoni Pizza',
-    },
   },
   {
     id: 'pinza-pizza',
@@ -511,9 +388,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 999,
     category: 'Pizza',
     section: 'food',
-    image: {
-      alt: 'Pinza Pizza',
-    },
   },
   {
     id: 'hot-chicken-bao',
@@ -522,9 +396,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 899,
     category: 'Bao Station',
     section: 'food',
-    image: {
-      alt: 'Hot Chicken Bao',
-    },
   },
   {
     id: 'smash-x-bao',
@@ -533,9 +404,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 949,
     category: 'Bao Station',
     section: 'food',
-    image: {
-      alt: 'Smash X Bao',
-    },
   },
   {
     id: 'katsu-chicken-bao',
@@ -544,9 +412,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 899,
     category: 'Bao Station',
     section: 'food',
-    image: {
-      alt: 'Katsu Chicken Bao',
-    },
   },
   {
     id: 'chicken-ala-kiev',
@@ -556,9 +421,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1949,
     category: 'Gourmet Selection',
     section: 'food',
-    image: {
-      alt: 'Chicken Ala Kiev',
-    },
   },
   {
     id: 'chicken-schnitzel',
@@ -567,9 +429,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1749,
     category: 'Gourmet Selection',
     section: 'food',
-    image: {
-      alt: 'Chicken Schnitzel',
-    },
   },
   {
     id: 'teriyaki-bowl',
@@ -578,9 +437,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1749,
     category: 'Gourmet Selection',
     section: 'food',
-    image: {
-      alt: 'Teriyaki Bowl',
-    },
   },
   {
     id: 'grilled-chicken-with-hummus',
@@ -589,9 +445,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1749,
     category: 'Gourmet Selection',
     section: 'food',
-    image: {
-      alt: 'Grilled Chicken with Hummus',
-    },
   },
   {
     id: 'chicken-with-lemon-caper-sauce',
@@ -601,9 +454,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1749,
     category: 'Gourmet Selection',
     section: 'food',
-    image: {
-      alt: 'Chicken with Lemon Caper Sauce',
-    },
   },
   {
     id: 'mediterranean-grilled-fish',
@@ -613,9 +463,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 2349,
     category: 'Gourmet Selection',
     section: 'food',
-    image: {
-      alt: 'Mediterranean Grilled Fish',
-    },
   },
   {
     id: 'baked-chicken-pot',
@@ -624,9 +471,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1549,
     category: 'Gourmet Selection',
     section: 'food',
-    image: {
-      alt: 'Baked Chicken Pot',
-    },
   },
   {
     id: 'nashville-chicken',
@@ -636,9 +480,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1649,
     category: 'Gourmet Selection',
     section: 'food',
-    image: {
-      alt: 'Nashville Chicken',
-    },
   },
   {
     id: 'parmesan-crusted-chicken',
@@ -648,9 +489,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1649,
     category: 'Gourmet Selection',
     section: 'food',
-    image: {
-      alt: 'Parmesan Crusted Chicken',
-    },
   },
   {
     id: 'jalapeno-orange-chicken',
@@ -660,9 +498,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1649,
     category: 'Gourmet Selection',
     section: 'food',
-    image: {
-      alt: 'Jalapeno Orange Chicken',
-    },
   },
   {
     id: 'grilled-chicken-with-sundried-tomato',
@@ -672,9 +507,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1849,
     category: 'Gourmet Selection',
     section: 'food',
-    image: {
-      alt: 'Grilled Chicken with Sundried Tomato',
-    },
   },
   {
     id: 'fish-and-chips',
@@ -683,9 +515,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 2249,
     category: 'Gourmet Selection',
     section: 'food',
-    image: {
-      alt: 'Fish & Chips',
-    },
   },
   {
     id: 'red-curry-with-garlic-rice',
@@ -694,9 +523,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1899,
     category: 'Tropical and Asian Mains',
     section: 'food',
-    image: {
-      alt: 'Red Curry with Garlic Rice',
-    },
   },
   {
     id: 'prawn-curry-with-masala-rice',
@@ -705,9 +531,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 2499,
     category: 'Tropical and Asian Mains',
     section: 'food',
-    image: {
-      alt: 'Prawn Curry with Masala Rice',
-    },
   },
   {
     id: 'chicken-cashew-nut',
@@ -717,9 +540,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1999,
     category: 'Tropical and Asian Mains',
     section: 'food',
-    image: {
-      alt: 'Chicken Cashew Nut',
-    },
   },
   {
     id: 'stogonuf-chicken-with-garlic-rice',
@@ -728,9 +548,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1999,
     category: 'Tropical and Asian Mains',
     section: 'food',
-    image: {
-      alt: 'Stogonuf Chicken with Garlic Rice',
-    },
   },
   {
     id: 'dragon-chicken-with-egg-fried-rice',
@@ -740,9 +557,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1999,
     category: 'Tropical and Asian Mains',
     section: 'food',
-    image: {
-      alt: 'Dragon Chicken with Egg Fried Rice',
-    },
   },
   {
     id: 'oyster-chicken-with-garlic-rice',
@@ -751,9 +565,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1799,
     category: 'Tropical and Asian Mains',
     section: 'food',
-    image: {
-      alt: 'Oyster Chicken with Garlic Rice',
-    },
   },
   {
     id: 'seven-leaves-with-garlic-rice',
@@ -763,9 +574,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1799,
     category: 'Tropical and Asian Mains',
     section: 'food',
-    image: {
-      alt: 'Seven Leaves with Garlic Rice',
-    },
   },
   {
     id: 'chicken-chilli-dry',
@@ -775,9 +583,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1799,
     category: 'Tropical and Asian Mains',
     section: 'food',
-    image: {
-      alt: 'Chicken Chilli Dry',
-    },
   },
   {
     id: 'beef-chilli-dry',
@@ -787,9 +592,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 2399,
     category: 'Tropical and Asian Mains',
     section: 'food',
-    image: {
-      alt: 'Beef Chilli Dry',
-    },
   },
   {
     id: 'fish-curry-almond-with-masala-rice',
@@ -799,9 +601,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1999,
     category: 'Tropical and Asian Mains',
     section: 'food',
-    image: {
-      alt: 'Fish Curry Almond with Masala Rice',
-    },
   },
   {
     id: 'kong-pao-chicken-with-egg-fried-rice',
@@ -811,9 +610,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1799,
     category: 'Tropical and Asian Mains',
     section: 'food',
-    image: {
-      alt: 'Kong Pao Chicken with Egg Fried Rice',
-    },
   },
   {
     id: 'kamil-jooje',
@@ -823,9 +619,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 3499,
     category: 'Middle Eastern Main',
     section: 'food',
-    image: {
-      alt: 'Kamil Jooje',
-    },
   },
   {
     id: 'shish-tauk-turkish',
@@ -835,9 +628,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 2299,
     category: 'Middle Eastern Main',
     section: 'food',
-    image: {
-      alt: 'Shish Tauk Turkish',
-    },
   },
   {
     id: 'persian-style-lamb-chops',
@@ -847,9 +637,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 4599,
     category: 'Middle Eastern Main',
     section: 'food',
-    image: {
-      alt: 'Persian Style Lamb Chops',
-    },
   },
   {
     id: 'turkish-lamb-cheese-kebab',
@@ -859,9 +646,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 2799,
     category: 'Middle Eastern Main',
     section: 'food',
-    image: {
-      alt: 'Turkish Lamb Cheese Kebab',
-    },
   },
   {
     id: 'jooje-khaas-kebab',
@@ -871,9 +655,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1999,
     category: 'Middle Eastern Main',
     section: 'food',
-    image: {
-      alt: 'Jooje Khaas Kebab',
-    },
   },
   {
     id: 'khafif-jooje',
@@ -883,9 +664,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 2199,
     category: 'Middle Eastern Main',
     section: 'food',
-    image: {
-      alt: 'Khafif Jooje',
-    },
   },
   {
     id: 'adana-kebab',
@@ -895,9 +673,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 2699,
     category: 'Middle Eastern Main',
     section: 'food',
-    image: {
-      alt: 'Adana Kebab',
-    },
   },
   {
     id: 'summuc-jooje',
@@ -907,9 +682,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 2199,
     category: 'Middle Eastern Main',
     section: 'food',
-    image: {
-      alt: 'Summuc Jooje',
-    },
   },
   {
     id: 'afghan-seekh-kebab',
@@ -919,9 +691,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1999,
     category: 'Middle Eastern Main',
     section: 'food',
-    image: {
-      alt: 'Afghan Seekh Kebab',
-    },
   },
   {
     id: 'beshghab-e-mix',
@@ -931,9 +700,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 5999,
     category: 'Middle Eastern Main',
     section: 'food',
-    image: {
-      alt: 'Beshghab e Mix',
-    },
   },
   {
     id: 'eddys-khaas',
@@ -943,9 +709,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 8999,
     category: 'Middle Eastern Main',
     section: 'food',
-    image: {
-      alt: "Eddy' s Khaas",
-    },
   },
   {
     id: 'mama-mia-pasta',
@@ -954,9 +717,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1699,
     category: 'Pasta',
     section: 'food',
-    image: {
-      alt: 'Mama Mia Pasta',
-    },
   },
   {
     id: 'penny-arbiata-pasta',
@@ -966,9 +726,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1599,
     category: 'Pasta',
     section: 'food',
-    image: {
-      alt: 'Penny Arbiata Pasta',
-    },
   },
   {
     id: 'beef-lasagna-pasta',
@@ -978,9 +735,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1599,
     category: 'Pasta',
     section: 'food',
-    image: {
-      alt: 'Beef Lasagna Pasta',
-    },
   },
   {
     id: 'penne-carbonara-pasta',
@@ -990,9 +744,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1499,
     category: 'Pasta',
     section: 'food',
-    image: {
-      alt: 'Penne Carbonara Pasta',
-    },
   },
   {
     id: 'aglio-e-olio-pasta',
@@ -1002,9 +753,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1699,
     category: 'Pasta',
     section: 'food',
-    image: {
-      alt: 'Aglio e Olio Pasta',
-    },
   },
   {
     id: 'caesar-salad',
@@ -1013,9 +761,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1149,
     category: 'Salad',
     section: 'food',
-    image: {
-      alt: 'Caesar Salad',
-    },
   },
   {
     id: 'quinoa-and-cranberry-salad',
@@ -1024,9 +769,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1149,
     category: 'Salad',
     section: 'food',
-    image: {
-      alt: 'Quinoa & Cranberry Salad',
-    },
   },
   {
     id: 'feta-salad',
@@ -1035,9 +777,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1149,
     category: 'Salad',
     section: 'food',
-    image: {
-      alt: 'Feta Salad',
-    },
   },
   {
     id: 'vietnamese-chicken-salad',
@@ -1046,9 +785,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1099,
     category: 'Salad',
     section: 'food',
-    image: {
-      alt: 'Vietnamese Chicken Salad',
-    },
   },
   {
     id: 'sautee-beef-salad',
@@ -1057,9 +793,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1299,
     category: 'Salad',
     section: 'food',
-    image: {
-      alt: 'Sautee Beef Salad',
-    },
   },
   {
     id: 'stuff-chicken-fingers',
@@ -1069,9 +802,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1549,
     category: 'Appetizers',
     section: 'food',
-    image: {
-      alt: 'Stuff Chicken Fingers',
-    },
   },
   {
     id: 'assorted-mini-sliders',
@@ -1081,9 +811,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1949,
     category: 'Appetizers',
     section: 'food',
-    image: {
-      alt: 'Assorted Mini Sliders',
-    },
   },
   {
     id: 'tempura-prawns',
@@ -1092,9 +819,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 2249,
     category: 'Appetizers',
     section: 'food',
-    image: {
-      alt: 'Tempura Prawns',
-    },
   },
   {
     id: 'chicken-chipotle-nachos',
@@ -1103,9 +827,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 999,
     category: 'Appetizers',
     section: 'food',
-    image: {
-      alt: 'Chicken Chipotle Nachos',
-    },
   },
   {
     id: 'dynamite-prawns',
@@ -1114,9 +835,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1599,
     category: 'Appetizers',
     section: 'food',
-    image: {
-      alt: 'Dynamite Prawns',
-    },
   },
   {
     id: 'fries',
@@ -1125,9 +843,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 499,
     category: 'Appetizers',
     section: 'food',
-    image: {
-      alt: 'Fries',
-    },
   },
   {
     id: 'mini-sliders',
@@ -1137,9 +852,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 749,
     category: 'Appetizers',
     section: 'food',
-    image: {
-      alt: 'Mini Sliders',
-    },
   },
   {
     id: 'peri-peri-bites',
@@ -1149,9 +861,6 @@ export const menuItems: readonly MenuItem[] = [
     priceFrom: true,
     category: 'Appetizers',
     section: 'food',
-    image: {
-      alt: 'Peri Peri Bites',
-    },
   },
   {
     id: 'chicken-quesadillas',
@@ -1161,9 +870,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 899,
     category: 'Appetizers',
     section: 'food',
-    image: {
-      alt: 'Chicken Quesadillas',
-    },
   },
   {
     id: 'loaded-sriracha-fries',
@@ -1172,9 +878,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 899,
     category: 'Appetizers',
     section: 'food',
-    image: {
-      alt: 'Loaded Sriracha Fries',
-    },
   },
   {
     id: 'butter-chicken-strips',
@@ -1183,9 +886,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 949,
     category: 'Appetizers',
     section: 'food',
-    image: {
-      alt: 'Butter Chicken Strips',
-    },
   },
   {
     id: 'masala-fries',
@@ -1194,9 +894,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 549,
     category: 'Appetizers',
     section: 'food',
-    image: {
-      alt: 'Masala Fries',
-    },
   },
   {
     id: 'croissant-and-butter-pudding',
@@ -1205,9 +902,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 999,
     category: 'Live Desserts',
     section: 'food',
-    image: {
-      alt: 'Croissant & Butter Pudding',
-    },
   },
   {
     id: 'molten-lava-with-ice-cream',
@@ -1216,9 +910,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 899,
     category: 'Live Desserts',
     section: 'food',
-    image: {
-      alt: 'Molten Lava with Ice Cream',
-    },
   },
   {
     id: 'nuts-about-nutella',
@@ -1227,9 +918,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 999,
     category: 'Live Desserts',
     section: 'food',
-    image: {
-      alt: 'Nuts About Nutella',
-    },
   },
   {
     id: 'home-made-waffles',
@@ -1238,9 +926,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 999,
     category: 'Live Desserts',
     section: 'food',
-    image: {
-      alt: 'Home Made Waffles',
-    },
   },
   {
     id: 'home-made-nutella',
@@ -1249,9 +934,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 999,
     category: 'Live Desserts',
     section: 'food',
-    image: {
-      alt: 'Home Made Nutella',
-    },
   },
   {
     id: 'home-made-lotus',
@@ -1260,9 +942,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 999,
     category: 'Live Desserts',
     section: 'food',
-    image: {
-      alt: 'Home Made Lotus',
-    },
   },
   {
     id: 'cookie-dough-with-ice-cream',
@@ -1272,9 +951,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 899,
     category: 'Live Desserts',
     section: 'food',
-    image: {
-      alt: 'Cookie Dough with Ice Cream',
-    },
   },
   {
     id: 'dessert-of-the-week',
@@ -1283,9 +959,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 999,
     category: 'Live Desserts',
     section: 'food',
-    image: {
-      alt: 'Dessert of the Week',
-    },
   },
   {
     id: 'eddys-signature-chocolate-cake',
@@ -1294,9 +967,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1049,
     category: 'Live Desserts',
     section: 'food',
-    image: {
-      alt: "Eddy's Signature Chocolate Cake",
-    },
   },
   {
     id: 'seasonal-fresh-juice',
@@ -1305,9 +975,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 699,
     category: 'Cold Beverages',
     section: 'drink',
-    image: {
-      alt: 'Seasonal Fresh Juice',
-    },
   },
   {
     id: 'fresh-lime',
@@ -1316,9 +983,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 269,
     category: 'Cold Beverages',
     section: 'drink',
-    image: {
-      alt: 'Fresh Lime',
-    },
   },
   {
     id: 'mint-margarita',
@@ -1327,9 +991,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 749,
     category: 'Homemade Sodas',
     section: 'drink',
-    image: {
-      alt: 'Mint Margarita',
-    },
   },
   {
     id: 'blue-lagoon',
@@ -1338,9 +999,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 749,
     category: 'Homemade Sodas',
     section: 'drink',
-    image: {
-      alt: 'Blue Lagoon',
-    },
   },
   {
     id: 'lime',
@@ -1349,9 +1007,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 749,
     category: 'Homemade Sodas',
     section: 'drink',
-    image: {
-      alt: 'Lime',
-    },
   },
   {
     id: 'strawberry-soda',
@@ -1360,9 +1015,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 749,
     category: 'Homemade Sodas',
     section: 'drink',
-    image: {
-      alt: 'Strawberry Soda',
-    },
   },
   {
     id: 'strawberry-mint-margarita',
@@ -1371,9 +1023,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 749,
     category: 'Homemade Sodas',
     section: 'drink',
-    image: {
-      alt: 'Strawberry Mint Margarita',
-    },
   },
   {
     id: 'peach',
@@ -1382,9 +1031,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 749,
     category: 'Homemade Sodas',
     section: 'drink',
-    image: {
-      alt: 'Peach',
-    },
   },
   {
     id: 'lychee',
@@ -1393,9 +1039,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 749,
     category: 'Homemade Sodas',
     section: 'drink',
-    image: {
-      alt: 'Lychee',
-    },
   },
   {
     id: 'raspberry',
@@ -1404,9 +1047,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 749,
     category: 'Homemade Sodas',
     section: 'drink',
-    image: {
-      alt: 'Raspberry',
-    },
   },
   {
     id: 'english-breakfast-tea',
@@ -1415,9 +1055,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 549,
     category: 'Tea Selection',
     section: 'drink',
-    image: {
-      alt: 'English Breakfast Tea',
-    },
   },
   {
     id: 'cardamom-tea',
@@ -1426,9 +1063,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 599,
     category: 'Tea Selection',
     section: 'drink',
-    image: {
-      alt: 'Cardamom Tea',
-    },
   },
   {
     id: 'chai-tea-latte',
@@ -1437,9 +1071,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 649,
     category: 'Tea Selection',
     section: 'drink',
-    image: {
-      alt: 'Chai Tea Latte',
-    },
   },
   {
     id: 'green-tea',
@@ -1448,9 +1079,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 449,
     category: 'Tea Selection',
     section: 'drink',
-    image: {
-      alt: 'Green Tea',
-    },
   },
   {
     id: 'peach-iced-tea',
@@ -1459,9 +1087,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 749,
     category: 'Cold Tea',
     section: 'drink',
-    image: {
-      alt: 'Peach Iced Tea',
-    },
   },
   {
     id: 'lemon-and-mint-iced-tea',
@@ -1470,9 +1095,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 749,
     category: 'Cold Tea',
     section: 'drink',
-    image: {
-      alt: 'Lemon & Mint Iced Tea',
-    },
   },
   {
     id: 'strawberry-iced-tea',
@@ -1481,9 +1103,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 749,
     category: 'Cold Tea',
     section: 'drink',
-    image: {
-      alt: 'Strawberry Iced Tea',
-    },
   },
   {
     id: 'hot-espresso',
@@ -1492,9 +1111,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 549,
     category: 'Hot Coffee',
     section: 'drink',
-    image: {
-      alt: 'Hot Espresso',
-    },
   },
   {
     id: 'hot-cafe-latte',
@@ -1503,9 +1119,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 799,
     category: 'Hot Coffee',
     section: 'drink',
-    image: {
-      alt: 'Hot Cafe Latte',
-    },
   },
   {
     id: 'hot-mocha-latte',
@@ -1514,9 +1127,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 899,
     category: 'Hot Coffee',
     section: 'drink',
-    image: {
-      alt: 'Hot Mocha Latte',
-    },
   },
   {
     id: 'hot-vanilla-latte',
@@ -1525,9 +1135,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 899,
     category: 'Hot Coffee',
     section: 'drink',
-    image: {
-      alt: 'Hot Vanilla Latte',
-    },
   },
   {
     id: 'hot-white-chocolate-mocha',
@@ -1536,9 +1143,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 899,
     category: 'Hot Coffee',
     section: 'drink',
-    image: {
-      alt: 'Hot White Chocolate Mocha',
-    },
   },
   {
     id: 'hot-spanish-latte',
@@ -1547,9 +1151,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 899,
     category: 'Hot Coffee',
     section: 'drink',
-    image: {
-      alt: 'Hot Spanish Latte',
-    },
   },
   {
     id: 'hot-macchiato',
@@ -1558,9 +1159,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 899,
     category: 'Hot Coffee',
     section: 'drink',
-    image: {
-      alt: 'Hot Macchiato',
-    },
   },
   {
     id: 'hot-americano',
@@ -1569,9 +1167,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 549,
     category: 'Hot Coffee',
     section: 'drink',
-    image: {
-      alt: 'Hot Americano',
-    },
   },
   {
     id: 'hot-cappuccino',
@@ -1580,9 +1175,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 799,
     category: 'Hot Coffee',
     section: 'drink',
-    image: {
-      alt: 'Hot Cappuccino',
-    },
   },
   {
     id: 'hot-caramel-latte',
@@ -1591,9 +1183,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 899,
     category: 'Hot Coffee',
     section: 'drink',
-    image: {
-      alt: 'Hot Caramel Latte',
-    },
   },
   {
     id: 'hot-hazelnut-latte',
@@ -1602,9 +1191,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 899,
     category: 'Hot Coffee',
     section: 'drink',
-    image: {
-      alt: 'Hot Hazelnut Latte',
-    },
   },
   {
     id: 'hot-chocolate',
@@ -1613,9 +1199,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 950,
     category: 'Hot Coffee',
     section: 'drink',
-    image: {
-      alt: 'Hot Chocolate',
-    },
   },
   {
     id: 'hot-babychino',
@@ -1624,9 +1207,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 499,
     category: 'Hot Coffee',
     section: 'drink',
-    image: {
-      alt: 'Hot Babychino',
-    },
   },
   {
     id: 'iced-cafe-latte',
@@ -1635,9 +1215,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 899,
     category: 'Cold Coffee',
     section: 'drink',
-    image: {
-      alt: 'Iced Cafe Latte',
-    },
   },
   {
     id: 'iced-mocha-latte',
@@ -1646,9 +1223,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 999,
     category: 'Cold Coffee',
     section: 'drink',
-    image: {
-      alt: 'Iced Mocha Latte',
-    },
   },
   {
     id: 'iced-vanilla-latte',
@@ -1657,9 +1231,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 999,
     category: 'Cold Coffee',
     section: 'drink',
-    image: {
-      alt: 'Iced Vanilla Latte',
-    },
   },
   {
     id: 'iced-white-chocolate-mocha',
@@ -1668,9 +1239,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 999,
     category: 'Cold Coffee',
     section: 'drink',
-    image: {
-      alt: 'Iced White Chocolate Mocha',
-    },
   },
   {
     id: 'iced-spanish-latte',
@@ -1679,9 +1247,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 999,
     category: 'Cold Coffee',
     section: 'drink',
-    image: {
-      alt: 'Iced Spanish Latte',
-    },
   },
   {
     id: 'iced-cappuccino',
@@ -1690,9 +1255,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 899,
     category: 'Cold Coffee',
     section: 'drink',
-    image: {
-      alt: 'Iced Cappuccino',
-    },
   },
   {
     id: 'iced-caramel-latte',
@@ -1701,9 +1263,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 999,
     category: 'Cold Coffee',
     section: 'drink',
-    image: {
-      alt: 'Iced Caramel Latte',
-    },
   },
   {
     id: 'iced-hazelnut-latte',
@@ -1712,9 +1271,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 999,
     category: 'Cold Coffee',
     section: 'drink',
-    image: {
-      alt: 'Iced Hazelnut Latte',
-    },
   },
   {
     id: 'fruity-chillers-mango',
@@ -1724,9 +1280,6 @@ export const menuItems: readonly MenuItem[] = [
     priceFrom: true,
     category: 'Fruity Chillers',
     section: 'drink',
-    image: {
-      alt: 'Mango',
-    },
   },
   {
     id: 'fruity-chillers-blueberry',
@@ -1736,9 +1289,6 @@ export const menuItems: readonly MenuItem[] = [
     priceFrom: true,
     category: 'Fruity Chillers',
     section: 'drink',
-    image: {
-      alt: 'Blueberry',
-    },
   },
   {
     id: 'fruity-chillers-strawberry',
@@ -1748,9 +1298,6 @@ export const menuItems: readonly MenuItem[] = [
     priceFrom: true,
     category: 'Fruity Chillers',
     section: 'drink',
-    image: {
-      alt: 'Strawberry',
-    },
   },
   {
     id: 'fruity-chillers-mix-berry',
@@ -1760,9 +1307,6 @@ export const menuItems: readonly MenuItem[] = [
     priceFrom: true,
     category: 'Fruity Chillers',
     section: 'drink',
-    image: {
-      alt: 'Mix Berry',
-    },
   },
   {
     id: 'fruity-smoothies-mango',
@@ -1772,9 +1316,6 @@ export const menuItems: readonly MenuItem[] = [
     priceFrom: true,
     category: 'Fruity Smoothies',
     section: 'drink',
-    image: {
-      alt: 'Mango',
-    },
   },
   {
     id: 'fruity-smoothies-blueberry',
@@ -1784,9 +1325,6 @@ export const menuItems: readonly MenuItem[] = [
     priceFrom: true,
     category: 'Fruity Smoothies',
     section: 'drink',
-    image: {
-      alt: 'Blueberry',
-    },
   },
   {
     id: 'fruity-smoothies-strawberry',
@@ -1796,9 +1334,6 @@ export const menuItems: readonly MenuItem[] = [
     priceFrom: true,
     category: 'Fruity Smoothies',
     section: 'drink',
-    image: {
-      alt: 'Strawberry',
-    },
   },
   {
     id: 'fruity-smoothies-mix-berry',
@@ -1808,9 +1343,6 @@ export const menuItems: readonly MenuItem[] = [
     priceFrom: true,
     category: 'Fruity Smoothies',
     section: 'drink',
-    image: {
-      alt: 'Mix Berry',
-    },
   },
   {
     id: 'caramel-shake',
@@ -1820,9 +1352,6 @@ export const menuItems: readonly MenuItem[] = [
     priceFrom: true,
     category: 'Shakes',
     section: 'drink',
-    image: {
-      alt: 'Caramel Shake',
-    },
   },
   {
     id: 'oreo-and-cream-shake',
@@ -1832,9 +1361,6 @@ export const menuItems: readonly MenuItem[] = [
     priceFrom: true,
     category: 'Shakes',
     section: 'drink',
-    image: {
-      alt: 'Oreo & Cream Shake',
-    },
   },
   {
     id: 'oreo-strawberry-shake',
@@ -1844,9 +1370,6 @@ export const menuItems: readonly MenuItem[] = [
     priceFrom: true,
     category: 'Shakes',
     section: 'drink',
-    image: {
-      alt: 'Oreo Strawberry Shake',
-    },
   },
   {
     id: 'vanilla-shake',
@@ -1856,9 +1379,6 @@ export const menuItems: readonly MenuItem[] = [
     priceFrom: true,
     category: 'Shakes',
     section: 'drink',
-    image: {
-      alt: 'Vanilla Shake',
-    },
   },
   {
     id: 'chocolate-shake',
@@ -1868,9 +1388,6 @@ export const menuItems: readonly MenuItem[] = [
     priceFrom: true,
     category: 'Shakes',
     section: 'drink',
-    image: {
-      alt: 'Chocolate Shake',
-    },
   },
   {
     id: 'caramel-frappe',
@@ -1880,9 +1397,6 @@ export const menuItems: readonly MenuItem[] = [
     priceFrom: true,
     category: 'Frappes',
     section: 'drink',
-    image: {
-      alt: 'Caramel Frappe',
-    },
   },
   {
     id: 'cookies-and-cream-frappe',
@@ -1892,9 +1406,6 @@ export const menuItems: readonly MenuItem[] = [
     priceFrom: true,
     category: 'Frappes',
     section: 'drink',
-    image: {
-      alt: 'Cookies & Cream Frappe',
-    },
   },
   {
     id: 'mocha-frappe',
@@ -1904,9 +1415,6 @@ export const menuItems: readonly MenuItem[] = [
     priceFrom: true,
     category: 'Frappes',
     section: 'drink',
-    image: {
-      alt: 'Mocha Frappe',
-    },
   },
   {
     id: 'vanilla-frappe',
@@ -1916,9 +1424,6 @@ export const menuItems: readonly MenuItem[] = [
     priceFrom: true,
     category: 'Frappes',
     section: 'drink',
-    image: {
-      alt: 'Vanilla Frappe',
-    },
   },
   {
     id: 'voltage-frappe',
@@ -1928,9 +1433,6 @@ export const menuItems: readonly MenuItem[] = [
     priceFrom: true,
     category: 'Frappes',
     section: 'drink',
-    image: {
-      alt: 'Voltage Frappe',
-    },
   },
   {
     id: 'lotus-frappe',
@@ -1940,9 +1442,6 @@ export const menuItems: readonly MenuItem[] = [
     priceFrom: true,
     category: 'Frappes',
     section: 'drink',
-    image: {
-      alt: 'Lotus Frappe',
-    },
   },
   {
     id: 'mexican-egg',
@@ -1952,9 +1451,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 949,
     category: 'Breakfast',
     section: 'food',
-    image: {
-      alt: 'Mexican Egg',
-    },
   },
   {
     id: 'fungi-and-cheese',
@@ -1964,9 +1460,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1099,
     category: 'Breakfast',
     section: 'food',
-    image: {
-      alt: 'Fungi and Cheese',
-    },
   },
   {
     id: 'poched-egg',
@@ -1976,9 +1469,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 899,
     category: 'Breakfast',
     section: 'food',
-    image: {
-      alt: 'Poched Egg',
-    },
   },
   {
     id: 'scrambled-eggs',
@@ -1988,9 +1478,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1049,
     category: 'Breakfast',
     section: 'food',
-    image: {
-      alt: 'Scrambled Eggs',
-    },
   },
   {
     id: 'steak-and-egg',
@@ -2000,9 +1487,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1249,
     category: 'Breakfast',
     section: 'food',
-    image: {
-      alt: 'Steak and Egg',
-    },
   },
   {
     id: 'lava-spread-egg',
@@ -2012,9 +1496,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 899,
     category: 'Breakfast',
     section: 'food',
-    image: {
-      alt: 'Lava Spread Egg',
-    },
   },
   {
     id: 'hunter-beef-and-egg-sando',
@@ -2024,9 +1505,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1149,
     category: 'Breakfast',
     section: 'food',
-    image: {
-      alt: 'Hunter Beef & Egg Sando',
-    },
   },
   {
     id: 'croissant-egg-and-cheese',
@@ -2036,9 +1514,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1049,
     category: 'Breakfast',
     section: 'food',
-    image: {
-      alt: 'Croissant Egg and Cheese',
-    },
   },
   {
     id: 'full-english-breakfast',
@@ -2048,9 +1523,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1149,
     category: 'Breakfast',
     section: 'food',
-    image: {
-      alt: 'Full English Breakfast',
-    },
   },
   {
     id: 'nutella-lotus-french-toast',
@@ -2060,9 +1532,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1149,
     category: 'Breakfast',
     section: 'food',
-    image: {
-      alt: 'Nutella / Lotus French Toast',
-    },
   },
   {
     id: 'nutella-lotus-pan-cakes',
@@ -2071,9 +1540,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1199,
     category: 'Breakfast',
     section: 'food',
-    image: {
-      alt: 'Nutella / Lotus Pan Cakes',
-    },
   },
   {
     id: 'tempura-chicken',
@@ -2082,9 +1548,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1149,
     category: 'Appetizers',
     section: 'food',
-    image: {
-      alt: 'Tempura Chicken',
-    },
   },
   {
     id: 'salad-of-the-week',
@@ -2093,9 +1556,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1149,
     category: 'Salad',
     section: 'food',
-    image: {
-      alt: 'Salad of the Week',
-    },
   },
   {
     id: 'teragon-steak-chicken',
@@ -2105,9 +1565,6 @@ export const menuItems: readonly MenuItem[] = [
     price: 1999,
     category: 'Steak House',
     section: 'food',
-    image: {
-      alt: 'Teragon Steak (Chicken)',
-    },
   },
   {
     id: 'teragon-steak-beef',
@@ -2117,8 +1574,5 @@ export const menuItems: readonly MenuItem[] = [
     price: 2949,
     category: 'Steak House',
     section: 'food',
-    image: {
-      alt: 'Teragon Steak (Beef)',
-    },
   },
 ]

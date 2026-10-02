@@ -1,6 +1,7 @@
-import { Photo, SectionHeading } from '@/components/ui'
-import { home, type Signature } from '@/data'
+import { Photo, Reveal, SectionHeading } from '@/components/ui'
+import { dishImage, home, type Signature } from '@/data'
 import { cn } from '@/lib/cn'
+import { photoSizes } from '@/lib/photoSizes'
 import { DishText } from './DishText'
 
 /**
@@ -10,13 +11,16 @@ import { DishText } from './DishText'
  */
 function SmallDish({ signature, square = false }: { signature: Signature; square?: boolean }) {
   return (
-    <article className="flex gap-4 md:flex-col md:gap-4">
-      <Photo
-        image={signature.item.image}
-        ratio="dish"
-        sizes="(width >= 48em) 33vw, 6rem"
-        className={cn('w-24 shrink-0 md:w-auto', square && 'md:aspect-gallery')}
-      />
+    <article data-zoom-group className="flex gap-4 md:flex-col md:gap-4">
+      <Reveal className="w-24 shrink-0 md:w-auto">
+        <Photo
+          image={dishImage(signature.item)}
+          ratio="dish"
+          sizes={square ? photoSizes.signatureStacked : photoSizes.signatureAcross}
+          zoom
+          className={cn(square && 'md:aspect-gallery')}
+        />
+      </Reveal>
       <DishText item={signature.item} description={signature.summary} compact className="flex-1" />
     </article>
   )
@@ -39,12 +43,18 @@ export function Signatures() {
 
         <div className="grid-layout gap-y-12">
           {feature && (
-            <article className="col-span-4 flex flex-col gap-6 md:col-span-2 lg:col-span-7">
-              <Photo
-                image={feature.item.image}
-                ratio="dish"
-                sizes="(width >= 64em) 55vw, (width >= 48em) 50vw, 100vw"
-              />
+            <article
+              data-zoom-group
+              className="col-span-4 flex flex-col gap-6 md:col-span-2 lg:col-span-7"
+            >
+              <Reveal>
+                <Photo
+                  image={dishImage(feature.item)}
+                  ratio="dish"
+                  sizes={photoSizes.sevenColumns}
+                  zoom
+                />
+              </Reveal>
               <DishText item={feature.item} description={feature.summary} large />
             </article>
           )}

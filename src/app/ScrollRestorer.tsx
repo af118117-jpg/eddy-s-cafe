@@ -2,6 +2,34 @@ import { useEffect, useLayoutEffect, useRef } from 'react'
 import { NavigationType, useLocation, useNavigationType } from 'react-router-dom'
 
 const STORAGE_KEY = 'eddys:scroll-positions'
+// Keep trying to reach a saved position for about a second.
+const MAX_FRAMES = 60
+// Any of these means the reader is moving the page themselves: stop restoring.
+const INPUT_EVENTS = ['wheel', 'touchstart', 'keydown', 'pointerdown'] as const
+
+/**
+ * Scrolls to `y`. The page may still be too short to get there (the menu
+ * renders its later sections just after its first paint), so this keeps
+ * trying each frame until it arrives, gives up, or the reader takes over.
+ * Returns a cleanup that stops it.
+ */
+function restore(y: number): () => void {
+  let frame = 0
+  let frames = 0
+  const stop = () => {
+    cancelAnimationFrame(frame)
+    for (const type of INPUT_EVENTS) window.removeEventListener(type, stop)
+  }
+  const attempt = () => {
+    window.scrollTo(0, y)
+    frames += 1
+    if (Math.abs(window.scrollY - y) < 1 || frames >= MAX_FRAMES) stop()
+    else frame = requestAnimationFrame(attempt)
+  }
+  for (const type of INPUT_EVENTS) window.addEventListener(type, stop, { passive: true })
+  attempt()
+  return stop
+}
 
 function loadPositions(): Map<string, number> {
   try {
@@ -75,7 +103,7 @@ export function ScrollRestorer() {
     }
     const saved = positions.current.get(entryKey)
     if (navigationType === NavigationType.Pop && saved !== undefined) {
-      window.scrollTo(0, saved)
+      return restore(saved)
     } else if (!hash) {
       window.scrollTo(0, 0)
     }

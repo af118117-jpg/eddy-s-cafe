@@ -1,5 +1,6 @@
 import { Photo, Price, SectionHeading, ServesLabel } from '@/components/ui'
 import { home } from '@/data'
+import { photoSizes } from '@/lib/photoSizes'
 
 /** Sharing platters on a cream band, with the serving size as big as the price. */
 export function Feasts() {
@@ -12,7 +13,7 @@ export function Feasts() {
           <Photo
             image={image}
             ratio="editorial"
-            sizes="(width >= 64em) 33vw, 100vw"
+            sizes={photoSizes.fourColumns}
             className="lg:aspect-dish"
           />
         </div>

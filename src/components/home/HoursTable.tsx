@@ -30,7 +30,10 @@ export function HoursTable({ week, currentDay, labelledBy }: HoursTableProps) {
               // Not colour alone: the current row is also set in medium weight.
               className={cn('border-b', current && 'bg-cream font-medium')}
             >
-              <th scope="row" className={cn('py-3 pl-3 text-left', !current && 'font-normal')}>
+              <th
+                scope="row"
+                className={cn('py-3 pl-3 text-left', current ? 'font-medium' : 'font-normal')}
+              >
                 {entry.day}
               </th>
               <td className="py-3 pr-3 text-right tabular-nums">

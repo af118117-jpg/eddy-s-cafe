@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useRef, useState } from 'react'
+import { Suspense, useRef, useState } from 'react'
 import { matchRoutes, Outlet, useLocation, type RouteObject } from 'react-router-dom'
 import {
   AnnouncementBar,
@@ -9,16 +9,17 @@ import {
   SiteHeader,
   SkipLink,
 } from '@/components/layout'
-import { cafe } from '@/data'
+import { pageMeta, type PageMeta } from '@/data/site'
 import { useMinWidth, useScrolledPast } from '@/hooks'
+import { useDocumentHead } from '@/hooks/useDocumentHead'
 import { ScrollRestorer } from './ScrollRestorer'
 import { ScrollToHash } from './ScrollToHash'
 import { useRouteFocus } from './useRouteFocus'
 
 /** Per-route settings, set as `handle` on the page routes. */
 export interface RouteHandle {
-  /** Page title; the site name is appended. */
-  title?: string
+  /** Title, description and canonical path (src/data/site.ts). */
+  meta?: PageMeta
   /** The page starts with a full-bleed hero the header sits over. */
   headerOverlay?: boolean
 }
@@ -54,9 +55,7 @@ export function SiteLayout({ pages }: SiteLayoutProps) {
 
   useRouteFocus()
 
-  useEffect(() => {
-    document.title = handle.title ? `${handle.title} | ${cafe.name}` : `${cafe.name}, Faisalabad`
-  }, [handle.title])
+  useDocumentHead(handle.meta ?? pageMeta.notFound)
 
   return (
     <div className="relative flex min-h-svh flex-col pb-(--action-bar-space)">
@@ -79,15 +78,20 @@ export function SiteLayout({ pages }: SiteLayoutProps) {
         }}
       />
       <main id={MAIN_ID} tabIndex={-1} className="flex-1">
-        {/* Already mounted, so a lazy page loading during navigation keeps the old page on screen. */}
-        <Suspense fallback={null}>
+        {/*
+          Already mounted, so a lazy page loading during navigation keeps the old page on screen.
+          On a first visit straight to a lazy page, the fallback holds a screen's height, so the
+          footer isn't drawn at the top and then pushed away (a layout shift).
+        */}
+        <Suspense fallback={<div aria-hidden="true" className="min-h-svh" />}>
           <Outlet />
+          {/* Inside the boundary: they act in the same commit as the page content, even when a lazy page loads late. */}
+          <ScrollRestorer />
+          <ScrollToHash />
         </Suspense>
       </main>
       <SiteFooter />
       {!navOpen && <MobileActionBar />}
-      <ScrollRestorer />
-      <ScrollToHash />
     </div>
   )
 }

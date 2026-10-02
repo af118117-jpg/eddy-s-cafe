@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Button, Chip, Photo, SectionHeading } from '@/components/ui'
-import { groupOf, home, menuGroups, type MenuGroupId } from '@/data'
+import { dishImage, groupOf, home, menuGroups, type MenuGroupId } from '@/data'
+import { photoSizes } from '@/lib/photoSizes'
 import { DishText } from './DishText'
 
 type Filter = MenuGroupId | 'all'
@@ -49,11 +50,12 @@ export function MenuPreview() {
 
           <ul className="grid gap-x-gutter-sm gap-y-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-x-gutter-lg">
             {visible.map((item) => (
-              <li key={item.id} className="flex flex-col gap-4">
+              <li key={item.id} data-zoom-group className="flex flex-col gap-4">
                 <Photo
-                  image={item.image}
+                  image={dishImage(item)}
                   ratio="dish"
-                  sizes="(width >= 64em) 25vw, (width >= 48em) 50vw, 100vw"
+                  sizes={photoSizes.fourAcross}
+                  zoom
                   // One column on phones: 16:9 keeps eight dishes from becoming a very long scroll.
                   className="max-md:aspect-editorial"
                 />

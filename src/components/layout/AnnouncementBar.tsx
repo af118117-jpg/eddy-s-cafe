@@ -47,18 +47,19 @@ export function AnnouncementBar({ onDismiss }: AnnouncementBarProps) {
           <span>
             Open daily till late<span className="max-sm:hidden"> on Green Avenue</span>
           </span>
+          {/* The full bar height, so it's a 44px touch target. */}
           <a
             href={cafe.links.foodpanda}
-            className="font-medium underline decoration-beige-dark underline-offset-4 hover:decoration-current"
+            className="inline-flex min-h-control-md items-center font-medium"
           >
-            Order on foodpanda
+            <span className="link-draw link-rest">Order on foodpanda</span>
           </a>
         </p>
         <button
           type="button"
           onClick={dismiss}
           aria-label="Dismiss announcement"
-          className="-mr-3 inline-flex size-(--spacing-control-md) shrink-0 items-center justify-center rounded-pill transition-colors duration-(--duration-micro) ease-standard hover:bg-fg hover:text-fg-inverse"
+          className="-mr-3 inline-flex size-(--spacing-control-md) shrink-0 items-center justify-center rounded-pill transition-colors duration-(--duration-standard) ease-standard hover:bg-fg hover:text-fg-inverse"
         >
           <Icon icon={X} size="sm" />
         </button>

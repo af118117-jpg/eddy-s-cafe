@@ -62,6 +62,19 @@ export const cafe = {
     instagram: 'https://www.instagram.com/theeddyscafe/',
   },
   instagramHandle: '@theeddyscafe',
+  /** Google Maps: "Rs 1,000-6,000 per person", as reported by 168 people. */
+  priceRange: 'Rs 1,000–6,000',
+  /** What the kitchen serves, taken from the menu's categories (for search engines). */
+  cuisines: [
+    'Middle Eastern',
+    'Steakhouse',
+    'Asian',
+    'Pizza',
+    'Pasta',
+    'Burgers',
+    'Desserts',
+    'Coffee',
+  ],
 } as const
 
 export type Cafe = typeof cafe

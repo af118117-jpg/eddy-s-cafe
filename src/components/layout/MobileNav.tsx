@@ -11,7 +11,7 @@ import { Wordmark } from './Wordmark'
 const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
 
 export const iconButtonClass =
-  'inline-flex size-(--spacing-control-md) shrink-0 items-center justify-center rounded-pill transition-colors duration-(--duration-micro) ease-standard hover:bg-fg hover:text-fg-inverse'
+  'inline-flex size-(--spacing-control-md) shrink-0 items-center justify-center rounded-pill transition-colors duration-(--duration-standard) ease-standard hover:bg-fg hover:text-fg-inverse'
 
 interface MobileNavProps {
   open: boolean
@@ -135,7 +135,7 @@ export function MobileNav({ open, onOpen, onClose, className }: MobileNavProps) 
                 <li key={item.to} className="border-b">
                   <NavItemLink
                     item={item}
-                    className="flex min-h-control-lg items-center py-3 text-h2 decoration-1 underline-offset-8 hover:underline aria-[current=page]:underline"
+                    className="flex min-h-control-lg items-center py-3 text-h2 [--link-offset:var(--spacing-1)]"
                   />
                 </li>
               ))}

@@ -60,12 +60,13 @@ export function SiteHeader({
 
         <div className="ml-auto flex items-center gap-2 lg:gap-8">
           <nav aria-label="Main" className="max-lg:hidden">
-            <ul className="flex items-center gap-8">
+            {/* Padded links with half the gap: the same spacing, and 44px targets even for "Visit". */}
+            <ul className="flex items-center gap-4">
               {primaryNav.map((item) => (
                 <li key={item.to}>
                   <NavItemLink
                     item={item}
-                    className="inline-flex min-h-control-md items-center text-nav decoration-1 underline-offset-4 hover:underline aria-[current=page]:underline"
+                    className="inline-flex min-h-control-md items-center px-2 text-nav"
                   />
                 </li>
               ))}

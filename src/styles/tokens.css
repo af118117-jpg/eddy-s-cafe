@@ -166,6 +166,11 @@
   --duration-standard: 250ms;
   --duration-reveal: 600ms;
   --duration-reveal-long: 800ms;
+  --duration-hero: 1200ms; /* hero photo settling on first load */
+  --duration-crossfade: 200ms; /* menu results when filtering */
+  --motion-stagger: 80ms; /* between wordmark lines and between the hero's last elements */
+  --scale-hero-from: 1.04;
+  --scale-hover: 1.03;
 
   --default-transition-duration: var(--duration-standard);
   --default-transition-timing-function: var(--ease-standard);

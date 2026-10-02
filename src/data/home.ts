@@ -3,16 +3,49 @@
  * home-selection.ts; names, descriptions and prices come from the menu data.
  * Search for "TODO(copy)" for placeholders to replace.
  */
+import drinksPhoto from '/assets-source/drinks.jpg?aspect=4:5&photo'
+import feastsPhoto from '/assets-source/feasts.jpg?aspect=4:5&photo'
+import heroNarrow from '/assets-source/hero.jpg?aspect=4:5&avifQuality=40&photo'
+import heroWide from '/assets-source/hero.jpg?aspect=16:9&avifQuality=40&photo'
+import introPhoto from '/assets-source/intro.jpg?aspect=4:5&photo'
+import spacePhoto from '/assets-source/space.jpg?aspect=16:9&photo'
+import { heroImage } from '@/lib/heroImage'
 import { cafe } from './cafe'
 import { homeDishes } from './home-dishes.generated'
 import { homeSelection } from './home-selection'
-import type { ImageAsset } from './images'
+import type { ImageAsset, Picture } from './images'
 import { feastServes, type MenuItem, type Serves } from './menu'
 
-/** Photo slot still waiting for a chosen, optimised photo (Phase 7). */
-function slot(alt: string, source?: string): ImageAsset {
-  return source ? { alt, source, sourceKind: 'own' } : { alt }
+/*
+ * Photos come from assets-source/ (see its README for what goes where). For
+ * now every file there is a cream placeholder; the alt texts describe the
+ * photo the README suggests for each slot. Rewrite one if you use another photo.
+ */
+
+/** Gallery photos in file-name order (01.jpg first), cropped square. */
+const galleryFiles = import.meta.glob<Picture>('/assets-source/gallery/*.jpg', {
+  eager: true,
+  import: 'default',
+  query: '?aspect=1:1&photo',
+})
+
+/** Alt text for each gallery file, by name. The tests check every file has one. */
+export const galleryAlts: Readonly<Record<string, string>> = {
+  '01': 'Two layered desserts in eddy’s cups on a wooden table',
+  '02': 'A pink iced drink in an eddy’s cup',
+  '03': 'A coffee in an eddy’s mug on a wooden table',
+  '04': 'Orange and red juices in glass bottles on a balcony',
+  '05': 'An eddy’s takeaway bag on a table by the stairs',
+  '06': 'Grilled chicken with fries and a creamy sauce',
+  '07': 'The eddy’s café sign on the front of the building',
+  '08': 'The front of eddy’s Café, with a red carpet at the door',
+  '09': 'The coffee bar under the eddy’s sign, with the drinks boards above',
 }
+
+const galleryImages: ImageAsset[] = Object.entries(galleryFiles).map(([path, picture]) => ({
+  alt: galleryAlts[path.slice(path.lastIndexOf('/') + 1, -'.jpg'.length)] ?? '',
+  picture,
+}))
 
 function dish(id: string): MenuItem {
   const item = homeDishes[id]
@@ -68,7 +101,12 @@ export const home = {
   hero: {
     positioning:
       'An all-day café and grill on Green Avenue, from Middle Eastern charcoal to specialty coffee.',
-    image: slot('TODO(copy): describe the hero photo'),
+    // Decorative: a backdrop under the wordmark, which with the line below says it all.
+    image: {
+      alt: '',
+      picture: heroNarrow,
+      art: { media: heroImage.wideMedia, picture: heroWide },
+    } satisfies ImageAsset,
   },
 
   intro: {
@@ -82,7 +120,10 @@ export const home = {
       'Eat in, take away, or order through foodpanda.',
     ],
     storyIsPlaceholder: true as boolean,
-    image: slot('TODO(copy): describe the intro photo'),
+    image: {
+      alt: 'The coffee counter under the eddy’s sign',
+      picture: introPhoto,
+    } satisfies ImageAsset,
   },
 
   signatures: {
@@ -108,7 +149,11 @@ export const home = {
       if (!serves) throw new Error(`No serving size for feast: ${id}`)
       return { item: dish(id), serves, description: lookup(feastDescriptions, id, 'description') }
     }),
-    image: slot('TODO(copy): describe the feasts photo'),
+    // TODO(photo): no photo of a platter yet; the alt text describes one from the menu.
+    image: {
+      alt: 'A sharing platter of grilled meats with rice, hummus and pita bread',
+      picture: feastsPhoto,
+    } satisfies ImageAsset,
   },
 
   drinks: {
@@ -119,34 +164,33 @@ export const home = {
     cold: homeSelection.cold.map(dish),
     linkLabel: 'All coffee and tea',
     linkTo: '/menu#coffee-tea',
-    image: slot('TODO(copy): describe the coffee photo'),
+    image: {
+      alt: 'An iced coffee in an eddy’s cup beside a chocolate dessert',
+      picture: drinksPhoto,
+    } satisfies ImageAsset,
   },
 
   space: {
     // TODO(copy): a line about the room itself (seating, light, the terrace?).
     caption: 'Eat in on Green Avenue West, open until 2 AM from Friday to Sunday.',
     captionIsPlaceholder: true as boolean,
-    image: slot('TODO(copy): describe the interior photo'),
+    image: {
+      alt: 'A corner table by the stairs, under a square light',
+      picture: spacePhoto,
+    } satisfies ImageAsset,
   },
 
   gallery: {
     title: 'Around eddy’s',
     instagramLabel: `Follow ${cafe.instagramHandle} on Instagram`,
-    images: [
-      slot(
-        'Two layered desserts in eddy’s cups on a wooden table',
-        '01-Google-Maps-Photos/google-maps-24.jpg',
-      ),
-      ...Array.from({ length: 8 }, (_, index) =>
-        slot(`TODO(copy): describe gallery photo ${String(index + 2)}`),
-      ),
-    ],
+    images: galleryImages,
   },
 
   visit: {
     title: 'Visit',
     hoursTitle: 'Opening hours',
-    mapImage: slot('TODO(copy): map of the area around the café'),
+    // No map image yet (none in the source material): a placeholder inside the Google Maps link.
+    mapImage: { alt: '' } satisfies ImageAsset,
   },
 
   closing: {

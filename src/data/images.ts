@@ -1,17 +1,19 @@
 /**
- * A photo slot. Until the image pipeline runs (Phase 7) most slots have no
- * `src` and render as a cream placeholder of the right ratio.
+ * One photo in every size and format, as vite-imagetools describes it for a
+ * <picture> (the `photo` preset in vite.config.ts): a srcset per format, and
+ * the largest JPEG as the fallback `src` with its pixel size.
  */
+export interface Picture {
+  sources: Partial<Record<'avif' | 'webp' | 'jpeg', string>>
+  img: { src: string; w: number; h: number }
+}
+
+/** A photo slot. Without a `picture` it renders as a cream placeholder of the right ratio. */
 export interface ImageAsset {
   /** Describes the photo for screen readers. "" only for purely decorative images. */
   alt: string
-  /** Optimised file under public/images. */
-  src?: string
-  /** Intrinsic size of `src`. */
-  width?: number
-  height?: number
-  /** Raw file in eddys-cafe-assets/ to process in Phase 7. */
-  source?: string
-  /** "own": the café's photo. "reference": foodpanda stock, watermarked "For reference only". */
-  sourceKind?: 'own' | 'reference'
+  /** The photo, from assets-source/ (see assets-source/README.md). */
+  picture?: Picture
+  /** Art direction: another crop of the photo, used where `media` matches (the hero's 16:9 crop). */
+  art?: { media: string; picture: Picture }
 }

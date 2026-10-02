@@ -2,13 +2,18 @@
  * Global base styles. Values come from tokens.css; nothing raw here.
  */
 
-/* Inter variable, latin subset, self-hosted. Preloaded in index.html — keep the URL in sync. */
+/*
+ * Inter variable, latin subset, self-hosted. Preloaded in index.html — keep the
+ * URL in sync. The weight axis is cut to the 400–500 the type scale uses
+ * (400 body, 450 nav, 500 headings and labels), which makes the file a third
+ * smaller. Nothing may ask for more than 500 (the browser would fake a bold).
+ */
 @font-face {
   font-family: 'Inter';
   font-style: normal;
-  font-weight: 100 900;
+  font-weight: 400 500;
   font-display: swap;
-  src: url('/fonts/inter-latin-wght.woff2') format('woff2-variations');
+  src: url('/fonts/inter-latin-wght-400-500.woff2') format('woff2-variations');
   unicode-range:
     U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
     U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
@@ -40,12 +45,6 @@
   }
 }
 
-/*
- * While the site header is hidden (scrolling down on phones). Sticky bars
- * under the header use it to move up into its place: header-hidden:top-0.
- */
-@custom-variant header-hidden (:root:has(header[data-hidden]) &);
-
 @layer base {
   :root {
     --page-margin: var(--spacing-margin-sm);
@@ -76,11 +75,20 @@
     border-color: var(--color-line);
   }
 
+  /* No default bold: the type scale (and the font file) stops at 500. */
+  b,
+  strong,
+  th {
+    font-weight: var(--font-weight-medium);
+  }
+
   html {
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
-    /* Anchor jumps land below the sticky header. */
+    /* Anchor jumps land below the sticky header, and focused controls scroll
+       clear of the fixed mobile action bar instead of hiding behind it. */
     scroll-padding-top: var(--header-height);
+    scroll-padding-bottom: var(--action-bar-space);
     /* Locking scroll for the mobile menu must not shift the layout. */
     scrollbar-gutter: stable;
   }
@@ -141,6 +149,19 @@
     --focus-ring-color: var(--color-bg);
     background-color: var(--color-ink);
     color: var(--color-fg);
+  }
+
+  /*
+   * Sticky bars under the header (the menu toolbar) move up into its place
+   * while it hides, in step with it, but only once stuck (data-stuck), so a
+   * bar still in the page flow never covers what's above it. A transform, so
+   * nothing is laid out again and nothing shifts.
+   */
+  [data-follow-header] {
+    transition: translate var(--duration-standard) var(--ease-standard);
+  }
+  :root:has(header[data-hidden]) [data-follow-header][data-stuck] {
+    translate: 0 calc(-1 * var(--header-height));
   }
 
   /* Search fields bring their own clear button. */
@@ -227,6 +248,171 @@
 }
 
 /*
+ * Text-link underline that draws from left to right (docs/PLAN.md Motion).
+ * Put `link-draw` on the element that wraps the link text (a span inside
+ * tall inline-flex links, or the <a> itself when it hugs its text), and add
+ * `link-rest` for links that keep a quiet beige line at rest. The line sits
+ * `--link-offset` below the text box.
+ */
+@utility link-draw {
+  --draw: 0;
+  position: relative;
+  /* The text box then hugs the glyphs, so the line sits just under the text. */
+  line-height: normal;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: calc(-1 * var(--link-offset, var(--spacing-1) / 2));
+    height: var(--border-hairline);
+    background-color: currentColor;
+    pointer-events: none;
+    /* Without motion the line simply appears. */
+    opacity: var(--draw);
+  }
+}
+
+@utility link-rest {
+  &::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: calc(-1 * var(--link-offset, var(--spacing-1) / 2));
+    height: var(--border-hairline);
+    background-color: var(--color-beige-dark);
+    pointer-events: none;
+  }
+}
+
+/* When the line is drawn: hover (pointer devices), keyboard focus, the current page, and forced states in the styleguide. */
+@media (hover: hover) {
+  :where(a, button):hover .link-draw,
+  a.link-draw:hover {
+    --draw: 1;
+  }
+}
+:where(a, button):focus-visible .link-draw,
+a.link-draw:focus-visible,
+[aria-current='page'] .link-draw,
+[data-force~='hover'] .link-draw,
+[data-force~='hover'].link-draw {
+  --draw: 1;
+}
+
+/* ---------------------------------------------------------------------------
+ * Motion. Everything that hides content before showing it lives under
+ * .js-motion, which src/lib/motion.ts sets only when JavaScript runs and
+ * reduced motion is off. Only transform, opacity and clip-path move.
+ * ------------------------------------------------------------------------- */
+
+@keyframes hero-settle {
+  from {
+    scale: var(--scale-hero-from);
+  }
+  to {
+    scale: 1;
+  }
+}
+
+@keyframes rise {
+  from {
+    translate: 0 100%;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.js-motion {
+  /*
+   * The hero entrance, the page's one orchestrated moment (first load only):
+   * the photo settles, the wordmark rises out of its mask, line by line, and
+   * the statement and buttons fade in last, all done within about 1.2s.
+   */
+  & [data-entrance='photo'] {
+    animation: hero-settle var(--duration-hero) var(--ease-standard) both;
+  }
+  & [data-entrance='line'] {
+    animation: rise var(--duration-reveal-long) var(--ease-standard) both;
+    animation-delay: calc(var(--duration-micro) + var(--entrance-line, 0) * var(--motion-stagger));
+  }
+  & [data-entrance='statement'],
+  & [data-entrance='actions'] {
+    animation: fade-in var(--duration-reveal) var(--ease-standard) both;
+    animation-delay: calc(var(--duration-micro) + var(--duration-reveal-long) / 2);
+  }
+  & [data-entrance='actions'] {
+    animation-delay: calc(
+      var(--duration-micro) + var(--duration-reveal-long) / 2 + var(--motion-stagger)
+    );
+  }
+
+  /* Scroll reveal (Signatures, SpaceFeature and Gallery photos only): wiped in from the bottom. */
+  & [data-reveal] {
+    transition: clip-path var(--duration-reveal-long) var(--ease-standard);
+  }
+  & [data-reveal='hidden'] {
+    clip-path: inset(100% 0 0 0);
+  }
+  /* An explicit end value: inset() can't interpolate to \`none\`, which would make it pop. */
+  & [data-reveal='shown'] {
+    clip-path: inset(0);
+  }
+
+  /* Hover zoom: the frame clips, the photo (or its placeholder) scales. */
+  & [data-zoom] > :is(img, [data-placeholder-fill]) {
+    transition: scale var(--duration-reveal) var(--ease-standard);
+  }
+  @media (hover: hover) {
+    & :is(a, [data-zoom-group]):hover [data-zoom] > :is(img, [data-placeholder-fill]),
+    & [data-zoom]:hover > :is(img, [data-placeholder-fill]) {
+      scale: var(--scale-hover);
+    }
+  }
+
+  /* The link underline draws from the left instead of appearing. */
+  & .link-draw::after {
+    opacity: 1;
+    scale: var(--draw) 1;
+    transform-origin: left;
+    transition: scale var(--duration-standard) var(--ease-standard);
+  }
+}
+
+/*
+ * Menu filtering runs in a view transition: the page crossfades over 200ms,
+ * except the toolbar, which shows its new state at once so the sliding tab
+ * indicator (a CSS transition) plays undisturbed.
+ */
+::view-transition-group(*),
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation-duration: var(--duration-crossfade);
+  animation-timing-function: var(--ease-standard);
+}
+/* The overlay would otherwise swallow clicks for the 200ms: let a quick second click reach the page. */
+::view-transition {
+  pointer-events: none;
+}
+::view-transition-old(menu-toolbar) {
+  display: none;
+}
+::view-transition-group(menu-toolbar),
+::view-transition-new(menu-toolbar) {
+  animation: none;
+}
+
+/*
  * Reduced motion: no transitions, animations or smooth scrolling anywhere.
  * Transforms are reset on anything marked data-motion (reveals etc.), so
  * those elements rest in their final position. Transforms used purely for
@@ -237,6 +423,7 @@
   ::before,
   ::after {
     animation-duration: 0s !important;
+    animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0s !important;
     transition-delay: 0s !important;
@@ -257,5 +444,12 @@
     translate: none !important;
     scale: none !important;
     rotate: none !important;
+  }
+
+  /* View transitions are never started with reduced motion; this is a backstop. */
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
   }
 }

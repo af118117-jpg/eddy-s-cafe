@@ -9,6 +9,7 @@ import {
 } from 'react'
 import { Icon } from '@/components/ui'
 import { cn } from '@/lib/cn'
+import { prefersReducedMotion } from '@/lib/motion'
 
 // Width of the edge fades (spacing-16): a chip under one counts as hidden.
 const EDGE_CLEARANCE = 64
@@ -57,8 +58,42 @@ interface ChipRowProps {
   label: string
   /** Chip buttons (aria-pressed). */
   children: ReactNode
+  /**
+   * Draw the pressed chip's fill as one indicator that slides from chip to
+   * chip (use with Chip variant="tab"). Leave off with reduced motion.
+   */
+  indicator?: boolean
   className?: string
 }
+
+/*
+ * The sliding indicator is a pill built from three pieces, a left cap, a body
+ * and a right cap, so it can change width while moving using only translate
+ * and scale: stretching a single pill would squash its round ends.
+ */
+const indicatorPiece = 'absolute top-0 left-0 h-(--tab-h) bg-fg'
+
+function positionIndicator(indicator: HTMLElement, chip: HTMLElement | undefined) {
+  indicator.hidden = !chip
+  if (!chip) return
+  const cap = chip.offsetHeight / 2
+  const x = chip.offsetLeft
+  const width = chip.offsetWidth
+  const set = (name: string, value: number, unit = 'px') => {
+    indicator.style.setProperty(name, `${String(value)}${unit}`)
+  }
+  set('--tab-y', chip.offsetTop)
+  set('--tab-h', chip.offsetHeight)
+  set('--tab-cap', cap)
+  set('--tab-x', x)
+  set('--tab-end-x', x + width - cap)
+  // The body overlaps each cap by a pixel so no seam shows while moving.
+  set('--tab-body-x', x + cap - 1)
+  set('--tab-body-scale', Math.max(width - 2 * cap + 2, 0), '')
+}
+
+const pressedChip = (row: HTMLElement) =>
+  chipsIn(row).find((chip) => chip.getAttribute('aria-pressed') === 'true')
 
 /**
  * One line of filter chips that scrolls sideways (never wraps, so the toolbar
@@ -68,8 +103,12 @@ interface ChipRowProps {
  * Keyboard (ARIA toolbar pattern): the row is one Tab stop, the pressed chip;
  * Left/Right, Home and End move between chips; Enter or Space presses one.
  */
-export function ChipRow({ label, children, className }: ChipRowProps) {
+export function ChipRow({ label, children, indicator = false, className }: ChipRowProps) {
   const rowRef = useRef<HTMLDivElement>(null)
+  const contentRef = useRef<HTMLDivElement>(null)
+  const indicatorRef = useRef<HTMLSpanElement>(null)
+  // Transitions switch on only after the indicator's first placement, so it doesn't fly in.
+  const [indicatorReady, setIndicatorReady] = useState(false)
   const lastPressed = useRef<HTMLButtonElement | null>(null)
   const firstChip = useRef<HTMLButtonElement | undefined>(undefined)
   const [overflow, setOverflow] = useState({ start: false, end: false })
@@ -83,6 +122,7 @@ export function ChipRow({ label, children, className }: ChipRowProps) {
     const stop =
       focused ?? chips.find((chip) => chip.getAttribute('aria-pressed') === 'true') ?? chips[0]
     for (const chip of chips) chip.tabIndex = chip === stop ? 0 : -1
+    if (indicatorRef.current) positionIndicator(indicatorRef.current, pressedChip(row))
 
     // New chips (another group's categories): start from the beginning.
     if (chips[0] !== firstChip.current) {
@@ -103,14 +143,25 @@ export function ChipRow({ label, children, className }: ChipRowProps) {
     if (hidden) row.scrollLeft = left - (parseFloat(getComputedStyle(row).scrollPaddingLeft) || 0)
   })
 
-  // Which edges hide more chips: drives the fades and the edge buttons.
+  useEffect(() => {
+    if (!indicator || indicatorReady) return
+    const frame = requestAnimationFrame(() => {
+      setIndicatorReady(true)
+    })
+    return () => {
+      cancelAnimationFrame(frame)
+    }
+  }, [indicator, indicatorReady])
+
+  // Which edges hide more chips (the fades and edge buttons), and the indicator after a resize.
   useEffect(() => {
     const row = rowRef.current
-    const content = row?.firstElementChild
+    const content = contentRef.current
     if (!row || !content) return
     let frame = 0
     const measure = () => {
       frame = 0
+      if (indicatorRef.current) positionIndicator(indicatorRef.current, pressedChip(row))
       const max = row.scrollWidth - row.clientWidth
       const next = { start: row.scrollLeft > 1, end: row.scrollLeft < max - 1 }
       setOverflow((prev) => (prev.start === next.start && prev.end === next.end ? prev : next))
@@ -148,8 +199,10 @@ export function ChipRow({ label, children, className }: ChipRowProps) {
   const scrollByPage = (direction: 1 | -1) => {
     const row = rowRef.current
     if (!row) return
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    row.scrollBy({ left: direction * row.clientWidth * 0.75, behavior: reduce ? 'auto' : 'smooth' })
+    row.scrollBy({
+      left: direction * row.clientWidth * 0.75,
+      behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+    })
   }
 
   return (
@@ -171,7 +224,40 @@ export function ChipRow({ label, children, className }: ChipRowProps) {
           'scroll-px-16',
         )}
       >
-        <div className="flex w-max gap-2 *:snap-start">{children}</div>
+        {indicator && (
+          // Before the chips in the DOM, so the chips' labels paint on top of it.
+          <span
+            ref={indicatorRef}
+            aria-hidden="true"
+            className={cn(
+              'pointer-events-none absolute top-0 left-0',
+              indicatorReady &&
+                '*:transition-[translate,scale] *:duration-(--duration-standard) *:ease-standard',
+            )}
+          >
+            <span
+              className={cn(
+                indicatorPiece,
+                'w-(--tab-cap) translate-x-(--tab-x) translate-y-(--tab-y) rounded-l-pill',
+              )}
+            />
+            <span
+              className={cn(
+                indicatorPiece,
+                'w-px origin-left translate-x-(--tab-body-x) translate-y-(--tab-y) scale-x-(--tab-body-scale)',
+              )}
+            />
+            <span
+              className={cn(
+                indicatorPiece,
+                'w-(--tab-cap) translate-x-(--tab-end-x) translate-y-(--tab-y) rounded-r-pill',
+              )}
+            />
+          </span>
+        )}
+        <div ref={contentRef} className="flex w-max gap-2 *:snap-start">
+          {children}
+        </div>
       </div>
       {overflow.start && (
         <ScrollButton

@@ -11,9 +11,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     price: 4599,
     category: 'Middle Eastern Main',
     section: 'food',
-    image: {
-      alt: 'Persian Style Lamb Chops',
-    },
   },
   'chicken-spicy-moroccan-steak': {
     id: 'chicken-spicy-moroccan-steak',
@@ -23,9 +20,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     price: 1999,
     category: 'Steak House',
     section: 'food',
-    image: {
-      alt: 'Chicken Spicy Moroccan Steak',
-    },
   },
   'chicken-cashew-nut': {
     id: 'chicken-cashew-nut',
@@ -35,9 +29,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     price: 1999,
     category: 'Tropical and Asian Mains',
     section: 'food',
-    image: {
-      alt: 'Chicken Cashew Nut',
-    },
   },
   'chicken-chilli-cheese-pizza': {
     id: 'chicken-chilli-cheese-pizza',
@@ -46,9 +37,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     price: 1699,
     category: 'Pizza',
     section: 'food',
-    image: {
-      alt: 'Chicken Chilli Cheese Pizza',
-    },
   },
   'eddys-katsu-club-sandwich': {
     id: 'eddys-katsu-club-sandwich',
@@ -57,9 +45,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     price: 1899,
     category: 'Sandwiches',
     section: 'food',
-    image: {
-      alt: "Eddy's Katsu Club Sandwich",
-    },
   },
   'hunter-beef-and-egg-sando': {
     id: 'hunter-beef-and-egg-sando',
@@ -69,9 +54,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     price: 1149,
     category: 'Breakfast',
     section: 'food',
-    image: {
-      alt: 'Hunter Beef & Egg Sando',
-    },
   },
   'hummus-with-lamb': {
     id: 'hummus-with-lamb',
@@ -80,9 +62,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     price: 1499,
     category: 'Middle Eastern Starters',
     section: 'food',
-    image: {
-      alt: 'Hummus with Lamb',
-    },
   },
   'dynamite-prawns': {
     id: 'dynamite-prawns',
@@ -91,9 +70,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     price: 1599,
     category: 'Appetizers',
     section: 'food',
-    image: {
-      alt: 'Dynamite Prawns',
-    },
   },
   'adana-kebab': {
     id: 'adana-kebab',
@@ -103,9 +79,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     price: 2699,
     category: 'Middle Eastern Main',
     section: 'food',
-    image: {
-      alt: 'Adana Kebab',
-    },
   },
   'chicken-ala-kiev': {
     id: 'chicken-ala-kiev',
@@ -115,9 +88,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     price: 1949,
     category: 'Gourmet Selection',
     section: 'food',
-    image: {
-      alt: 'Chicken Ala Kiev',
-    },
   },
   'porcini-pizza': {
     id: 'porcini-pizza',
@@ -126,9 +96,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     price: 1899,
     category: 'Pizza',
     section: 'food',
-    image: {
-      alt: 'Porcini Pizza',
-    },
   },
   'mama-mia-pasta': {
     id: 'mama-mia-pasta',
@@ -137,9 +104,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     price: 1699,
     category: 'Pasta',
     section: 'food',
-    image: {
-      alt: 'Mama Mia Pasta',
-    },
   },
   'molten-lava-with-ice-cream': {
     id: 'molten-lava-with-ice-cream',
@@ -148,9 +112,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     price: 899,
     category: 'Live Desserts',
     section: 'food',
-    image: {
-      alt: 'Molten Lava with Ice Cream',
-    },
   },
   'croissant-and-butter-pudding': {
     id: 'croissant-and-butter-pudding',
@@ -159,9 +120,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     price: 999,
     category: 'Live Desserts',
     section: 'food',
-    image: {
-      alt: 'Croissant & Butter Pudding',
-    },
   },
   'turkish-lamb-cheese-kebab': {
     id: 'turkish-lamb-cheese-kebab',
@@ -171,9 +129,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     price: 2799,
     category: 'Middle Eastern Main',
     section: 'food',
-    image: {
-      alt: 'Turkish Lamb Cheese Kebab',
-    },
   },
   'kamil-jooje': {
     id: 'kamil-jooje',
@@ -183,9 +138,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     price: 3499,
     category: 'Middle Eastern Main',
     section: 'food',
-    image: {
-      alt: 'Kamil Jooje',
-    },
   },
   'beshghab-e-mix': {
     id: 'beshghab-e-mix',
@@ -195,9 +147,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     price: 5999,
     category: 'Middle Eastern Main',
     section: 'food',
-    image: {
-      alt: 'Beshghab e Mix',
-    },
   },
   'eddys-khaas': {
     id: 'eddys-khaas',
@@ -207,9 +156,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     price: 8999,
     category: 'Middle Eastern Main',
     section: 'food',
-    image: {
-      alt: "Eddy' s Khaas",
-    },
   },
   'hot-espresso': {
     id: 'hot-espresso',
@@ -218,9 +164,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     price: 549,
     category: 'Hot Coffee',
     section: 'drink',
-    image: {
-      alt: 'Hot Espresso',
-    },
   },
   'hot-americano': {
     id: 'hot-americano',
@@ -229,9 +172,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     price: 549,
     category: 'Hot Coffee',
     section: 'drink',
-    image: {
-      alt: 'Hot Americano',
-    },
   },
   'hot-cappuccino': {
     id: 'hot-cappuccino',
@@ -240,9 +180,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     price: 799,
     category: 'Hot Coffee',
     section: 'drink',
-    image: {
-      alt: 'Hot Cappuccino',
-    },
   },
   'hot-cafe-latte': {
     id: 'hot-cafe-latte',
@@ -251,9 +188,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     price: 799,
     category: 'Hot Coffee',
     section: 'drink',
-    image: {
-      alt: 'Hot Cafe Latte',
-    },
   },
   'hot-spanish-latte': {
     id: 'hot-spanish-latte',
@@ -262,9 +196,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     price: 899,
     category: 'Hot Coffee',
     section: 'drink',
-    image: {
-      alt: 'Hot Spanish Latte',
-    },
   },
   'iced-spanish-latte': {
     id: 'iced-spanish-latte',
@@ -273,9 +204,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     price: 999,
     category: 'Cold Coffee',
     section: 'drink',
-    image: {
-      alt: 'Iced Spanish Latte',
-    },
   },
   'caramel-frappe': {
     id: 'caramel-frappe',
@@ -285,9 +213,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     priceFrom: true,
     category: 'Frappes',
     section: 'drink',
-    image: {
-      alt: 'Caramel Frappe',
-    },
   },
   'lotus-frappe': {
     id: 'lotus-frappe',
@@ -297,9 +222,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     priceFrom: true,
     category: 'Frappes',
     section: 'drink',
-    image: {
-      alt: 'Lotus Frappe',
-    },
   },
   'voltage-frappe': {
     id: 'voltage-frappe',
@@ -309,9 +231,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     priceFrom: true,
     category: 'Frappes',
     section: 'drink',
-    image: {
-      alt: 'Voltage Frappe',
-    },
   },
   'mint-margarita': {
     id: 'mint-margarita',
@@ -320,9 +239,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     price: 749,
     category: 'Homemade Sodas',
     section: 'drink',
-    image: {
-      alt: 'Mint Margarita',
-    },
   },
   'blue-lagoon': {
     id: 'blue-lagoon',
@@ -331,9 +247,6 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     price: 749,
     category: 'Homemade Sodas',
     section: 'drink',
-    image: {
-      alt: 'Blue Lagoon',
-    },
   },
   'strawberry-mint-margarita': {
     id: 'strawberry-mint-margarita',
@@ -342,8 +255,5 @@ export const homeDishes: Readonly<Record<string, MenuItem>> = {
     price: 749,
     category: 'Homemade Sodas',
     section: 'drink',
-    image: {
-      alt: 'Strawberry Mint Margarita',
-    },
   },
 }

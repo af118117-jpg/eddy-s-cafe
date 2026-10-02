@@ -1,4 +1,4 @@
-import type { ImageAsset } from '@/data/images'
+import type { ImageAsset, Picture } from '@/data/images'
 import { cn } from '@/lib/cn'
 
 /**
@@ -19,9 +19,14 @@ const ratioClass: Record<FixedImageRatio, string> = {
 
 export interface ImageSource {
   srcSet: string
-  type: 'image/avif' | 'image/webp'
+  type: 'image/avif' | 'image/webp' | 'image/jpeg'
   /** Defaults to the image's `sizes`. */
   sizes?: string
+  /** Art direction: only used where this media query matches. */
+  media?: string
+  /** Pixel size of this source, when it differs from the <img>'s (another crop). */
+  width?: number
+  height?: number
 }
 
 interface CommonProps {
@@ -29,6 +34,11 @@ interface CommonProps {
   alt: string
   /** Classes for the frame. */
   className?: string
+  /**
+   * Scale the photo to 1.03 on hover, inside the frame. Hovering an ancestor
+   * link or `data-zoom-group` element triggers it too.
+   */
+  zoom?: boolean
 }
 
 interface LoadedImageProps extends CommonProps {
@@ -38,14 +48,14 @@ interface LoadedImageProps extends CommonProps {
   height: number
   srcSet?: string
   sizes?: string
-  /** Modern formats, tried in order before the fallback <img>. */
+  /** Art-directed crops and modern formats, tried in order before the fallback <img>. */
   sources?: readonly ImageSource[]
   ratio?: ImageRatio
   /** For the LCP image: loads eagerly with fetchpriority="high". */
   priority?: boolean
 }
 
-/** No photo yet (until Phase 7): a cream block of the right ratio. */
+/** No photo for this slot: a cream block of the right ratio. */
 interface PlaceholderImageProps extends CommonProps {
   src?: undefined
   ratio: FixedImageRatio
@@ -59,18 +69,22 @@ export type ResponsiveImageProps = LoadedImageProps | PlaceholderImageProps
  */
 export function ResponsiveImage(props: ResponsiveImageProps) {
   if (props.src === undefined) {
-    const { alt, ratio, className } = props
+    const { alt, ratio, zoom = false, className } = props
     return (
-      // No image content yet, so nothing for assistive tech to announce.
+      // No image content, so nothing for assistive tech to announce.
       <div
         aria-hidden="true"
         data-placeholder
-        className={cn('bg-placeholder', ratioClass[ratio], className)}
+        data-zoom={zoom || undefined}
+        className={cn('overflow-hidden', ratioClass[ratio], className)}
       >
-        {import.meta.env.DEV && ratio !== 'fill' && (
-          // Dev only: which photo belongs here. Not on full-bleed slots, where it would sit under the header.
-          <span className="block p-3 text-meta text-ink">{alt}</span>
-        )}
+        {/* The fill is the part that scales on hover, like the <img> of a real photo. */}
+        <div data-placeholder-fill className="size-full bg-placeholder">
+          {import.meta.env.DEV && ratio !== 'fill' && (
+            // Dev only: which photo belongs here. Not on full-bleed slots, where it would sit under the header.
+            <span className="block p-3 text-meta text-ink">{alt}</span>
+          )}
+        </div>
       </div>
     )
   }
@@ -85,6 +99,7 @@ export function ResponsiveImage(props: ResponsiveImageProps) {
     sources,
     ratio = 'intrinsic',
     priority = false,
+    zoom = false,
     className,
   } = props
   // React 18 doesn't know the camelCase fetchPriority prop yet; set the attribute directly.
@@ -92,6 +107,7 @@ export function ResponsiveImage(props: ResponsiveImageProps) {
 
   return (
     <picture
+      data-zoom={zoom || undefined}
       className={cn(
         'block overflow-hidden bg-placeholder',
         ratio !== 'intrinsic' && ratioClass[ratio],
@@ -103,10 +119,13 @@ export function ResponsiveImage(props: ResponsiveImageProps) {
     >
       {sources?.map((source) => (
         <source
-          key={source.type}
+          key={`${source.media ?? ''} ${source.type}`}
           type={source.type}
+          media={source.media}
           srcSet={source.srcSet}
           sizes={source.sizes ?? sizes}
+          width={source.width}
+          height={source.height}
         />
       ))}
       <img
@@ -125,29 +144,68 @@ export function ResponsiveImage(props: ResponsiveImageProps) {
   )
 }
 
+const MODERN_FORMATS = [
+  ['avif', 'image/avif'],
+  ['webp', 'image/webp'],
+] as const
+
+/** <source>s for the formats of one crop; `jpeg` too when it isn't the <img> fallback. */
+function pictureSources(
+  picture: Picture,
+  options: { media?: string; sizes?: string; withJpeg?: boolean } = {},
+): ImageSource[] {
+  const { media, sizes, withJpeg = false } = options
+  const formats = withJpeg ? [...MODERN_FORMATS, ['jpeg', 'image/jpeg'] as const] : MODERN_FORMATS
+  return formats.flatMap(([format, type]) => {
+    const srcSet = picture.sources[format]
+    if (!srcSet) return []
+    const size = media ? { width: picture.img.w, height: picture.img.h } : {}
+    return [{ srcSet, type, media, sizes, ...size }]
+  })
+}
+
 interface PhotoProps {
   image: ImageAsset
   ratio: FixedImageRatio
+  /** How wide the photo is drawn at each viewport width (the `sizes` attribute). */
   sizes?: string
+  /** `sizes` for the art-directed crop (`image.art`), if it has one. */
+  artSizes?: string
   priority?: boolean
+  /** Hover zoom (see ResponsiveImage). */
+  zoom?: boolean
   className?: string
 }
 
-/** Renders a photo slot from content data: the photo once it exists, otherwise its placeholder. */
-export function Photo({ image, ratio, sizes, priority, className }: PhotoProps) {
-  if (image.src && image.width && image.height) {
-    return (
-      <ResponsiveImage
-        src={image.src}
-        alt={image.alt}
-        width={image.width}
-        height={image.height}
-        ratio={ratio}
-        sizes={sizes}
-        priority={priority}
-        className={className}
-      />
-    )
+/**
+ * Renders a photo slot from content data: AVIF and WebP sources with a JPEG
+ * <img>, plus the art-directed crop first if there is one. Without a photo,
+ * the slot's placeholder.
+ */
+export function Photo({ image, ratio, sizes, artSizes, priority, zoom, className }: PhotoProps) {
+  const { alt, picture, art } = image
+  if (!picture) {
+    return <ResponsiveImage alt={alt} ratio={ratio} zoom={zoom} className={className} />
   }
-  return <ResponsiveImage alt={image.alt} ratio={ratio} className={className} />
+  const sources = [
+    ...(art
+      ? pictureSources(art.picture, { media: art.media, sizes: artSizes, withJpeg: true })
+      : []),
+    ...pictureSources(picture),
+  ]
+  return (
+    <ResponsiveImage
+      src={picture.img.src}
+      width={picture.img.w}
+      height={picture.img.h}
+      srcSet={picture.sources.jpeg}
+      sizes={sizes}
+      sources={sources}
+      alt={alt}
+      ratio={ratio}
+      priority={priority}
+      zoom={zoom}
+      className={className}
+    />
+  )
 }

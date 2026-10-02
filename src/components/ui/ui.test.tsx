@@ -89,7 +89,16 @@ describe('ResponsiveImage', () => {
     expect(screen.queryByRole('img')).not.toBeInTheDocument()
     const placeholder = container.querySelector('[data-placeholder]')
     expect(placeholder).toHaveAttribute('aria-hidden', 'true')
-    expect(placeholder).toHaveClass('aspect-dish', 'bg-placeholder')
+    expect(placeholder).toHaveClass('aspect-dish', 'overflow-hidden')
+    // The fill inside is what zooms on hover, like the <img> of a real photo.
+    expect(placeholder?.querySelector('[data-placeholder-fill]')).toHaveClass('bg-placeholder')
+  })
+
+  it('marks the frame for hover zoom only when asked', () => {
+    const { container, rerender } = render(<ResponsiveImage {...photo} ratio="dish" />)
+    expect(container.querySelector('picture')).not.toHaveAttribute('data-zoom')
+    rerender(<ResponsiveImage {...photo} ratio="dish" zoom />)
+    expect(container.querySelector('picture')).toHaveAttribute('data-zoom')
   })
 })
 

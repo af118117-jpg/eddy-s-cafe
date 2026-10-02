@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- TODO(domain): the site's real address; must match siteUrl in src/data/site.ts. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://eddys-cafe.example/</loc>
+  </url>
+  <url>
+    <loc>https://eddys-cafe.example/menu</loc>
+  </url>
+</urlset>

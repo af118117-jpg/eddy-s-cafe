@@ -1,6 +1,9 @@
 import { describe, expect, it } from 'vitest'
-import { groupOf, home } from '@/data'
+import { dishImage, groupOf, home, type ImageAsset } from '@/data'
+import { dishAlts, dishPhotos } from '@/data/dish-photos'
+import { galleryAlts } from '@/data/home'
 import { menuCategories, menuItems } from '@/data/menu-items'
+import { heroImage } from '@/lib/heroImage'
 
 describe('menu data', () => {
   it('imported every row from the CSV', () => {
@@ -31,18 +34,43 @@ describe('home content', () => {
     }
   })
 
-  it('never ships a TODO alt text on a real photo', () => {
-    const images = [
-      home.hero.image,
+  it('describes every photo; only the hero backdrop is decorative', () => {
+    const images: ImageAsset[] = [
       home.intro.image,
       home.feasts.image,
       home.drinks.image,
       home.space.image,
-      home.visit.mapImage,
       ...home.gallery.images,
     ]
     for (const image of images) {
-      if (image.src) expect(image.alt).not.toMatch(/TODO/)
+      expect(image.picture).toBeDefined()
+      expect(image.alt).not.toBe('')
+      expect(image.alt).not.toMatch(/TODO/)
     }
+    expect(home.hero.image.alt).toBe('')
+    // The map slot has no photo yet, so it stays a hidden placeholder.
+    const map: ImageAsset = home.visit.mapImage
+    expect(map.picture).toBeUndefined()
+  })
+
+  it('has alt text written for every gallery and dish photo file', () => {
+    expect(Object.keys(galleryAlts)).toHaveLength(home.gallery.images.length)
+    expect(Object.keys(dishPhotos).length).toBeGreaterThan(0)
+    for (const id of Object.keys(dishPhotos)) expect(dishAlts[id], id).toBeTruthy()
+    for (const signature of home.signatures.items) {
+      expect(dishImage(signature.item).alt).toBe(dishAlts[signature.item.id])
+    }
+  })
+
+  it('crops the hero 4:5 below 768px and 16:9 above, in every format and width', () => {
+    const { picture, art } = home.hero.image
+    expect(art.media).toBe(heroImage.wideMedia)
+    for (const crop of [picture, art.picture]) {
+      expect(Object.keys(crop.sources).sort()).toEqual(['avif', 'jpeg', 'webp'])
+      const widths = crop.sources.avif?.split(', ').map((entry) => entry.split(' ')[1])
+      expect(widths).toEqual(['480w', '800w', '1200w', '1600w', '2400w'])
+    }
+    expect(picture.img.w / picture.img.h).toBeCloseTo(4 / 5)
+    expect(art.picture.img.w / art.picture.img.h).toBeCloseTo(16 / 9, 2)
   })
 })

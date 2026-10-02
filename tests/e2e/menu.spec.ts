@@ -207,17 +207,30 @@ test('filtering never moves or resizes the toolbar, and nothing shifts on its ow
   }
 
   for (const name of ['Mains', 'Feasts', 'Cold Drinks', 'All']) {
-    await groups(page).getByRole('button', { name, exact: true }).click()
+    const chip = groups(page).getByRole('button', { name, exact: true })
+    // Bring it to the middle of its row first, as a person would: at the row's
+    // edge, the scroll arrow covers it and Playwright would scroll the page instead.
+    await chip.evaluate((element) => {
+      element.scrollIntoView({ block: 'nearest', inline: 'center' })
+    })
+    await chip.click()
     await expect(groups(page).getByRole('button', { name, exact: true })).toHaveAttribute(
       'aria-pressed',
       'true',
     )
+    // Let the crossfade finish: while the page swaps, a click can't reach the next chip,
+    // and Playwright would scroll the page trying.
+    await page.waitForFunction(() =>
+      document.getAnimations().every((animation) => animation.playState !== 'running'),
+    )
     await check()
   }
-  await searchBox(page).fill('zzzz')
+  // Typed with real key presses: fill() sends no key events, so the browser
+  // wouldn't count the resulting change as caused by input.
+  await searchBox(page).pressSequentially('zzzz')
   await expect(resultCount(page)).toHaveText('No matches')
   await check()
-  await searchBox(page).fill('')
+  await searchBox(page).press('Escape')
   await expect(resultCount(page)).toHaveText('175 dishes and drinks')
   await check()
 

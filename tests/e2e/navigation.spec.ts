@@ -38,6 +38,8 @@ async function tabTo(page: Page, name: string, max = 40) {
 
 test('skip link is the first stop and moves focus to main', async ({ page }) => {
   await page.goto('/')
+  // Tab pressed before the app has rendered goes nowhere.
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
   await page.keyboard.press('Tab')
   const first = await focused(page)
   expect(first?.name).toBe('Skip to content')
@@ -180,6 +182,8 @@ test('no horizontal scroll on any page', async ({ page }) => {
 
 test('header turns solid after 24px; hides on scroll down only on mobile', async ({ page }) => {
   await page.goto('/')
+  // The page is a lazy chunk: scroll once it's there, or there's nothing to scroll yet.
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
   const header = page.getByRole('banner')
   await expect(header).toHaveAttribute('data-state', 'overlay')
   await page.evaluate(() => {
@@ -226,6 +230,7 @@ test('dismissed announcement stays dismissed after reload', async ({ page }) => 
 
 test('new pages start at the top; back restores the scroll position', async ({ page }) => {
   await page.goto('/')
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
   await page.evaluate(() => {
     window.scrollTo(0, 900)
   })
@@ -242,6 +247,23 @@ test('new pages start at the top; back restores the scroll position', async ({ p
   await page.waitForFunction((y) => Math.abs(window.scrollY - y) < 2, before)
 })
 
+test('a reload keeps the scroll position, though the page loads after the frame', async ({
+  page,
+}) => {
+  for (const path of ['/', '/menu']) {
+    await page.goto(path)
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
+    await page.evaluate(() => {
+      window.scrollTo(0, 900)
+    })
+    await page.waitForFunction(() => window.scrollY > 800)
+    const before = await page.evaluate(() => window.scrollY)
+    await page.reload()
+    await expect(page.getByRole('heading', { level: 1 })).toBeAttached()
+    await page.waitForFunction((y) => Math.abs(window.scrollY - y) < 2, before)
+  }
+})
+
 test('no serious or critical axe violations', async ({ page }) => {
   const scan = async (label: string) => {
     const { violations } = await new AxeBuilder({ page })
@@ -254,6 +276,7 @@ test('no serious or critical axe violations', async ({ page }) => {
     ).toEqual([])
   }
   await page.goto('/')
+  await page.getByRole('heading', { level: 1 }).waitFor()
   await scan('home')
   await page.goto('/menu')
   await page.getByRole('heading', { level: 1, name: 'Menu' }).waitFor()
