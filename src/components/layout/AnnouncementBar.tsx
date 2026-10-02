@@ -44,8 +44,13 @@ export function AnnouncementBar({ onDismiss }: AnnouncementBarProps) {
         {/* Balances the dismiss button so the message sits in the true centre. */}
         <span aria-hidden="true" className="-ml-3 hidden w-control-md shrink-0 sm:block" />
         <p className="flex min-h-control-md flex-1 flex-wrap items-center justify-center gap-x-4 text-center text-small">
+          {/*
+            Always one line, so the bar is as tall as --announcement-height says and the hero's
+            wordmark clears the mobile action bar: shorter below 380px and 640px.
+          */}
           <span>
-            Open daily till late<span className="max-sm:hidden"> on Green Avenue</span>
+            Open daily<span className="max-xs:hidden"> till late</span>
+            <span className="max-sm:hidden"> on Green Avenue</span>
           </span>
           {/* The full bar height, so it's a 44px touch target. */}
           <a

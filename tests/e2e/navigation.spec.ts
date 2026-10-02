@@ -264,6 +264,44 @@ test('a reload keeps the scroll position, though the page loads after the frame'
   }
 })
 
+test('a fresh visit starts at the top, even to a page this tab has scrolled before', async ({
+  page,
+}) => {
+  await page.goto('/menu')
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
+  await page.evaluate(() => {
+    window.scrollTo(0, 900)
+  })
+  await page.waitForFunction(() => window.scrollY > 800)
+  // Leaves the document (saving positions), then comes back as a new visit, like a typed address.
+  await page.goto('/')
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
+  await page.goto('/menu')
+  await expect(page.getByRole('heading', { level: 1, name: 'Menu' })).toBeVisible()
+  // Long enough for a restore to have happened, had there been one.
+  await page.waitForTimeout(300)
+  expect(await page.evaluate(() => window.scrollY)).toBe(0)
+})
+
+test('a malformed #hash in a shared link still shows the page', async ({ page }) => {
+  await page.goto('/menu#%E0%A4%A')
+  await expect(page.getByRole('heading', { level: 1, name: 'Menu' })).toBeVisible()
+})
+
+test('a page whose code fails to download offers a reload instead of a blank screen', async ({
+  page,
+}) => {
+  // As after a new deploy: the menu's chunk is gone. The app reloads once, then explains.
+  await page.route(/\/assets\/Menu-[\w-]+\.js$/, (route) => route.abort())
+  await page.goto('/')
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
+  await page.getByRole('link', { name: 'View menu' }).click()
+  await expect(page.getByRole('heading', { level: 1, name: 'This page didn’t load' })).toBeVisible()
+  await expect(page).toHaveURL(/\/menu$/)
+  await expect(page.getByRole('banner')).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Reload the page' })).toBeVisible()
+})
+
 test('no serious or critical axe violations', async ({ page }) => {
   const scan = async (label: string) => {
     const { violations } = await new AxeBuilder({ page })

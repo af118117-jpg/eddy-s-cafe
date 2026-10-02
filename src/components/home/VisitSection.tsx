@@ -1,12 +1,15 @@
-import { Photo } from '@/components/ui'
+import { Button, Photo } from '@/components/ui'
 import { cafe, home } from '@/data'
 import { useOpenStatus } from '@/hooks/useOpenStatus'
 import { describeOpenStatus } from '@/lib/openStatus'
 import { photoSizes } from '@/lib/photoSizes'
-import { ContactActions } from './ContactActions'
 import { HoursTable } from './HoursTable'
 
-/** Address, live open/closed status, the week's hours, contact buttons and a map link. */
+/**
+ * Address, live open/closed status, the week's hours, call and WhatsApp links
+ * and a map link. The links stay quiet: the closing section right after has
+ * the big Call, WhatsApp and Directions buttons.
+ */
 export function VisitSection() {
   const { title, hoursTitle, mapImage } = home.visit
   const status = useOpenStatus()
@@ -42,7 +45,16 @@ export function VisitSection() {
             />
           </div>
 
-          <ContactActions />
+          <div className="flex flex-col items-start">
+            <Button href={cafe.phone.href} variant="link" size="lg">
+              Call {cafe.phone.display}
+            </Button>
+            {cafe.whatsapp && (
+              <Button href={cafe.whatsapp.href} variant="link" size="lg">
+                WhatsApp {cafe.whatsapp.display}
+              </Button>
+            )}
+          </div>
         </div>
 
         <a

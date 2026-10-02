@@ -1,0 +1,14 @@
+# Static site: Netlify serves /menu from menu.html and any path without a file
+# from 404.html (with a 404 status) on its own. No redirects or functions.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "24"
+
+# File names under /assets change whenever their content does, so browsers may keep them.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

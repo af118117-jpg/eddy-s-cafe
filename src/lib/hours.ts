@@ -1,5 +1,5 @@
-// Relative import: the Vite config loads this file (through src/lib/schema.ts).
-import type { DayHours } from '../data/cafe'
+// Relative import with its extension: the Vite config loads this file (through src/data/site.ts).
+import type { DayHours } from '../data/cafe.ts'
 
 /** "11:00" → "11 AM", "13:30" → "1:30 PM", "00:00" → "midnight", "12:00" → "noon". */
 export function formatTime(time: string): string {
@@ -56,4 +56,21 @@ export function summariseHours(week: readonly DayHours[]): HoursGroup[] {
       },
     ]
   })
+}
+
+/**
+ * The week's hours as a phrase for running text, so copy never restates them:
+ * "Monday to Thursday from 11 AM to 1 AM and Friday to Sunday from 11 AM to 2 AM".
+ */
+export function describeHours(week: readonly DayHours[]): string {
+  const parts = summariseHours(week).map(({ days, hours }) => `${days} from ${hours}`)
+  const last = parts.pop() ?? ''
+  return parts.length > 0 ? `${parts.join(', ')} and ${last}` : last
+}
+
+/** "11 AM" when all seven days open at the same time, otherwise null. */
+export function dailyOpening(week: readonly DayHours[]): string | null {
+  const times = new Set(week.map((day) => day.opens))
+  const [opens] = times
+  return week.length === 7 && times.size === 1 && opens ? formatTime(opens) : null
 }

@@ -14,7 +14,12 @@ export function ScrollToHash() {
 
   useEffect(() => {
     if (!hash) return
-    const id = decodeURIComponent(hash.slice(1))
+    let id: string
+    try {
+      id = decodeURIComponent(hash.slice(1))
+    } catch {
+      return // A malformed escape (a mangled link, "#%"): no element can have that id.
+    }
     let frame = 0
     let attempts = 0
 

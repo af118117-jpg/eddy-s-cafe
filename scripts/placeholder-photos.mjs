@@ -1,7 +1,8 @@
 // Writes a cream placeholder into assets-source/ for every photo slot that
 // has no file yet: at the slot's ratio and 2400px wide, so the build generates
-// every width, with its file name faintly in the middle so you can tell which
-// file to replace (and so no two are identical, which the build would merge).
+// every width, with its file name faintly in the middle (in beige, a token) so
+// you can tell which file to replace (and so no two are identical, which the
+// build would merge).
 // Files that already exist (real photos) are never touched; delete one to get
 // its placeholder back.
 // Usage: npm run photos:placeholders
@@ -9,14 +10,15 @@ import { existsSync, mkdirSync } from 'node:fs'
 import { dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import sharp from 'sharp'
+import { colorToken } from './tokens.ts'
 
 const root = fileURLToPath(new URL('../assets-source/', import.meta.url))
 // Node runs this TypeScript file directly (type stripping); it has no imports.
 const { homeSelection } = await import(new URL('../src/data/home-selection.ts', import.meta.url))
 
-const CREAM = '#e8dfd7' // --color-cream
-const BEIGE = '#bfb3a1' // --color-beige: cream would vanish on the cream Feasts band
-const LABEL = '#d5cbc1' // a shade darker than cream: readable up close, quiet on the page
+const CREAM = colorToken('cream')
+// Cream would vanish on the cream Feasts band.
+const BEIGE = colorToken('beige')
 const WIDTH = 2400
 
 const slots = [
@@ -46,7 +48,7 @@ for (const { file, ratio, colour = CREAM } of slots) {
   const label = Buffer.from(
     `<svg xmlns="http://www.w3.org/2000/svg" width="${String(WIDTH)}" height="${String(height)}">
       <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle"
-        font-family="Arial, sans-serif" font-size="96" fill="${colour === CREAM ? LABEL : CREAM}">${file}</text>
+        font-family="Arial, sans-serif" font-size="96" fill="${colour === CREAM ? BEIGE : CREAM}">${file}</text>
     </svg>`,
   )
   await sharp({ create: { width: WIDTH, height, channels: 3, background: colour } })

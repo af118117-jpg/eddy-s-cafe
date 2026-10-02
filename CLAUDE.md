@@ -31,6 +31,7 @@ npm run analyze    # production build + reports/bundle.html (treemap, gzipped si
 npm run photos:placeholders  # cream placeholders for empty photo slots in assets-source/
 npm run icons      # favicon set + site.webmanifest from public/favicon.svg and the colour tokens
 npm run og-image   # public/og-image.jpg (1200×630) in the site's font and colours (needs PLAYWRIGHT_CHANNEL=msedge here)
+npm run screenshots  # build + full-page shots of / and /menu at 320–1536px into tests/screenshots/ (same browser note)
 ```
 
 Before reporting any phase as done: `typecheck`, `lint` and `test` pass, and `build` succeeds.
@@ -51,6 +52,8 @@ src/styles              tokens.css (@theme, the only raw values) + base.css
 assets-source           source photos, processed at build time (see its README)
 public/fonts            Inter variable woff2 (weights 400–500), preloaded in index.html
 tests/e2e               Playwright + axe specs
+tests/screenshots       full-page screenshots for design review (npm run screenshots)
+scripts                 build-time scripts; tokens.ts reads the colour tokens for them and the Vite config
 reports                 analyze and Lighthouse output (git-ignored)
 ```
 
@@ -59,26 +62,28 @@ reports                 analyze and Lighthouse output (git-ignored)
 ## Routing and the site shell
 
 - Declarative `BrowserRouter` + `useRoutes` on purpose: the data router (`createBrowserRouter`) costs ~20 KB gzipped. Home and Menu are lazy chunks (`lazyPage` / `React.lazy`), so neither page downloads the other's code and photos; `SiteLayout` wraps the outlet, `ScrollRestorer` and `ScrollToHash` in one Suspense boundary so they act when the page content commits.
-- Each page has its own HTML file, written by the `pageHtml` plugin in `vite.config.ts` (its `PAGES` list mirrors the routes): index.html preloads the hero photo and the Home chunk, menu.html the Menu chunk (and has its own title). `/menu` must be served from menu.html: `vite preview` and most static hosts do that by default ("pretty URLs"); elsewhere it falls back to index.html and still works. `main.tsx` waits for the Home chunk before the first render on `/` (`preloadPage`), so the hero renders with the frame.
+- Each page has its own HTML file, written by the `pageHtml` plugin in `vite.config.ts` (its `PAGES` list mirrors the routes): index.html preloads the hero photo and the Home chunk, menu.html the Menu chunk (and has its own title). `/menu` must be served from menu.html: `vite preview` and Netlify do that by default, Vercel through `cleanUrls` in vercel.json. 404.html (noindex, nothing preloaded) is what static hosts serve, with a 404 status, for any other path; the router then shows NotFound. There is no SPA fallback, and none is needed. `main.tsx` waits for the Home chunk before the first render on `/` (`preloadPage`), so the hero renders with the frame.
 - `package.json` declares `"sideEffects": ["**/*.css"]`. That's what keeps `home.ts` and the photo data out of the main chunk when the shell imports `@/data`. Keep modules free of import-time side effects.
 - Page routes set `handle: { title, headerOverlay }` in `src/app/routes.tsx`. `headerOverlay` makes the header transparent over a full-bleed hero, which must pull itself up with `-mt-(--header-height)`.
 - The home page must keep the section ids `#feasts`, `#coffee`, `#visit` (used by the nav in `src/data/navigation.ts`).
+- `PageErrorBoundary` (in `SiteLayout`) catches a page that fails to load or render, so the frame stays usable. A missing chunk (a tab opened before a deploy) reloads once; a second failure within 10s shows a message with Reload and Home.
 - Pages render inside `<main>`; don't add another `main`. Each page has exactly one `h1`: it receives focus after client-side navigation.
 - Buttons and chips use `fg` / `fg-inverse`, so they invert automatically inside `data-surface="ink"`.
 
 ## SEO and the document head
 
-- `src/data/site.ts` (no imports) holds `siteUrl`, each page's `title` / `description` / canonical `path` (`pageMeta`) and the link-preview image. Route handles carry `meta: pageMeta.x`.
+- `src/data/site.ts` holds `siteUrl`, each page's `title` / `description` / canonical `path` (`pageMeta`) and the link-preview image. Route handles carry `meta: pageMeta.x`.
 - The build writes each page's head into its HTML (`pageHead` / `headTags` in `vite.config.ts`): title, description, canonical, Open Graph and Twitter tags, and on the home page the Restaurant JSON-LD from `src/lib/schema.ts` (built from `cafe.ts` and `hours.ts`). Crawlers and link previews read them without running the app. `useDocumentHead` (in `SiteLayout`) keeps them current while navigating in the app; the not-found page gets `noindex` and no canonical.
 - `siteUrl` is a placeholder (`https://eddys-cafe.example`) until the café has a domain. Change it together with `public/robots.txt` and `public/sitemap.xml`; a unit test fails if they disagree.
-- `src/lib/schema.ts`, `hours.ts`, `heroImage.ts` and `src/data/site.ts` / `cafe.ts` are loaded by the Vite config too: keep their imports relative (no `@/`).
+- `src/lib/schema.ts`, `hours.ts`, `heroImage.ts` and `src/data/site.ts` / `cafe.ts` are loaded by the Vite config too: keep their imports relative and with the `.ts` extension (no `@/`), or Vite warns that its coming native config loader can't read them. The theme colour comes from `--color-bg` through `scripts/tokens.ts`, never a hex in index.html.
 - Lighthouse SEO is 100 on both pages without prerendering; add it only if that changes.
 
 ## Content data
 
-- The menu is generated: `npm run import:menu` turns `eddys-cafe-assets/05-Menu-Data/menu.csv` into `src/data/menu.generated.ts` (all 182 items) and `home-dishes.generated.ts` (only the dishes listed in `src/data/home-selection.ts`). Never edit the generated files by hand.
+- The menu is generated: `npm run import:menu` turns `src/data/menu.csv` (a copy of `eddys-cafe-assets/05-Menu-Data/menu.csv`, and the file to edit from now on) into `src/data/menu.generated.ts` (all 182 items) and `home-dishes.generated.ts` (only the dishes listed in `src/data/home-selection.ts`). Never edit the generated files by hand.
 - `src/data/menu.ts` holds types, the 8 groups and the category→group mapping, and has no runtime import of the menu, so the home page doesn't bundle all 182 items. Import the full list from `@/data/menu-items` (menu page only).
-- Home copy and photo slots live in `src/data/home.ts`; placeholders are marked `TODO(copy)`.
+- Home copy and photo slots live in `src/data/home.ts`; placeholders are marked `TODO(copy)` / `TODO(photo)`. Copy never restates the hours or address: build it from `cafe.ts` (`describeHours`, `dailyOpening` in `src/lib/hours.ts`).
+- MenuPreview shows dish photos only once all eight featured dishes have one; until then it's a text list (no empty frames). The Visit section has quiet Call/WhatsApp links; the big Call/WhatsApp/Directions buttons belong to ClosingCTA right after it.
 - Photos live in `assets-source/` (all cream placeholders for now; its README says what goes where) and are imported as `file.jpg?aspect=4:5&photo`: the `photo` preset in `vite.config.ts` crops them and writes AVIF, WebP and JPEG at 480/800/1200/1600/2400 (never upscaled). `ImageAsset` = `{ alt, picture?, art? }`; `<Photo image={asset} ratio=… sizes=… />` renders the <picture>, or a cream placeholder (aria-hidden) when there is no `picture`. Every `sizes` value comes from `src/lib/photoSizes.ts`, worked out from the grid; `tests/e2e/images.spec.ts` checks them against the rendered width.
 - The hero is art-directed (4:5 below 768px, 16:9 above, AVIF at quality 40 under its scrims). Its media and sizes live in `src/lib/heroImage.ts`, shared by the Hero and the preload in index.html: change them in one place or the browser downloads the hero twice.
 - Dish photos: `assets-source/dishes/<menu id>.jpg` (`src/data/dish-photos.ts`) with alt text in `dishAlts`; gallery photos in name order with `galleryAlts` in `home.ts`. Tests require alt text for each.
@@ -96,7 +101,7 @@ reports                 analyze and Lighthouse output (git-ignored)
 - Don't add `content-visibility: auto` to the category blocks: it halves the render cost of "All" but breaks the deep-link offsets (blocks above the target change height after the jump).
 - Chip rows (`ChipRow`) are single-line horizontal scrollers so the toolbar never changes height: roving tab stop with arrow keys, snap, edge fades (`scroll-fade`), and edge buttons for fine pointers only.
 - The first render shows only the first ~24 dishes; the rest follows at once in a transition, which React renders in slices (one 180-dish render was the page's longest task). `ScrollRestorer` keeps re-applying a saved position for up to a second so Back/reload still land deep in the list.
-- Budget (gzipped): main ~67 KB, Menu ~14.5 KB, shared photo chunk ~3–4 KB, so `/menu` is ~85 KB; Home ~11 KB, so `/` is ~82 KB. Keep each page under 90 KB.
+- Budget (gzipped): main ~68.5 KB, Menu ~14.5 KB, shared photo chunk ~3.7 KB, so `/menu` is ~87 KB; Home ~11 KB, so `/` is ~83 KB. Keep each page under 90 KB.
 
 ## Motion (details in docs/PLAN.md Motion)
 
@@ -118,6 +123,7 @@ reports                 analyze and Lighthouse output (git-ignored)
 - Text over the hero photo must pass AA over a pure white photo: the scrims are sized for that, and `a11y.spec.ts` measures the header's contrast from rendered pixels.
 - Respect `prefers-reduced-motion`. Put `data-motion` on anything that animates in with a transform, so reduced motion rests it in place.
 - Raw values live only in `src/styles/tokens.css`. ESLint fails on hex colours, `[..px]` arbitrary values, numeric/px inline styles, `text-beige*` and off-scale spacing classes in `src/`. Tailwind's default colours, shadows and off-scale spacing (`gap-10`, `p-5`) are switched off and would silently generate nothing. The scale is 0 1 2 3 4 6 8 12 16 24 32 40.
+- `tests/e2e/design.spec.ts` checks the rendered pages too: every colour is a token (alpha aside), no shadows, radius only on buttons and chips (999px), the hero wordmark in view at load, and the pixel values in `photoSizes.ts` / `heroImage.ts` derive from the tokens.
 - Use the `grid-layout` utility for the 4 / 12-column page grid.
 - Dark or cream sections use `data-surface="ink" | "cream"`: it swaps muted text and the focus ring to AA-safe colours.
 

@@ -104,6 +104,7 @@ export default function Menu() {
     },
   }
 
+  // What is being searched, for the search placeholder and the empty state.
   const scope =
     menuSections.find((section) => section.id === filter.category)?.label ??
     (filter.group ? groupLabel(filter.group) : null)
@@ -123,6 +124,7 @@ export default function Menu() {
       <MenuToolbar
         filter={{ ...filter, ...actions }}
         sections={menuSections}
+        scope={scope}
         toolbarRef={toolbarRef}
         searchRef={searchRef}
       />
