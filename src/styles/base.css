@@ -40,17 +40,34 @@
   }
 }
 
+/*
+ * While the site header is hidden (scrolling down on phones). Sticky bars
+ * under the header use it to move up into its place: header-hidden:top-0.
+ */
+@custom-variant header-hidden (:root:has(header[data-hidden]) &);
+
 @layer base {
   :root {
     --page-margin: var(--spacing-margin-sm);
     --focus-ring-color: var(--color-accent);
+    --header-height: var(--spacing-16);
+    /* Height of the announcement bar while it's shown (see :has rule below). */
+    --announcement-height: var(--spacing-0);
+    /* Space kept free at the bottom for the mobile action bar (below md). */
+    --action-bar-space: calc(var(--spacing-control-lg) + env(safe-area-inset-bottom));
 
     @variant md {
       --page-margin: var(--spacing-margin-md);
+      /* A length, not a bare 0: it's used inside calc(). */
+      --action-bar-space: var(--spacing-0);
     }
     @variant lg {
       --page-margin: var(--spacing-margin-lg);
     }
+  }
+
+  :root:has([data-announcement]) {
+    --announcement-height: var(--spacing-control-md);
   }
 
   *,
@@ -62,11 +79,15 @@
   html {
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
+    /* Anchor jumps land below the sticky header. */
+    scroll-padding-top: var(--header-height);
+    /* Locking scroll for the mobile menu must not shift the layout. */
+    scrollbar-gutter: stable;
   }
 
   body {
     background-color: var(--color-bg);
-    color: var(--color-ink);
+    color: var(--color-fg);
     font-family: var(--font-sans);
     font-size: var(--text-body);
     line-height: var(--text-body--line-height);
@@ -90,22 +111,42 @@
   }
 
   /*
+   * Containers that receive focus only from code (main after a route change,
+   * a section after an anchor jump) aren't controls, so they get no ring.
+   */
+  [tabindex='-1']:focus-visible {
+    outline: none;
+  }
+
+  /*
    * Surfaces. Anything inside picks up colours that keep WCAG AA contrast:
    * - cream: ink-muted is 4.1:1 on cream (below 4.5:1), so muted text uses ink.
    * - ink (footer): ink-muted is 3.2:1 on ink, so muted text uses cream; the
-   *   accent focus ring is 2.7:1, so the ring uses bg.
+   *   accent focus ring is 2.7:1, so the ring uses bg. fg / fg-inverse swap,
+   *   so filled and outline buttons invert.
    */
   [data-surface='cream'] {
     --color-ink-muted: var(--color-ink);
+    /* line is 1.02:1 on cream, so dividers there use beige, and so do photo placeholders. */
+    --color-line: var(--color-beige);
+    --color-placeholder: var(--color-beige);
     background-color: var(--color-cream);
-    color: var(--color-ink);
+    color: var(--color-fg);
   }
 
   [data-surface='ink'] {
     --color-ink-muted: var(--color-cream);
+    --color-fg: var(--color-bg);
+    --color-fg-inverse: var(--color-ink);
     --focus-ring-color: var(--color-bg);
     background-color: var(--color-ink);
-    color: var(--color-bg);
+    color: var(--color-fg);
+  }
+
+  /* Search fields bring their own clear button. */
+  input[type='search']::-webkit-search-cancel-button,
+  input[type='search']::-webkit-search-decoration {
+    appearance: none;
   }
 }
 
@@ -133,6 +174,51 @@
   max-width: calc(min(var(--container-prose), var(--container-measure)) + 2 * var(--page-margin));
   margin-inline: auto;
   padding-inline: var(--page-margin);
+}
+
+/* Page grid: 4 columns / 16px gutters, 12 columns / 24px gutters from lg. */
+@utility grid-layout {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: var(--spacing-gutter-sm);
+
+  @variant lg {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--spacing-gutter-lg);
+  }
+}
+
+/* Horizontal scrollers (chip rows): no scrollbar; swipe, keys or the edge buttons scroll them. */
+@utility scrollbar-none {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/*
+ * Fades the edge of a horizontal scroller where more content is hidden. Set
+ * data-overflow-start / data-overflow-end while there is more to scroll to.
+ * The mask only uses alpha, so the colour keywords stand for opaque/clear.
+ */
+@utility scroll-fade {
+  --fade-start: var(--spacing-0);
+  --fade-end: var(--spacing-0);
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black var(--fade-start),
+    black calc(100% - var(--fade-end)),
+    transparent
+  );
+
+  &[data-overflow-start] {
+    --fade-start: var(--spacing-16);
+  }
+  &[data-overflow-end] {
+    --fade-end: var(--spacing-16);
+  }
 }
 
 /* Reading width: 680px, and never more than 68 characters. */

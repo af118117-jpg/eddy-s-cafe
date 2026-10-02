@@ -590,7 +590,7 @@ export default function Styleguide() {
       <GuideSection
         id="spacing"
         title="Spacing"
-        intro="A 4px base. Only these steps exist as utilities: p-5 or gap-7 generate nothing."
+        intro="A 4px base. Only these steps exist as utilities; off-scale steps (5, 7, 10) generate nothing, and lint rejects them."
       >
         <Subsection title="Scale">
           <ul className="flex flex-col gap-3">
@@ -682,6 +682,10 @@ export default function Styleguide() {
             <Button variant="link" data-force="focus" tabIndex={-1}>
               Focus ring on cream
             </Button>
+            <div className="flex flex-wrap gap-3">
+              <Button>Primary</Button>
+              <Button variant="secondary">Secondary</Button>
+            </div>
           </div>
           <div
             data-surface="ink"
@@ -689,11 +693,16 @@ export default function Styleguide() {
           >
             <p className="text-item-name">Ink surface (footer)</p>
             <p className="text-small text-ink-muted">
-              Muted text uses cream and the focus ring uses bg, so both stay above AA contrast.
+              Muted text uses cream, the focus ring uses bg, and buttons invert, so everything stays
+              above AA contrast.
             </p>
             <Button variant="link" data-force="focus" tabIndex={-1}>
               Focus ring on ink
             </Button>
+            <div className="flex flex-wrap gap-3">
+              <Button>Primary</Button>
+              <Button variant="secondary">Secondary</Button>
+            </div>
           </div>
         </div>
       </GuideSection>
@@ -796,6 +805,17 @@ export default function Styleguide() {
             </StateCell>
           ))}
         </div>
+        <Subsection title="Quiet (second row, e.g. menu categories)">
+          <div className="flex flex-wrap items-start gap-x-8 gap-y-6">
+            {chipStates.map((state) => (
+              <StateCell key={state.label} label={state.label}>
+                <Chip variant="quiet" pressed={state.pressed} {...state.extra}>
+                  Hot Coffee
+                </Chip>
+              </StateCell>
+            ))}
+          </div>
+        </Subsection>
         <Subsection title="Try it">
           <ChipGroupDemo />
         </Subsection>

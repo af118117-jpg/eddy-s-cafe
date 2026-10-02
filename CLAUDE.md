@@ -26,19 +26,20 @@ npm run preview    # serve the build
 npm run typecheck  # tsc --noEmit
 npm run lint       # eslint
 npm run test       # vitest
-npm run e2e        # playwright (incl. axe)
+npm run e2e        # playwright (incl. axe) at 375 / 768 / 1280 / 1536
 ```
 
 Before reporting any phase as done: `typecheck`, `lint` and `test` pass, and `build` succeeds.
+Playwright's own Chromium isn't installed on this machine; run e2e against the installed Edge with `PLAYWRIGHT_CHANNEL=msedge npm run e2e`.
 
 ## Layout
 
 ```
-src/app                 routes, providers, app shell
-src/components/layout   AnnouncementBar, SiteHeader, SiteFooter
+src/app                 routes.tsx, SiteLayout (app shell), scroll + focus management
+src/components/layout   AnnouncementBar, SiteHeader, MobileNav, MobileActionBar, SiteFooter, SkipLink
 src/components/ui       Button, Chip, Container, Icon, Price, ResponsiveImage, SectionHeading
 src/components/home     home page sections
-src/components/menu     menu page components
+src/components/menu     menu page: MenuToolbar (GroupTabs, CategoryChips, MenuSearch, ChipRow), MenuList, EmptyState
 src/pages               route pages (the only default exports); _Styleguide is dev-only
 src/data                typed menu + café info (single source for content)
 src/hooks  src/lib
@@ -50,6 +51,34 @@ tests/e2e               Playwright + axe specs
 
 `/styleguide` (dev server only) shows every token and component state. Check new UI there first.
 
+## Routing and the site shell
+
+- Declarative `BrowserRouter` + `useRoutes` on purpose: the data router (`createBrowserRouter`) costs ~20 KB gzipped. Lazy pages use `React.lazy`; `SiteLayout` wraps the outlet in Suspense.
+- Page routes set `handle: { title, headerOverlay }` in `src/app/routes.tsx`. `headerOverlay` makes the header transparent over a full-bleed hero, which must pull itself up with `-mt-(--header-height)`.
+- The home page must keep the section ids `#feasts`, `#coffee`, `#visit` (used by the nav in `src/data/navigation.ts`).
+- Pages render inside `<main>`; don't add another `main`. Each page has exactly one `h1`: it receives focus after client-side navigation.
+- Buttons and chips use `fg` / `fg-inverse`, so they invert automatically inside `data-surface="ink"`.
+
+## Content data
+
+- The menu is generated: `npm run import:menu` turns `eddys-cafe-assets/05-Menu-Data/menu.csv` into `src/data/menu.generated.ts` (all 182 items) and `home-dishes.generated.ts` (only the dishes listed in `src/data/home-selection.ts`). Never edit the generated files by hand.
+- `src/data/menu.ts` holds types, the 8 groups and the category→group mapping, and has no runtime import of the menu, so the home page doesn't bundle all 182 items. Import the full list from `@/data/menu-items` (menu page only).
+- Home copy and photo slots live in `src/data/home.ts`; placeholders are marked `TODO(copy)`.
+- Photos: `<Photo image={asset} ratio=… />` renders the photo once an `ImageAsset` has `src`, otherwise a cream placeholder of the right ratio (aria-hidden; the dev server labels it with the alt text). Phase 7 fills in `src`.
+- Opening status: `useOpenStatus()` works in the café's time zone (`cafe.timeZone`, Asia/Karachi) and treats 00:30 as part of the previous day's session.
+- `/menu#coffee-tea` is linked from the home page: the menu page gives each group's wrapper its group id and each category block its own slug id (`#hot-coffee`).
+- `import:menu` also writes `menu-image-sources.generated.ts` (where each item's raw photo is, own or reference). The app never imports it; it's for choosing photos in Phase 7.
+
+## Menu page
+
+- `src/data/menu-sections.ts` (menu page only) turns the items into category sections in group order. Chicken/Beef versions of one dish (same category and description) become one row with both prices; the four platters get their own "Sharing platters" block in Feasts. `spicyDishes` there lists what gets the "Spicy" tag.
+- `useMenuFilter` (`src/hooks/useMenuFilter.ts`) keeps `?group=&category=&q=` in the URL and replaces the history entry on every change. Import it from its module, not from `@/hooks`: through the index it lands in the main bundle. The search box has its own state; `?q=` is written after a 300 ms pause (Safari limits replaceState).
+- Search: every word has to start a word in the name, description or category ("lat" finds Latte; "latte" doesn't find Platter). Case, accents and apostrophes don't matter.
+- Replace navigations that only change the query string are not page changes: `ScrollRestorer` keeps the scroll position and `useRouteFocus` leaves focus alone. Saved positions are keyed by history key plus URL.
+- The toolbar is sticky at `top-(--header-height)` and uses the `header-hidden:` variant to move up while the header hides. Anchors stop below it via `scroll-mt-(--menu-toolbar-height)` (measured at runtime). Scrolling more than a screen at once shows the header, so anchor offsets stay exact.
+- Chip rows (`ChipRow`) are single-line horizontal scrollers so the toolbar never changes height: roving tab stop with arrow keys, snap, edge fades (`scroll-fade`), and edge buttons for fine pointers only.
+- Budget: the menu chunk is ~14 KB gzipped on top of ~75 KB main. Keep `/menu` under 90 KB in total.
+
 ## Design guardrails (quick reference — details in docs/PLAN.md)
 
 - Colours only from the PLAN tokens. `beige` / `beige-dark` never used for text.
@@ -59,7 +88,8 @@ tests/e2e               Playwright + axe specs
 - Never use: 01/02 numbered markers, middle-dot meta strings, "→" on buttons, all-caps eyebrows, fade-up on every section, identical rounded cards.
 - Focus: 2px accent outline, 3px offset, `:focus-visible` only. Touch targets ≥ 44px.
 - Respect `prefers-reduced-motion`. Put `data-motion` on anything that animates in with a transform, so reduced motion rests it in place.
-- Raw values live only in `src/styles/tokens.css`. ESLint fails on hex colours, `[..px]` arbitrary values, numeric/px inline styles and `text-beige*` in `src/`. Tailwind's default colours, shadows and off-scale spacing (`p-5`) are switched off and generate nothing.
+- Raw values live only in `src/styles/tokens.css`. ESLint fails on hex colours, `[..px]` arbitrary values, numeric/px inline styles, `text-beige*` and off-scale spacing classes in `src/`. Tailwind's default colours, shadows and off-scale spacing (`gap-10`, `p-5`) are switched off and would silently generate nothing. The scale is 0 1 2 3 4 6 8 12 16 24 32 40.
+- Use the `grid-layout` utility for the 4 / 12-column page grid.
 - Dark or cream sections use `data-surface="ink" | "cream"`: it swaps muted text and the focus ring to AA-safe colours.
 
 ## Content rules
@@ -81,7 +111,10 @@ Images: width/height (or aspect-ratio) always set, modern formats, `loading="laz
 
 ## Open questions (confirm with the user before building the affected parts)
 
-- **Menu grouping:** the source data has 25 categories, but PLAN.md defines 8 groups. The mapping still needs to be agreed. There is no "Feasts" category in the data, and "Breakfast" (11 items) has no group of its own.
+- **Menu grouping:** the source data has 25 categories, but PLAN.md defines 8 groups. A proposed mapping is in `src/data/menu.ts` (marked PROPOSAL) and still needs the user's OK. Feasts = the 4 sharing platters whose descriptions give a serving size. Breakfast (11 items) is provisionally under Mains.
+- **Spelling:** "Eddy' s Khaas" (stray space) and "Poched Egg" are shown as published until the user confirms corrections.
+- **Menu page labelling (PROPOSAL):** the "Spicy" tag list (`spicyDishes` in `src/data/menu-sections.ts`), the merged Chicken/Beef steak rows (shown as "Spicy Moroccan Steak" with both prices), and the "Sharing platters" heading for the four feasts.
+- **Menu prices** come from the foodpanda listing (the CSV's source); confirm they match dine-in prices.
 - **Hours:** Google Maps (dine-in) and foodpanda (delivery) disagree. The site should show Google Maps hours as opening hours unless the user says otherwise.
-- **Instagram** `@theeddyscafe` was read off a table card in a photo; the profile hasn't been verified.
-- **WhatsApp:** no WhatsApp number is in the data. Don't assume it matches the phone number (+92 304 1112111) without confirmation.
+- **Instagram** `@theeddyscafe` was read off a table card in a photo; the profile hasn't been verified. It is linked in the footer (flagged in `src/data/cafe.ts`); confirm before launch.
+- **WhatsApp:** no WhatsApp number is in the data. Don't assume it matches the phone number (+92 304 1112111) without confirmation. `cafe.whatsapp` is `null` and every WhatsApp button stays hidden until it's set.

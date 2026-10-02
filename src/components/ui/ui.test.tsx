@@ -69,7 +69,7 @@ describe('ResponsiveImage', () => {
     expect(img).toHaveAttribute('loading', 'lazy')
     expect(img).toHaveAttribute('decoding', 'async')
     expect(img).not.toHaveAttribute('fetchpriority')
-    expect(img.closest('picture')).toHaveClass('aspect-dish', 'bg-cream')
+    expect(img.closest('picture')).toHaveClass('aspect-dish', 'bg-placeholder')
   })
 
   it('loads eagerly with high fetch priority when priority is set', () => {
@@ -82,6 +82,14 @@ describe('ResponsiveImage', () => {
   it('reserves the intrinsic ratio when no ratio is given', () => {
     render(<ResponsiveImage {...photo} />)
     expect(screen.getByRole('img').closest('picture')).toHaveStyle({ aspectRatio: '800 / 1000' })
+  })
+
+  it('renders a hidden placeholder of the right ratio when there is no photo yet', () => {
+    const { container } = render(<ResponsiveImage alt="Lamb chops" ratio="dish" />)
+    expect(screen.queryByRole('img')).not.toBeInTheDocument()
+    const placeholder = container.querySelector('[data-placeholder]')
+    expect(placeholder).toHaveAttribute('aria-hidden', 'true')
+    expect(placeholder).toHaveClass('aspect-dish', 'bg-placeholder')
   })
 })
 
