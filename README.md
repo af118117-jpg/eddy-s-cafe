@@ -92,7 +92,7 @@ All the café’s facts are in one file, [`src/data/cafe.ts`](src/data/cafe.ts):
 - `openingHours`: one line per day in 24-hour time, `{ day: 'Monday', opens: '11:00', closes: '01:00' }`. A closing time earlier than the opening time means after midnight.
 - `phone`: `display` is what people see, `href` is the `tel:` link with no spaces.
 - `whatsapp`: `null` for now, which hides every WhatsApp button. Set it to `{ display: '+92 …', href: 'https://wa.me/92…' }` once the café confirms the number.
-- `address`, `coordinates` (they drive the directions link), `links` (Google Maps, foodpanda, Instagram) and `instagramHandle`.
+- `address`, `coordinates` (they drive the directions link), `links` (Google Maps, foodpanda, Facebook, Instagram) and `instagramHandle`. The footer’s Follow links (icon and name, opening in a new tab) and the structured data read Facebook and Instagram from `links`.
 
 Everything else reads from this file: the hours table, the live “Open now / Closed” label (worked out in Pakistan time, `timeZone`), the footer, the intro text, the search-engine description and the structured data Google reads. Run `npm run test` after a change.
 

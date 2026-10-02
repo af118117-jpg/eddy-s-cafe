@@ -42,7 +42,7 @@ Playwright's own Chromium isn't installed on this machine; run e2e against the i
 ```
 src/app                 routes.tsx, SiteLayout (app shell), scroll + focus management
 src/components/layout   AnnouncementBar, SiteHeader, MobileNav, MobileActionBar, SiteFooter, SkipLink
-src/components/ui       Button, Chip, Container, Icon, Price, ResponsiveImage (Photo), Reveal, SectionHeading, ServesLabel
+src/components/ui       Button, Chip, Container, Icon, Price, ResponsiveImage (Photo), Reveal, SectionHeading, ServesLabel, brandIcons (Facebook, Instagram: lucide 1.x has none)
 src/components/home     home page sections
 src/components/menu     menu page: MenuToolbar (GroupTabs, CategoryChips, MenuSearch, ChipRow), MenuList, EmptyState
 src/pages               route pages (the only default exports); _Styleguide is dev-only
@@ -154,5 +154,6 @@ Measure with Lighthouse mobile on `npm run preview` (HTTP/1.1); production hosts
 - **Menu prices** come from the foodpanda listing (the CSV's source); confirm they match dine-in prices.
 - **Hours:** Google Maps (dine-in) and foodpanda (delivery) disagree. The site should show Google Maps hours as opening hours unless the user says otherwise.
 - **Instagram** `@theeddyscafe` was read off a table card in a photo; the profile hasn't been verified. It is linked in the footer (flagged in `src/data/cafe.ts`); confirm before launch.
+- **Facebook:** the page in `cafe.links.facebook` (titled "eddy's Café | Faisalabad") was added at the user's request on 2026-10-02; the raw data says "Not publicly found". It is in the footer's Follow links and the JSON-LD `sameAs`.
 - **Domain:** the café has no website yet. `siteUrl` (canonical, Open Graph, JSON-LD, sitemap) is a placeholder; set the real address before launch.
 - **WhatsApp:** no WhatsApp number is in the data. Don't assume it matches the phone number (+92 304 1112111) without confirmation. `cafe.whatsapp` is `null` and every WhatsApp button stays hidden until it's set.

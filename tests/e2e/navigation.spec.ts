@@ -165,7 +165,8 @@ test('footer links are all reachable with a light focus ring', async ({ page }) 
     'Order on foodpanda',
     'Get directions',
     '+92 304 1112111',
-    'Instagram',
+    'Facebook (opens in a new tab)',
+    'Instagram (opens in a new tab)',
   ])
 })
 
